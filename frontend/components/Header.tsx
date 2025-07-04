@@ -10,6 +10,7 @@ import menuData from "../lib/menuData";
 const Header = () => {
   // Navbar toggle
   const [navbarOpen, setNavbarOpen] = useState(false);
+
   const navbarToggleHandler = () => {
     setNavbarOpen(!navbarOpen);
   };
@@ -31,6 +32,7 @@ const Header = () => {
 
   // submenu handler
   const [openIndex, setOpenIndex] = useState(-1);
+
   const handleSubmenu = (index:number) => {
     if (openIndex === index) {
       setOpenIndex(-1);
@@ -44,20 +46,18 @@ const Header = () => {
   return (
     <>
       <header
-        className={`header left-0 top-0 z-40 flex w-full items-center ${
+        className={`header left-0 top-0 z-40 flex w-full  border border-blue-800 items-center ${
           sticky
             ? "dark:bg-gray-dark dark:shadow-sticky-dark fixed z-[9999] bg-white !bg-opacity-80 shadow-sticky backdrop-blur-sm transition"
             : "absolute bg-transparent"
         }`}
       >
-        <div className="container">
-          <div className="relative -mx-4 flex items-center justify-between">
+        <div className="container mx-auto">
+          <div className=" -mx-4 flex items-center justify-between">
             <div className="w-60 max-w-full px-4 xl:mr-12">
               <Link
                 href="/"
-                className={`header-logo block w-full ${
-                  sticky ? "py-5 lg:py-2" : "py-8"
-                } `}
+                className={`header-logo block w-full ${sticky ? "py-5 lg:py-2" : "py-8"} `}
               >
                 <Image
                   src="/images/logo/logo-2.svg"
@@ -77,7 +77,7 @@ const Header = () => {
             </div>
             <div className="flex w-full items-center justify-between px-4">
               <div>
-                <button
+                {/* <button
                   onClick={navbarToggleHandler}
                   id="navbarToggler"
                   aria-label="Mobile Menu"
@@ -98,7 +98,7 @@ const Header = () => {
                       navbarOpen ? " top-[-8px] -rotate-45" : " "
                     }`}
                   />
-                </button>
+                </button> */}
                 <nav
                   id="navbarCollapse"
                   className={`navbar absolute right-0 z-30 w-[250px] rounded border-[.5px] border-body-color/50 bg-white px-6 py-4 duration-300 dark:border-body-color/20 dark:bg-dark lg:visible lg:static lg:w-auto lg:border-none lg:!bg-transparent lg:p-0 lg:opacity-100 ${
