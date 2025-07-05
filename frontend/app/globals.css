@@ -120,3 +120,9 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer utilities {
+  .gradient-vertical {
+    background: linear-gradient(180deg, #12141d 0%, #12151f 100%);
+  }
+}

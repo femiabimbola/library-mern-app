@@ -1,6 +1,8 @@
 const Register = () => {
   return (
-    <p> The register page</p>
+    <div className="flex flex-col gap-4">
+      
+    </div>
   )
 }
 
