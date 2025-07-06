@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import {
   Form,
@@ -46,23 +46,40 @@ const Register = () => {
       </p>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-        <FormField
-              control={form.control}
-              name="fullName"
-              render={({field}) => (
-                <FormItem>
-                  <FormLabel>First Name</FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      // disabled={isPending}
-                      placeholder="Enter your name"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+          <FormField
+            control={form.control}
+            name="fullName"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>First Name</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    // disabled={isPending}
+                    placeholder="Enter your name"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+                    <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Password</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    // disabled={isPending}
+                    placeholder="Enter your password"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
         </form>
       </Form>
     </div>
