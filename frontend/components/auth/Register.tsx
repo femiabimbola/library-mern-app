@@ -67,6 +67,24 @@ const Register = () => {
               </FormItem>
             )}
           />
+                    <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel >Email</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    // disabled={isPending}
+                    className="text-white/80"
+                    placeholder="Enter your email address"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <FormField
             control={form.control}
             name="password"
@@ -79,6 +97,25 @@ const Register = () => {
                     // disabled={isPending}
                     placeholder="Enter your password"
                     type={showPassword ? "text" : "password"}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+                    <FormField
+            control={form.control}
+            name="fullName"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel >University Number</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    // disabled={isPending}
+                    className="text-white/80"
+                    placeholder="Enter your name"
+                    type= "number"
                   />
                 </FormControl>
                 <FormMessage />
