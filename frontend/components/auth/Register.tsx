@@ -12,6 +12,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Input } from "../ui/input";
+import { useState } from "react";
 
 export const signUpSchema = z.object({
   fullName: z.string().min(3),
@@ -22,6 +23,8 @@ export const signUpSchema = z.object({
 });
 
 const Register = () => {
+  const [showPassword, setShowPassword] = useState(false);
+
   const form = useForm<z.infer<typeof signUpSchema>>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
@@ -51,11 +54,12 @@ const Register = () => {
             name="fullName"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>First Name</FormLabel>
+                <FormLabel >First Name</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
                     // disabled={isPending}
+                    className="text-white/80"
                     placeholder="Enter your name"
                   />
                 </FormControl>
@@ -63,7 +67,7 @@ const Register = () => {
               </FormItem>
             )}
           />
-                    <FormField
+          <FormField
             control={form.control}
             name="password"
             render={({ field }) => (
@@ -74,6 +78,7 @@ const Register = () => {
                     {...field}
                     // disabled={isPending}
                     placeholder="Enter your password"
+                    type={showPassword ? "text" : "password"}
                   />
                 </FormControl>
                 <FormMessage />
