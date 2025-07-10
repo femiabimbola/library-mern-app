@@ -35,7 +35,7 @@ interface Props {
 
 const FileUpload = ({ onFileChange }: Props) => {
 
-  const ikUploadRef = useRef(null);
+  const ikUploadRef = useRef<HTMLInputElement>(null);
   const [progress, setProgress] = useState(0);
   const [file, setFile] = useState<{ filePath : string } | null>(null);
 
@@ -46,7 +46,13 @@ const FileUpload = ({ onFileChange }: Props) => {
   }
 
   return (
-    <div> The file upload</div>
+    // <ImageKitProvider
+    //   publicKey={publicKey}
+    //   urlEndpoint={imageKitEndpoint}
+    //   authenticator={authenticator}
+    // >
+      <div></div>
+    // </ImageKitProvider>
   )
 
 }
