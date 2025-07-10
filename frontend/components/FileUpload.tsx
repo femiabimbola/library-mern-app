@@ -1,22 +1,54 @@
 "use client"
 
-// import { IKImage, IKVideo, ImageKitProvider, IKUpload } from "imagekitio-next";
-import { Image, ImageKitProvider } from '@imagekit/next';
+import { Image, Video, ImageKitProvider, upload }  from '@imagekit/next';
+import { useRef, useState } from 'react';
 
 const imageKitEndpoint = process.env.NEXT_PUBLIC_API_ENDPOINT!
 
 const authenticator = async () => {
   try {
     const  response = await fetch(`${imageKitEndpoint}/api/auth/imagekit`)
-  } catch (error) {
-    
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(
+        `Request failed with status ${response.status}: ${errorText}`
+      );
+    }
+    const data = await response.json();
+    const { signature, expire, token } = data;
+
+    return { token, expire, signature };
+  } catch (error: any) {
+    throw new Error(`Authentication request failed: ${error.message}`);
   }
 }
 
-const FileUpload = () => {
+interface Props {
+  type: "image" | "video";
+  accept: string;
+  placeholder: string;
+  folder: string;
+  variant: "dark" | "light";
+  onFileChange: (filePath: string) => void;
+  value?: string;
+}
+
+const FileUpload = ({ onFileChange }: Props) => {
+
+  const ikUploadRef = useRef(null);
+  const [progress, setProgress] = useState(0);
+  const [file, setFile] = useState<{ filePath : string } | null>(null);
+
+
+  const onSuccess = ( res:any) => {
+    setFile(res)
+    onFileChange(res.filePath);
+  }
+
   return (
     <div> The file upload</div>
   )
+
 }
 
 export default FileUpload;
