@@ -13,6 +13,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Input } from "../ui/input";
 import { useState } from "react";
+import { ImageUpload } from "../ImageUpload";
 
 export const signUpSchema = z.object({
   fullName: z.string().min(3),
@@ -105,7 +106,7 @@ const Register = () => {
           />
                     <FormField
             control={form.control}
-            name="fullName"
+            name="universityId"
             render={({ field }) => (
               <FormItem>
                 <FormLabel >University Number</FormLabel>
@@ -117,6 +118,19 @@ const Register = () => {
                     placeholder="Enter your name"
                     type= "number"
                   />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="universityCard"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>University Card</FormLabel>
+                <FormControl>
+                  {/* <ImageUpload /> */}
                 </FormControl>
                 <FormMessage />
               </FormItem>
