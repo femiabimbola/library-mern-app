@@ -13,8 +13,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Input } from "../ui/input";
 import { useState } from "react";
-import { ImageUpload } from "../ImageUpload";
-import { MediaUpload } from "../MediaUpload";
+import { ImageUpload2 } from "../ImageUpload";
+import { ImageUpload } from "../MediaUpload";
 
 export const signUpSchema = z.object({
   fullName: z.string().min(3),
@@ -131,8 +131,8 @@ const Register = () => {
               <FormItem>
                 <FormLabel>University Card</FormLabel>
                 <FormControl>
-                  {/* <ImageUpload /> */}
-                  <MediaUpload />
+                  <ImageUpload />
+         
                 </FormControl>
                 <FormMessage />
               </FormItem>

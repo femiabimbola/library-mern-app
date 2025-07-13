@@ -1,24 +1,12 @@
-"use client";
+'use client';
 
-import {
-  upload,
-  Image,
-  ImageKitProvider,
-  Video,
-  ImageKitInvalidRequestError,
-  ImageKitAbortError,
-  ImageKitUploadNetworkError,
-  ImageKitServerError,
-} from "@imagekit/next";
-import { useRef, useState } from "react";
-import { FormError } from "./FormMessage";
-import { Button } from "./ui/button";
-
-const frontendUrl = process.env.NEXT_PUBLIC_FRONTEND_URL;
-const imageKitEndpoint = process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT;
+import { upload, ImageKitInvalidRequestError, ImageKitAbortError, ImageKitUploadNetworkError, ImageKitServerError, Image, ImageKitProvider } from '@imagekit/next';
+import { useState, useRef } from 'react';
+import { Progress } from '@/components/ui/progress';
+import { FormError } from './FormMessage';
 
 interface UploadResponse {
-  url?: string; // Changed to optional to match SDK's response type
+  url?: string;
   filePath?: string;
 }
 
@@ -29,52 +17,32 @@ interface UploadAuthParams {
   publicKey: string;
 }
 
-const authenticator = async () => {
-  try {
-    const response = await fetch(`${frontendUrl}/api/auth/imagekit`);
-    if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error(
-        `Request failed with status ${response.status}: ${errorText}`
-      );
-    }
-    const data = await response.json();
-    const { signature, expire, token } = data;
-    return { token, expire, signature };
-  } catch (error: any) {
-    throw new Error(`Authentication request failed: ${error.message}`);
-  }
-};
+const imageKitEndpoint = process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT!
+const frontendUrl = process.env.NEXT_PUBLIC_FRONTEND_URL;
 
-export const MediaUpload = () => {
-  const [error, setError] = useState<string | undefined>("");
+export const ImageUpload = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [uploadStatus, setUploadStatus] = useState<string>("");
+  const [error, setError] = useState<string | undefined>("");
+  const [uploadStatus, setUploadStatus] = useState<string>('');
   const [uploadProgress, setUploadProgress] = useState<number>(0);
-  const [uploadedImageUrl, setUploadedImageUrl] = useState<string>("");
+  const [uploadedImageUrl, setUploadedImageUrl] = useState<string>('');
 
-
-  const handleUpload = async () => {
+  const handleUpload = async (file: File) => {
     setError("");
-    if (
-      !fileInputRef.current?.files ||
-      fileInputRef.current.files.length === 0
-    ) {
-      setError("Please select a file");
+    // Check file size (1MB = 1,048,576 bytes)
+    const MAX_FILE_SIZE = 1048576;
+    if (file.size > MAX_FILE_SIZE) {
+      setUploadStatus('File size exceeds 1MB limit');
       return;
     }
 
-    const file = fileInputRef.current.files[0];
-
+    // Fetch auth parameters
     const authResponse = await fetch(`${frontendUrl}/api/auth/imagekit`);
-
     if (!authResponse.ok) {
-      setError("Failed to get upload auth parameters");
+      setError('Failed to get upload auth parameters');
       return;
     }
-
     const authData: UploadAuthParams = await authResponse.json();
-    console.log(authData);
 
     try {
       const response: UploadResponse = await upload({
@@ -84,45 +52,72 @@ export const MediaUpload = () => {
         token: authData.token,
         expire: authData.expire,
         publicKey: authData.publicKey,
-        folder: "/library-uploads",
+        folder: '/Uploads',
         onProgress: (event) => {
           const percentage = Math.round((event.loaded / event.total) * 100);
           setUploadProgress(percentage);
           setUploadStatus(`Uploading... ${percentage}%`);
         },
       });
+
+      if (!response.url) {
+        setError('Upload succeeded but no URL returned');
+        return;
+      }
+
+      setUploadStatus('File uploaded successfully!');
+      setUploadedImageUrl(response.url);
+      setUploadProgress(100);
     } catch (error) {
       setUploadProgress(0);
       if (error instanceof ImageKitInvalidRequestError) {
-        setError("Invalid request: " + error.message);
+        setError('Invalid request: ' + error.message);
       } else if (error instanceof ImageKitAbortError) {
-        setError("Upload aborted");
+        setError('Upload aborted');
       } else if (error instanceof ImageKitUploadNetworkError) {
-        setError("Network error during upload");
+        setError('Network error during upload');
       } else if (error instanceof ImageKitServerError) {
-        setError("Server error: " + error.message);
+        setError('Server error: ' + error.message);
       } else {
-        setError("Unknown error: " + (error as Error).message);
+        setError('Unknown error: ' + (error as Error).message);
       }
     }
   };
 
+  const handleFileChange = () => {
+    if (fileInputRef.current?.files && fileInputRef.current.files.length > 0) {
+      const file = fileInputRef.current.files[0];
+      handleUpload(file);
+    }
+  };
+
   return (
-    <>
+    <div className="space-y-4">
       <FormError message={error} />
-      <button onClick={handleUpload} className="upload-btn" type="button">
-         <input type="file" ref={fileInputRef} accept="image/*" />
-      </button>
-      <ImageKitProvider urlEndpoint={imageKitEndpoint}>
-       { uploadedImageUrl &&  <Image
-          src={uploadedImageUrl}
-          alt="Uploaded Image"
-          // width={200}
-          // height={200}
-          transformation={[{ height: '300', width: '500', crop: 'force' }]}
-        /> }
-     
-      </ImageKitProvider>
-    </>
+      <input 
+        type="file" 
+        ref={fileInputRef} 
+        accept="image/*" 
+        onChange={handleFileChange}
+        className="file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:bg-primary file:text-primary-foreground hover:file:bg-primary/80 "
+      />
+       {uploadProgress > 0 && uploadProgress < 100 && (
+        <Progress value={uploadProgress} className="w-full bg-white" />
+      )}
+      {uploadStatus && <p className="text-sm text-muted-foreground">{uploadStatus}</p>}
+
+      {uploadedImageUrl && (
+        <ImageKitProvider urlEndpoint={imageKitEndpoint}>
+          <Image
+            src={uploadedImageUrl}
+            alt="Uploaded Image"
+            width={800}
+            height={400}
+            // transformation={[{ height: '200', width: '200', crop: 'force' }]}
+            className="rounded-md"
+          />
+        </ImageKitProvider>
+      )}
+    </div>
   );
-};
+}
