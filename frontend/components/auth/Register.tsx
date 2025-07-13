@@ -14,6 +14,7 @@ import { useForm } from "react-hook-form";
 import { Input } from "../ui/input";
 import { useState } from "react";
 import { ImageUpload } from "../ImageUpload";
+import { MediaUpload } from "../MediaUpload";
 
 export const signUpSchema = z.object({
   fullName: z.string().min(3),
@@ -131,6 +132,7 @@ const Register = () => {
                 <FormLabel>University Card</FormLabel>
                 <FormControl>
                   {/* <ImageUpload /> */}
+                  <MediaUpload />
                 </FormControl>
                 <FormMessage />
               </FormItem>

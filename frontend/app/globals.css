@@ -131,4 +131,12 @@
   .bg-pattern {
     background-image: url('/images/pattern.webp');
   }
+
+  .upload-btn {
+    @apply flex min-h-14 w-full items-center justify-center gap-1.5 rounded-md;
+  }
+}
+
+@layer components {
+  
 }

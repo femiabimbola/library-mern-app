@@ -1,6 +1,6 @@
 'use client';
 
-import { upload, ImageKitInvalidRequestError, ImageKitAbortError, ImageKitUploadNetworkError, ImageKitServerError, Image } from '@imagekit/next';
+import { upload, ImageKitInvalidRequestError, ImageKitAbortError, ImageKitUploadNetworkError, ImageKitServerError, Image, ImageKitProvider } from '@imagekit/next';
 
 import { useState, useRef } from 'react';
 
@@ -16,7 +16,9 @@ interface UploadAuthParams {
   publicKey: string;
 }
 
-const imageKitEndpoint = process.env.NEXT_PUBLIC_API_ENDPOINT!
+const imageKitEndpoint = process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT!
+const frontendUrl = process.env.NEXT_PUBLIC_FRONTEND_URL;
+
 export const ImageUpload = () => {
 
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -33,7 +35,7 @@ export const ImageUpload = () => {
     const file = fileInputRef.current.files[0];
 
     // Fetch auth parameters
-    const authResponse = await fetch(`${imageKitEndpoint}/api/auth/imagekit`);
+    const authResponse = await fetch(`${frontendUrl}/api/auth/imagekit`);
     if (!authResponse.ok) {
       setUploadStatus('Failed to get upload auth parameters');
       return;
@@ -83,7 +85,7 @@ export const ImageUpload = () => {
 
   return (
     <div>
-      <h2>Upload an Image</h2>
+      {/* <h2>Upload an Image</h2> */}
       <input type="file" ref={fileInputRef} accept="image/*" />
       <button onClick={handleUpload}>Upload</button>
       {uploadStatus && <p>{uploadStatus}</p>}
@@ -91,6 +93,7 @@ export const ImageUpload = () => {
         <progress value={uploadProgress} max="100">{uploadProgress}%</progress>
       )}
       {uploadedImageUrl && (
+        <ImageKitProvider urlEndpoint={imageKitEndpoint}>
         <Image
           src={uploadedImageUrl}
           alt="Uploaded Image"
@@ -98,6 +101,7 @@ export const ImageUpload = () => {
           height={200}
           transformation={[{ height: '200', width: '200', crop: 'force' }]}
         />
+      </ImageKitProvider>
       )}
     </div>
   );
