@@ -29,6 +29,7 @@ export const ImageUpload = () => {
 
   const handleUpload = async (file: File) => {
     setError("");
+
     // Check file size (1MB = 1,048,576 bytes)
     const MAX_FILE_SIZE = 1048576;
     if (file.size > MAX_FILE_SIZE) {
@@ -42,6 +43,7 @@ export const ImageUpload = () => {
       setError('Failed to get upload auth parameters');
       return;
     }
+    
     const authData: UploadAuthParams = await authResponse.json();
 
     try {

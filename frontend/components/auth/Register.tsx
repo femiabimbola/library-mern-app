@@ -15,6 +15,7 @@ import { Input } from "../ui/input";
 import { useState } from "react";
 import { ImageUpload2 } from "../ImageUpload";
 import { ImageUpload } from "../MediaUpload";
+import { Button } from "../ui/button";
 
 export const signUpSchema = z.object({
   fullName: z.string().min(3),
@@ -38,7 +39,9 @@ const Register = () => {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof signUpSchema>) => {};
+  const onSubmit = (values: z.infer<typeof signUpSchema>) => {
+    console.log(values)
+  };
 
   return (
     <div className="flex flex-col gap-4">
@@ -132,12 +135,12 @@ const Register = () => {
                 <FormLabel>University Card</FormLabel>
                 <FormControl>
                   <ImageUpload />
-         
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
+          <Button type="submit" className="w-full"> Sign Up</Button>
         </form>
       </Form>
     </div>
