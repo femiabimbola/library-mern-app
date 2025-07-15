@@ -40,7 +40,7 @@ const Register = () => {
   });
 
   const onSubmit = (values: z.infer<typeof signUpSchema>) => {
-    console.log(values)
+    console.log(values);
   };
 
   return (
@@ -59,7 +59,7 @@ const Register = () => {
             name="fullName"
             render={({ field }) => (
               <FormItem>
-                <FormLabel >First Name</FormLabel>
+                <FormLabel>First Name</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
@@ -72,12 +72,12 @@ const Register = () => {
               </FormItem>
             )}
           />
-                    <FormField
+          <FormField
             control={form.control}
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel >Email</FormLabel>
+                <FormLabel>Email</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
@@ -108,19 +108,19 @@ const Register = () => {
               </FormItem>
             )}
           />
-                    <FormField
+          <FormField
             control={form.control}
             name="universityId"
             render={({ field }) => (
               <FormItem>
-                <FormLabel >University Number</FormLabel>
+                <FormLabel>University Number</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
                     // disabled={isPending}
                     className="text-white/80"
                     placeholder="Enter your name"
-                    type= "number"
+                    type="number"
                   />
                 </FormControl>
                 <FormMessage />
@@ -134,13 +134,15 @@ const Register = () => {
               <FormItem>
                 <FormLabel>University Card</FormLabel>
                 <FormControl>
-                  <ImageUpload />
+                  <ImageUpload  control={form.control} name={field.name} field={field}/>
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <Button type="submit" className="w-full"> Sign Up</Button>
+          <Button type="submit" className="w-full">
+            Sign Up
+          </Button>
         </form>
       </Form>
     </div>

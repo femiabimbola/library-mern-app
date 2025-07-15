@@ -20,14 +20,14 @@ interface UploadAuthParams {
 const imageKitEndpoint = process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT!
 const frontendUrl = process.env.NEXT_PUBLIC_FRONTEND_URL;
 
-export const ImageUpload = () => {
+export const ImageUpload = ({ control, name, ...rest }: any) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [error, setError] = useState<string | undefined>("");
   const [uploadStatus, setUploadStatus] = useState<string>('');
   const [uploadProgress, setUploadProgress] = useState<number>(0);
   const [uploadedImageUrl, setUploadedImageUrl] = useState<string>('');
 
-  const handleUpload = async (file: File) => {
+  const handleUpload = async (file: File, onChange: (value: string) => void ) => {
     setError("");
 
     // Check file size (1MB = 1,048,576 bytes)
@@ -69,6 +69,8 @@ export const ImageUpload = () => {
 
       setUploadStatus('File uploaded successfully!');
       setUploadedImageUrl(response.url);
+      onChange(response.url)
+
       setUploadProgress(100);
     } catch (error) {
       setUploadProgress(0);
@@ -86,10 +88,10 @@ export const ImageUpload = () => {
     }
   };
 
-  const handleFileChange = () => {
+  const handleFileChange = (field: { onChange: (value: string) => void }) => {
     if (fileInputRef.current?.files && fileInputRef.current.files.length > 0) {
       const file = fileInputRef.current.files[0];
-      handleUpload(file);
+      handleUpload(file, field.onChange);
     }
   };
 
@@ -100,7 +102,7 @@ export const ImageUpload = () => {
         type="file" 
         ref={fileInputRef} 
         accept="image/*" 
-        onChange={handleFileChange}
+        onChange={() => handleFileChange({ onChange: rest.field.onChange })}
         className="file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:bg-primary file:text-primary-foreground hover:file:bg-primary/80 "
       />
        {uploadProgress > 0 && uploadProgress < 100 && (
