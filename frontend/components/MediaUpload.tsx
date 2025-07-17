@@ -20,7 +20,8 @@ interface UploadAuthParams {
 const imageKitEndpoint = process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT!
 const frontendUrl = process.env.NEXT_PUBLIC_FRONTEND_URL;
 
-export const ImageUpload = ({ control, name, ...rest }: any) => {
+// control, name, ...rest
+export const ImageUpload = ({ ...rest }: any) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [error, setError] = useState<string | undefined>("");
   const [uploadStatus, setUploadStatus] = useState<string>('');

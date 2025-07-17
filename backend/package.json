@@ -13,7 +13,9 @@
   "description": "",
   "dependencies": {
     "dotenv": "^17.0.0",
+    "drizzle-orm": "^0.44.3",
     "express": "^5.1.0",
+    "pg": "^8.16.3",
     "ts-node": "^10.9.2"
   },
   "devDependencies": {

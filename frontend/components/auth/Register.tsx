@@ -134,7 +134,7 @@ const Register = () => {
               <FormItem>
                 <FormLabel>University Card</FormLabel>
                 <FormControl>
-                  <ImageUpload  control={form.control} name={field.name} field={field}/>
+                  <ImageUpload field={field}/>
                 </FormControl>
                 <FormMessage />
               </FormItem>
