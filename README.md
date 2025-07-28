@@ -8,3 +8,4 @@ This application makes use of his own unique fonts. The font is domiciledin the 
 - Database : Postgress
 - ORM : Drizzle
 - Framework : Express
+- Validator: Zod
