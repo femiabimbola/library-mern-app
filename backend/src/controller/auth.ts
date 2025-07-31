@@ -11,11 +11,13 @@ export const createUser = async ( req: Request, res: any, next: NextFunction
 
   try {
     const existingUser = await db.select().from(users).where(eq(users.email, email)).limit(1);
-
-    if (existingUser.length > 0) { }
+    console.log( fullName, email, password, )
+    if (existingUser.length > 0) return res.status(401).send({ message: "User already exist" })
     const hashedPassword = await hash(password, 10);
+    // const newUser = await db.insert(users).values({})
+    // console.log( fullName, email, password, )
     return res.status(201).send({ msg: "You have successfully created" });
   } catch (error) {
-    return res.status(201).send({ msg: "Could not create user" });
+    return res.status(404).send({ msg: "Could not create user" });
   }
 }

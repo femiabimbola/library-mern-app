@@ -1,5 +1,6 @@
 import express, { Express, Request, Response } from "express";
 import { db } from "./database/connectdb";
+import router from "./routes";
 import { config } from "./lib/config/app.config";
 // import dotenv from "dotenv"
 
@@ -16,6 +17,8 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 app.get("/", (req: Request, res: Response) => {
   res.status(200).send("Express with TypeScript Server");
 });
+
+app.use("/api/", router)
 
 app.listen(port, async () => {
   console.log(`[server]: Server is running at http://localhost:${port} in ${process.env.NODE_ENV}`);
