@@ -26,3 +26,7 @@ export const createUser = async (
     return res.status(404).send({ msg: "Could not create user" });
   }
 };
+
+export const loginUser = async ( req: Request, res: any, next: NextFunction) => {
+  
+}
