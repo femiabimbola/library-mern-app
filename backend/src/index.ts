@@ -23,6 +23,7 @@ app.use(passport.initialize())
 app.use(passport.session())
 app.use(session(sessionObject))
 app.use("/api/", router)
+// app.use(router)
 
 
 app.listen(port, async () => {

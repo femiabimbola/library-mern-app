@@ -12,7 +12,7 @@ passport.serializeUser((user:any, done) => {
 // The deserialize function take the id from session, and find who the user is.it get called afteruser sign in and call other routes
 passport.deserializeUser(async (id: string, done) => {
   try {
-    const findUser = await findAUserByID(id) as User
+    const findUser = await findAUserByID(id) 
     if (!findUser) throw new Error("user not found");
     done(null, findUser);
   } catch (error) {
@@ -22,7 +22,7 @@ passport.deserializeUser(async (id: string, done) => {
 
 
 export default passport.use(
-  new Strategy({usernameField:"email"}, async (username, password, done) =>{
+  new Strategy({usernameField:"email", passwordField: "password"}, async (username, password, done) =>{
     try{
     
       const findUser = await findAUserByEmail(username)

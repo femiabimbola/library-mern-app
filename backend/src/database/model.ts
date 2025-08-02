@@ -18,7 +18,7 @@ export const findAUserByEmail = async (email: string) => {
   }
 };
 
-export const findAUserByID = async (id: number) => {
+export const findAUserByID = async (id: string) => {
   try {
     const result = await db
       .select()
