@@ -8,6 +8,7 @@ const MAX_REQUESTS = 4;
 const WINDOW_MS = 60 * 1000; // 1 minute in milliseconds
 
 export const rateLimiter = (req: Request, res: Response, next: NextFunction) => {
+
   const ip = req.headers['x-forwarded-for']?.toString().split(',')[0]?.trim() || 
              req.socket.remoteAddress || '127.0.0.1';
   
@@ -22,8 +23,7 @@ export const rateLimiter = (req: Request, res: Response, next: NextFunction) => 
   
   // Check if limit is exceeded
   if (requests.length >= MAX_REQUESTS) {
-     res.status(429).json({
-      error: 'Rate limit exceeded. Please try again in a minute.'
+     res.status(429).json({ error: 'Rate limit exceeded. Please try again in a minute.'
     });
   return;
   }
