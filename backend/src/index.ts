@@ -1,6 +1,7 @@
 import express, { Express, Request, Response } from "express";
 import { db } from "./database/connectdb";
 import router from "./routes";
+import session from "express-session";
 import { config } from "./lib/config/app.config";
 // import dotenv from "dotenv"
 
@@ -19,6 +20,7 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 app.use("/api/", router)
+
 
 app.listen(port, async () => {
   console.log(`[server]: Server is running at http://localhost:${port} in ${process.env.NODE_ENV}`);

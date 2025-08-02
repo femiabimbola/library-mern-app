@@ -10,8 +10,8 @@ export const createUser = async (
   const { fullName, email, password, universityCard, universityId } = req.body;
 
   try {
+   
     const existingUser = await db.select().from(users).where(eq(users.email, email)).limit(1);
-
     if (existingUser.length > 0) return res.status(401).send({ message: "User already exist" });
     const hashedPassword = await hash(password, 10);
 
