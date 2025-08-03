@@ -9,3 +9,4 @@ This application makes use of his own unique fonts. The font is domiciledin the 
 - ORM : Drizzle
 - Framework : Express
 - Validator: Zod
+- Authentication: Passport, Passport-local

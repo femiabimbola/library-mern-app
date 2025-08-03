@@ -15,4 +15,9 @@ export const signUpSchema = z.object({
     .nonempty({ message: "Password is required" }),
 });
 
-export const loginSchema = z.object({})
+export const loginSchema = z.object({
+  email: z.email({ message: "Invalid email format" }).nonempty({ message: "Email is required" }),
+  password: z.string()
+  .min(8, { message: "Password must be at least 8 characters long" })
+  .nonempty({ message: "Password is required" }),
+})
