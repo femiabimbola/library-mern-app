@@ -26,7 +26,7 @@ app.get("/", (req: Request, res: Response) => {
 
 
 app.use("/api/", router)
-// app.use(router)
+app.use(router)
 
 
 app.listen(port, async () => {
