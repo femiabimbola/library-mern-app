@@ -15,13 +15,16 @@ app.use(express.urlencoded({ extended: false }));
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
+app.use(session(sessionObject))
+app.use(passport.initialize())
+app.use(passport.session())
+
 app.get("/", (req: Request, res: Response) => {
   res.status(200).send("Express with TypeScript Server");
 });
 
-app.use(passport.initialize())
-app.use(passport.session())
-app.use(session(sessionObject))
+
+
 app.use("/api/", router)
 // app.use(router)
 

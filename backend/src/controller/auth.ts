@@ -28,5 +28,5 @@ export const createUser = async (
 };
 
 export const loginUser = async ( req: Request, res: any, next: NextFunction) => {
-
+  return res.status(201).send({msg: "successfully log in"});
 }
