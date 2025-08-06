@@ -11,7 +11,7 @@ const router = Router();
 
 router.post("/auth/register", validateSignUp, rateLimiter, createUser)
 
-router.post("/auth/login", validateSignIn, passport.authenticate("local"), loginUser )
+router.post("/auth/login", validateSignIn, passport.authenticate("local", {failureMessage: true}), loginUser )
 
 
 export default router;
