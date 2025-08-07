@@ -86,7 +86,7 @@ const Login = () => {
           />
 
           <Button type="submit" className="w-full">
-            Sign Up
+            Log In
           </Button>
         </form>
       </Form>
