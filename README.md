@@ -3,6 +3,9 @@
 ### Learning about Fonts
 This application makes use of his own unique fonts. The font is domiciledin the app folder
 
+## Frontend Tools
+- Nextjs
+
 
 ## Backend Tools
 - Database : Postgress

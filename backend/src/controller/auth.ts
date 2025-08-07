@@ -34,10 +34,11 @@ export const loginUser = async ( req: Request, res: any, next: NextFunction) => 
 
 
 export const PassportLocal = (req: Request, res: Response, next: NextFunction) => {
+  
   Passport.authenticate('local', (err: any, user: any, info: { message?: string }) => {
-    if (err) {
-      return next(err); // Handle errors (e.g., database issues)
-    }
+
+    if (err)  return next(err); // Handle errors (e.g., database issues)
+    
     if (!user) {
       // Authentication failed, return the specific error message
       return res.status(401).json({ message: info.message || 'Authentication failed' });
