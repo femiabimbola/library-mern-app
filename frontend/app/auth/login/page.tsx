@@ -1,4 +1,3 @@
-import Register from "@/components/auth/Register"
 import Login from "@/components/auth/Login"
 
 const LoginPage = () => {
