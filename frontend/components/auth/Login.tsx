@@ -17,29 +17,23 @@ import { ImageUpload2 } from "../ImageUpload";
 import { ImageUpload } from "../MediaUpload";
 import { Button } from "../ui/button";
 
-export const signUpSchema = z.object({
-  fullName: z.string().min(3),
+export const LogInSchema = z.object({
   email: z.string().email(),
-  universityId: z.coerce.number(), //turns a string to a number
-  universityCard: z.string().nonempty("University Card is required"),
   password: z.string().min(8),
 });
 
-const Register = () => {
+const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
 
-  const form = useForm<z.infer<typeof signUpSchema>>({
-    resolver: zodResolver(signUpSchema),
+  const form = useForm<z.infer<typeof LogInSchema>>({
+    resolver: zodResolver(LogInSchema),
     defaultValues: {
       email: "",
       password: "",
-      fullName: "",
-      universityId: 0,
-      universityCard: "",
     },
   });
 
-  const onSubmit = (values: z.infer<typeof signUpSchema>) => {
+  const onSubmit = (values: z.infer<typeof LogInSchema>) => {
     console.log(values);
   };
 
@@ -100,4 +94,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Login;
