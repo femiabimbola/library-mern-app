@@ -3,7 +3,7 @@ import { db } from "./database/connectdb";
 import router from "./routes";
 import session from "express-session";
 import passport from "passport"
-// import { config } from "./lib/config/app.config";
+import cors from "cors";
 import { sessionObject } from "./lib/sessionObject";
 
 
@@ -12,6 +12,7 @@ const port = process.env.PORT || 5000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cors())
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 

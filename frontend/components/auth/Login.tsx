@@ -12,9 +12,8 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Input } from "../ui/input";
-import { useState } from "react";
-import { ImageUpload2 } from "../ImageUpload";
 import { ImageUpload } from "../MediaUpload";
+import { useState, useTransition } from "react";
 import { Button } from "../ui/button";
 
 export const LogInSchema = z.object({

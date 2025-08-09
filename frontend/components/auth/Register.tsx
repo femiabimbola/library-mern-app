@@ -12,21 +12,32 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Input } from "../ui/input";
-import { useState } from "react";
-import { ImageUpload2 } from "../ImageUpload";
+import { useState, useTransition } from "react";
 import { ImageUpload } from "../MediaUpload";
 import { Button } from "../ui/button";
+import { useRouter } from "next/navigation";
+import axios from "axios";
 
 export const signUpSchema = z.object({
-  fullName: z.string().min(3),
-  email: z.string().email(),
+  fullName: z
+    .string().min(3, "Full name must be at least 3 characters")
+    .regex(/^[a-zA-Z\s]*$/, "Full name can only contain letters and spaces"),
+  email: z.string().email("Invalid email address").trim(),
   universityId: z.coerce.number(), //turns a string to a number
   universityCard: z.string().nonempty("University Card is required"),
-  password: z.string().min(8),
+  password: z
+    .string().min(8, "Password must be at least 8 characters")
+    .regex(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/,
+      "Password must contain at least one uppercase letter, one lowercase letter, and one number"
+    )
 });
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState<string | undefined>("");
+  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
 
   const form = useForm<z.infer<typeof signUpSchema>>({
     resolver: zodResolver(signUpSchema),
@@ -40,6 +51,15 @@ const Register = () => {
   });
 
   const onSubmit = (values: z.infer<typeof signUpSchema>) => {
+    setError("");
+    startTransition(async() => {
+      try {
+        const {data} = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/register`, values)
+        router.push('/login')
+      } catch (error: any) {
+        setError(error.response.data.message)
+      }
+    })
     console.log(values);
   };
 
@@ -63,7 +83,7 @@ const Register = () => {
                 <FormControl>
                   <Input
                     {...field}
-                    // disabled={isPending}
+                    disabled={isPending}
                     className="text-white/80"
                     placeholder="Enter your name"
                   />
@@ -81,7 +101,7 @@ const Register = () => {
                 <FormControl>
                   <Input
                     {...field}
-                    // disabled={isPending}
+                    disabled={isPending}
                     className="text-white/80"
                     placeholder="Enter your email address"
                   />
@@ -99,7 +119,7 @@ const Register = () => {
                 <FormControl>
                   <Input
                     {...field}
-                    // disabled={isPending}
+                    disabled={isPending}
                     placeholder="Enter your password"
                     type={showPassword ? "text" : "password"}
                   />
@@ -117,7 +137,7 @@ const Register = () => {
                 <FormControl>
                   <Input
                     {...field}
-                    // disabled={isPending}
+                    disabled={isPending}
                     className="text-white/80"
                     placeholder="Enter your name"
                     type="number"
@@ -140,6 +160,7 @@ const Register = () => {
               </FormItem>
             )}
           />
+          <p>{error}</p>
           <Button type="submit" className="w-full">
             Sign Up
           </Button>
