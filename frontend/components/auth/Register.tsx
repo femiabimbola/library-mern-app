@@ -79,7 +79,7 @@ const Register = () => {
             name="fullName"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>First Name</FormLabel>
+                <FormLabel className="text-white/80">First Name</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
@@ -97,7 +97,7 @@ const Register = () => {
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email</FormLabel>
+                <FormLabel className="text-white/80">Email</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
@@ -115,7 +115,7 @@ const Register = () => {
             name="password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Password</FormLabel>
+                <FormLabel className="text-white/80">Password</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
@@ -133,7 +133,7 @@ const Register = () => {
             name="universityId"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>University Number</FormLabel>
+                <FormLabel className="text-white/80">University Number</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
@@ -152,7 +152,7 @@ const Register = () => {
             name="universityCard"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>University Card</FormLabel>
+                <FormLabel className="text-white/80">University Card</FormLabel>
                 <FormControl>
                   <ImageUpload field={field}/>
                 </FormControl>
@@ -160,8 +160,8 @@ const Register = () => {
               </FormItem>
             )}
           />
-          <p>{error}</p>
-          <Button type="submit" className="w-full">
+          <p className="text-white/80">{error}</p>
+          <Button type="submit" className="w-full text-white/80 " >
             Sign Up
           </Button>
         </form>
