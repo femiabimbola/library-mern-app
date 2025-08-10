@@ -13,17 +13,34 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
-import { bookSchema } from "@/lib/validations";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import FileUpload from "@/components/FileUpload";
-import ColorPicker from "@/components/admin/ColorPicker";
+import ColorPicker from "./ColorPicker";
 // import { createBook } from "@/lib/admin/actions/book";
 // import { toast } from "@/hooks/use-toast";
 
 interface Props extends Partial<Book> {
   type?: "create" | "update";
 }
+
+
+export const bookSchema = z.object({
+  title: z.string().trim().min(2).max(100),
+  description: z.string().trim().min(10).max(1000),
+  author: z.string().trim().min(2).max(100),
+  genre: z.string().trim().min(2).max(50),
+  rating: z.coerce.number().min(1).max(5),
+  totalCopies: z.coerce.number().int().positive().lte(10000),
+  coverUrl: z.string().nonempty(),
+  coverColor: z 
+    .string()
+    .trim()
+    .regex(/^#[0-9A-F]{6}$/i),
+  // videoUrl: z.string().nonempty(),
+  videoUrl: z.string(),
+  summary: z.string().trim().min(10),
+});
 
 const BookForm = ({ type, ...book }: Props) => {
   const router = useRouter();
