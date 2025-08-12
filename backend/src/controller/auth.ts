@@ -40,7 +40,6 @@ export const PassportLocal = (req: Request, res: Response, next: NextFunction) =
     if (err)  return next(err); // Handle errors (e.g., database issues)
     
     if (!user) {
-      // Authentication failed, return the specific error message
       return res.status(401).json({ message: info.message || 'Authentication failed' });
     }
     // Authentication succeeded, log the user in
