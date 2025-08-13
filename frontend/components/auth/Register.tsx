@@ -166,6 +166,10 @@ const Register = () => {
           </Button>
         </form>
       </Form>
+      <p className="text-center text-base font-medium">
+      Already have an BookWise? 
+      <a className="font-bold text-primary" href="/auth/login"> Sign In </a>
+      </p>
     </div>
   );
 };

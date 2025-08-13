@@ -89,6 +89,10 @@ const Login = () => {
           </Button>
         </form>
       </Form>
+      <p className="text-center text-base font-medium">
+      New to BookWise? 
+      <a className="font-bold text-primary" href="/auth/register"> Create an account </a>
+      </p>
     </div>
   );
 };
