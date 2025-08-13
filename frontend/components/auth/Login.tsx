@@ -52,12 +52,12 @@ const Login = () => {
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email</FormLabel>
+                <FormLabel className="text-white/80">Email</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
                     // disabled={isPending}
-                    className="text-white/80"
+                    className="form-input"
                     placeholder="Enter your email address"
                   />
                 </FormControl>
@@ -70,7 +70,7 @@ const Login = () => {
             name="password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Password</FormLabel>
+                <FormLabel className="text-white/80">Password</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
