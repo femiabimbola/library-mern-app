@@ -12,7 +12,6 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Input } from "../ui/input";
-import { ImageUpload } from "../MediaUpload";
 import { useState, useTransition } from "react";
 import { Button } from "../ui/button";
 
@@ -23,6 +22,8 @@ export const LogInSchema = z.object({
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [isPending, startTransition] = useTransition();
+
 
   const form = useForm<z.infer<typeof LogInSchema>>({
     resolver: zodResolver(LogInSchema),
@@ -91,7 +92,7 @@ const Login = () => {
       </Form>
       <p className="text-center text-base font-medium">
       New to BookWise? 
-      <a className="font-bold text-primary" href="/auth/register"> Create an account </a>
+      <a className="font-bold" href="/auth/register"> Create an account </a>
       </p>
     </div>
   );
