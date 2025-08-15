@@ -68,7 +68,7 @@ const Register = () => {
       <h1 className="text-2xl font-semibold text-white">
         Create your library account
       </h1>
-      <p className="text-white/80">
+      <p className="text-white/80 mb-3">
         Please complete all fields and upload a valid university ID to gain
         access to the library
       </p>
@@ -84,7 +84,7 @@ const Register = () => {
                   <Input
                     {...field}
                     disabled={isPending}
-                    className="text-white/80"
+                    className="form-input"
                     placeholder="Enter your name"
                   />
                 </FormControl>
@@ -102,7 +102,7 @@ const Register = () => {
                   <Input
                     {...field}
                     disabled={isPending}
-                    className="text-white/80"
+                    className="form-input"
                     placeholder="Enter your email address"
                   />
                 </FormControl>
