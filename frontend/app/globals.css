@@ -140,7 +140,7 @@
 
 @layer components {
   .form-input {
-    @apply w-full min-h-12 border-none text-base font-bold placeholder:font-normal text-white focus-visible:ring-0 focus-visible:shadow-none ;
+    @apply w-full min-h-12 border-none text-base font-bold placeholder:font-normal text-white focus-visible:ring-1 focus-visible:shadow-none ;
    ;
   }
 }

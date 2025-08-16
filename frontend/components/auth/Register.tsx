@@ -55,7 +55,7 @@ const Register = () => {
     startTransition(async() => {
       try {
         const {data} = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/register`, values)
-        router.push('/login')
+        router.push('/auth/login')
       } catch (error: any) {
         setError(error.response.data.message)
       }
@@ -84,7 +84,7 @@ const Register = () => {
                   <Input
                     {...field}
                     disabled={isPending}
-                    className="form-input"
+                    className="form-input bg-[#060911]"
                     placeholder="Enter your name"
                   />
                 </FormControl>
@@ -101,8 +101,9 @@ const Register = () => {
                 <FormControl>
                   <Input
                     {...field}
+                    type="email"
                     disabled={isPending}
-                    className="form-input"
+                    className="form-input bg-[#060911]"
                     placeholder="Enter your email address"
                   />
                 </FormControl>
@@ -122,6 +123,7 @@ const Register = () => {
                     disabled={isPending}
                     placeholder="Enter your password"
                     type={showPassword ? "text" : "password"}
+                    className="form-input bg-[#060911]"
                   />
                 </FormControl>
                 <FormMessage />
@@ -138,9 +140,8 @@ const Register = () => {
                   <Input
                     {...field}
                     disabled={isPending}
-                    className="text-white/80"
-                    placeholder="Enter your name"
-                    type="number"
+                    className="form-input bg-[#060911]"
+                    placeholder="Enter your university number"
                   />
                 </FormControl>
                 <FormMessage />
@@ -161,14 +162,14 @@ const Register = () => {
             )}
           />
           <p className="text-white/80">{error}</p>
-          <Button type="submit" className="w-full text-white/80 " >
+          <Button type="submit" className="w-full text-white/80 cursor-pointer" >
             Sign Up
           </Button>
         </form>
       </Form>
-      <p className="text-center text-base font-medium">
+      <p className="text-center text-base font-medium text-white/60">
       Already have an BookWise? 
-      <a className="font-bold text-primary" href="/auth/login"> Sign In </a>
+      <a className="font-bold text-white/80" href="/auth/login"> Sign In </a>
       </p>
     </div>
   );

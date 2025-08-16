@@ -104,12 +104,12 @@ export const ImageUpload = ({ ...rest }: any) => {
         ref={fileInputRef} 
         accept="image/*" 
         onChange={() => handleFileChange({ onChange: rest.field.onChange })}
-        className="file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:bg-primary file:text-primary-foreground hover:file:bg-primary/80 "
+        className="file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:bg-primary file:text-white hover:file:bg-primary/80 text-white"
       />
        {uploadProgress > 0 && uploadProgress < 100 && (
         <Progress value={uploadProgress} className="w-full bg-white" />
       )}
-      {uploadStatus && <p className="text-sm text-muted-foreground">{uploadStatus}</p>}
+      {uploadStatus && <p className="text-sm text-white/70">{uploadStatus}</p>}
 
       {uploadedImageUrl && (
         <ImageKitProvider urlEndpoint={imageKitEndpoint}>
@@ -118,7 +118,6 @@ export const ImageUpload = ({ ...rest }: any) => {
             alt="Uploaded Image"
             width={800}
             height={400}
-            // transformation={[{ height: '200', width: '200', crop: 'force' }]}
             className="rounded-md"
           />
         </ImageKitProvider>
