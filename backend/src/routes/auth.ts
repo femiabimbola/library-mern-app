@@ -1,5 +1,5 @@
 import { Request, NextFunction, Router } from "express";
-import { createUser, loginUser, PassportLocal, } from "../controller/auth";
+import { createUser,  PassportLocal, } from "../controller/auth";
 import { validateSignUp, validateSignIn } from "../middleware/authValidation";
 import { rateLimiter } from "../middleware/ratelimit";
 import "../lib/passportStrategy/localStrategy"
