@@ -14,6 +14,7 @@ import { useForm } from "react-hook-form";
 import { Input } from "../ui/input";
 import { useState, useTransition } from "react";
 import { Button } from "../ui/button";
+import axios from "axios";
 
 export const LogInSchema = z.object({
   email: z.string().email(),
@@ -23,6 +24,7 @@ export const LogInSchema = z.object({
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isPending, startTransition] = useTransition();
+  const [error, setError] = useState<string | undefined>("");
 
 
   const form = useForm<z.infer<typeof LogInSchema>>({
@@ -35,6 +37,15 @@ const Login = () => {
 
   const onSubmit = (values: z.infer<typeof LogInSchema>) => {
     console.log(values);
+    setError("");
+    startTransition(async() => {
+      try {
+        const {data} = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/login`, values)
+        console.log(data)
+      } catch (error:any) {
+        setError(error.response.data.message)
+      }
+    })
   };
 
   return (
@@ -58,8 +69,9 @@ const Login = () => {
                   <Input
                     {...field}
                     // disabled={isPending}
-                    className="form-input"
+                    className="form-input bg-[#060911]"
                     placeholder="Enter your email address"
+                    type=""
                   />
                 </FormControl>
                 <FormMessage />
@@ -78,6 +90,7 @@ const Login = () => {
                     // disabled={isPending}
                     placeholder="Enter your password"
                     type={showPassword ? "text" : "password"}
+                    className="form-input bg-[#060911]"
                   />
                 </FormControl>
                 <FormMessage />
@@ -85,12 +98,12 @@ const Login = () => {
             )}
           />
 
-          <Button type="submit" className="w-full">
+          <Button type="submit" className="w-full cursor-pointer">
             Log In
           </Button>
         </form>
       </Form>
-      <p className="text-center text-base font-medium">
+      <p className="text-center font-medium text-white/60">
       New to BookWise? 
       <a className="font-bold" href="/auth/register"> Create an account </a>
       </p>
