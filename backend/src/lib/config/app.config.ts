@@ -21,7 +21,7 @@ export const config = {
 
 
 export const corsOptions = {
-  origin :  "http://localhost:3000",
+  origin :  process.env.FRONTEND_URL,
   credentials: true, //Majorly because of cookies
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization',]

@@ -42,7 +42,7 @@ const Login = () => {
     setError("");
     startTransition(async() => {
       try {
-        const data = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/login`, values, {withCredentials:true})
+        const {data} = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/login`, values, {withCredentials:true})
         console.log(data)
         router.push("/dashboard");
       } catch (error:any) {
