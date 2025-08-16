@@ -18,3 +18,11 @@ export const config = {
   MAILER_SENDER: process.env.MAILER_SENDER,
   RESEND_API_KEY: process.env.RESEND_API_KEY,
 }
+
+
+export const corsOptions = {
+  origin :  "http://localhost:3000",
+  credentials: true, //Majorly because of cookies
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization',]
+}

@@ -5,14 +5,18 @@ import session from "express-session";
 import passport from "passport"
 import cors from "cors";
 import { sessionObject } from "./lib/sessionObject";
+import { corsOptions } from "./lib/config/app.config";
+
 
 
 const app: Express = express();
 const port = process.env.PORT || 5000;
 
+app.use(cors(corsOptions))
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cors())
+
+
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 

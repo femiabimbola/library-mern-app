@@ -15,6 +15,7 @@ import { Input } from "../ui/input";
 import { useState, useTransition } from "react";
 import { Button } from "../ui/button";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 export const LogInSchema = z.object({
   email: z.string().email(),
@@ -25,6 +26,7 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | undefined>("");
+  const router = useRouter();
 
 
   const form = useForm<z.infer<typeof LogInSchema>>({
@@ -40,8 +42,9 @@ const Login = () => {
     setError("");
     startTransition(async() => {
       try {
-        const {data} = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/login`, values)
+        const data = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/login`, values, {withCredentials:true})
         console.log(data)
+        router.push("/dashboard");
       } catch (error:any) {
         setError(error.response.data.message)
       }
@@ -68,7 +71,7 @@ const Login = () => {
                 <FormControl>
                   <Input
                     {...field}
-                    // disabled={isPending}
+                    disabled={isPending}
                     className="form-input bg-[#060911]"
                     placeholder="Enter your email address"
                     type=""
@@ -87,7 +90,7 @@ const Login = () => {
                 <FormControl>
                   <Input
                     {...field}
-                    // disabled={isPending}
+                    disabled={isPending}
                     placeholder="Enter your password"
                     type={showPassword ? "text" : "password"}
                     className="form-input bg-[#060911]"
