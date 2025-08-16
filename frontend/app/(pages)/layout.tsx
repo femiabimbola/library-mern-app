@@ -2,9 +2,9 @@
 import { redirect } from "next/navigation";
 import { ReactNode } from "react";
 
-import "@/styles/admin.css";
-import Sidebar from "@/components/admin/Sidebar";
-import Header from "@/components/admin/Header";
+// import "@/styles/admin.css";
+// import Sidebar from "@/components/admin/Sidebar";
+// import Header from "@/components/admin/Header";
 // import { db } from "@/database/drizzle";
 // import { users } from "@/database/schema";
 // import { eq } from "drizzle-orm";
@@ -24,11 +24,12 @@ const AdminLayout = async ({ children }: { children: ReactNode }) => {
 
   return (
     <main className="flex min-h-screen w-full flex-row">
-      <Sidebar session={session} />
+      {/* <Sidebar session={session} />
       <div className="admin-container">
         <Header session={session} />
         {children}
-      </div>
+      </div> */}
+      {children}
     </main>
   );
 };
