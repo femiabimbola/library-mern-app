@@ -51,3 +51,15 @@ export const PassportLocal = (req: Request, res: Response, next: NextFunction) =
     });
   })(req, res, next);
 };
+
+
+export const logOut = (req: Request, res: Response, next: NextFunction) => {
+  req.logout((err) => {
+    if (err) {
+      return res.status(500).json({ message: 'Logout failed' });
+    }
+    req.session.destroy(() => {
+      res.status(200).json({ message: 'Logged out successfully' });
+    });
+  });
+}

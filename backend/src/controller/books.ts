@@ -41,7 +41,7 @@ export const createBooks = async (
       })
       .returning();  //it returns the book
 
-      res.status(201).json({success: true,data: newBook[0]});
+      return res.status(201).json({success: true,data: newBook[0]});
   } catch (error) {
     console.error('Error creating book:', error);
     res.status(500).json({

@@ -2,10 +2,11 @@ import passport from 'passport'
 import { Strategy } from 'passport-local'
 import bcrypt from "bcryptjs"
 import { findAUserByEmail, findAUserByID } from '../../database/model'
+import {AppUser, Role } from '../../../types/express'
 
 
 // The serialize function create the user object and stores it in the session.it get called during user sign in
-passport.serializeUser((user:any, done) => {
+passport.serializeUser((user: any, done) => {
   done(null, user.id)
 })
 

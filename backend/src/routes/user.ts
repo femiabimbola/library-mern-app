@@ -1,8 +1,9 @@
-import { Request, NextFunction, Router } from "express";
-import { getUser } from "../controller/user";
+import {  Router } from "express";
+import { getUser, isAuthenticated } from "../controller/user";
+
 
 const router = Router();
 
-router.post('/user', getUser );
+router.get('/user',  getUser );
 
-export default router
+export default router;
