@@ -1,14 +1,14 @@
 "use client";
 
 import Image from "next/image";
-import { adminSideBarLinks } from "@/constants";
+import { adminSideBarLinks } from "@/lib/constants";
 import Link from "next/link";
 import { cn, getInitials } from "@/lib/utils";
 import { usePathname } from "next/navigation";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
-
-const Sidebar = ({ session }: { session: Session }) => {
+// const Sidebar = ({ session }: { session: Session }) => {
+const Sidebar = ({ user }: { user: any }) => {
   const pathname = usePathname();
 
   return (
@@ -26,15 +26,18 @@ const Sidebar = ({ session }: { session: Session }) => {
 
         <div className="mt-10 flex flex-col gap-5">
           {adminSideBarLinks.map((link) => {
-            const isSelected =(link.route !== "/admin" &&
-                pathname.includes(link.route) && link.route.length > 1) ||
+            const isSelected =
+              (link.route !== "/admin" &&
+                pathname.includes(link.route) &&
+                link.route.length > 1) ||
               pathname === link.route;
 
             return (
               <Link href={link.route} key={link.route}>
                 <div
                   className={cn(
-                    "link", isSelected && "bg-primary-admin shadow-sm",
+                    "link",
+                    isSelected && "bg-primary-admin shadow-sm"
                   )}
                 >
                   <div className="relative size-5">
@@ -43,7 +46,9 @@ const Sidebar = ({ session }: { session: Session }) => {
                       alt="icon"
                       fill
                       // This invert the color of the icon
-                      className={`${isSelected ? "brightness-0 invert" : ""}  object-contain`}
+                      className={`${
+                        isSelected ? "brightness-0 invert" : ""
+                      }  object-contain`}
                     />
                   </div>
 
@@ -60,13 +65,13 @@ const Sidebar = ({ session }: { session: Session }) => {
       <div className="user">
         <Avatar>
           <AvatarFallback className="bg-amber-100">
-            {getInitials(session?.user?.name || "IN")}
+            {getInitials(user?.user?.name || "IN")}
           </AvatarFallback>
         </Avatar>
 
         <div className="flex flex-col max-md:hidden">
-          <p className="font-semibold text-dark-200">{session?.user?.name}</p>
-          <p className="text-xs text-light-500">{session?.user?.email}</p>
+          <p className="font-semibold text-dark-200">{user?.name}</p>
+          <p className="text-xs text-light-500">{user?.email}</p>
         </div>
       </div>
     </div>

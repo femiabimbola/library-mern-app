@@ -20,7 +20,7 @@ const fetcher = async (url: string) => {
   return res.json();
 };
 
-const UserLayout = async ({ children }: { children: ReactNode }) => {
+const UserLayout = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
   const { data, error, isLoading } = useSWR(
     "http://localhost:5000/api/user",
@@ -56,10 +56,9 @@ const UserLayout = async ({ children }: { children: ReactNode }) => {
 
   return (
     <main className="flex min-h-screen w-full flex-row">
-      <Sidebar session={user} />
+      <Sidebar user={user} />
       <div className="admin-container">
         {/* <Header session={session} /> */}
-        {children}
       </div>
       {children}
     </main>
