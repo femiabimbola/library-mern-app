@@ -10,3 +10,6 @@ frontend/package-lock.json
 frontend/next-env.d.ts
 frontend/.next
 frontend/.env.local
+
+
+.vscode

@@ -12,7 +12,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Input } from "../ui/input";
-import { useState, useTransition } from "react";
+import { useState} from "react";
 import useSWRMutation from "swr/mutation";
 import { Button } from "../ui/button";
 import axios from "axios";
@@ -30,7 +30,6 @@ const loginFetcher = async (url: string, { arg }: { arg: z.infer<typeof LogInSch
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | undefined>("");
   const router = useRouter();
 
@@ -44,23 +43,9 @@ const Login = () => {
   });
 
   const { trigger, isMutating, error: swrError } = useSWRMutation(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/login`,
-    loginFetcher
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/login`,  loginFetcher
   );
 
-  // const onSubmit = (values: z.infer<typeof LogInSchema>) => {
-  //   console.log(values);
-  //   setError("");
-  //   startTransition(async() => {
-  //     try {
-  //       const {data} = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/login`, values, {withCredentials:true})
-  //       console.log(data)
-  //       router.push("/dashboard");
-  //     } catch (error:any) {
-  //       setError(error.response.data.message)
-  //     }
-  //   })
-  // };
 
   const onSubmit = async (values: z.infer<typeof LogInSchema>) => {
     setError("");
@@ -97,7 +82,7 @@ const Login = () => {
                 <FormControl>
                   <Input
                     {...field}
-                    disabled={isPending}
+                    disabled={isMutating}
                     className="form-input bg-[#060911]"
                     placeholder="Enter your email address"
                     type=""
@@ -116,7 +101,7 @@ const Login = () => {
                 <FormControl>
                   <Input
                     {...field}
-                    disabled={isPending}
+                    disabled={isMutating}
                     placeholder="Enter your password"
                     type={showPassword ? "text" : "password"}
                     className="form-input bg-[#060911]"
@@ -126,13 +111,14 @@ const Login = () => {
               </FormItem>
             )}
           />
-          {error && <p style={{ color: "red" }}>{error}</p>}
+          {/* {error && <p style={{ color: "red" }}>{error}</p>} */}
+          {error && <p className="text-red-800 text-center">{error}</p>}
           <Button type="submit" className="w-full cursor-pointer" disabled={isMutating}>
           {isMutating ? "Logging in..." : "Log In"}
           </Button>
         </form>
       </Form>
-      <p className="text-center font-medium text-white/60">
+      <p className="text-center font-medium text-white">
       New to BookWise? 
       <a className="font-bold" href="/auth/register"> Create an account </a>
       </p>
