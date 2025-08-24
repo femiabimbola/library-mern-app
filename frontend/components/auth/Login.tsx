@@ -13,6 +13,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Input } from "../ui/input";
 import { useState, useTransition } from "react";
+import useSWRMutation from "swr/mutation";
 import { Button } from "../ui/button";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -21,6 +22,11 @@ export const LogInSchema = z.object({
   email: z.string().email(),
   password: z.string().min(8),
 });
+
+const loginFetcher = async (url: string, { arg }: { arg: z.infer<typeof LogInSchema> }) => {
+  const response = await axios.post(url, arg, { withCredentials: true });
+  return response.data;
+};
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -37,19 +43,39 @@ const Login = () => {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof LogInSchema>) => {
-    console.log(values);
+  const { trigger, isMutating, error: swrError } = useSWRMutation(
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/login`,
+    loginFetcher
+  );
+
+  // const onSubmit = (values: z.infer<typeof LogInSchema>) => {
+  //   console.log(values);
+  //   setError("");
+  //   startTransition(async() => {
+  //     try {
+  //       const {data} = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/login`, values, {withCredentials:true})
+  //       console.log(data)
+  //       router.push("/dashboard");
+  //     } catch (error:any) {
+  //       setError(error.response.data.message)
+  //     }
+  //   })
+  // };
+
+  const onSubmit = async (values: z.infer<typeof LogInSchema>) => {
     setError("");
-    startTransition(async() => {
-      try {
-        const {data} = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/login`, values, {withCredentials:true})
-        console.log(data)
-        router.push("/dashboard");
-      } catch (error:any) {
-        setError(error.response.data.message)
-      }
-    })
-  };
+    try {
+      const data = await trigger(values);
+      console.log("Login response:", data);
+      router.push("/dashboard");
+    } catch (error: any) {
+      const errorMessage =
+        error?.response?.data?.message || swrError?.message || "An unexpected error occurred";
+      setError(errorMessage);
+      console.error("Login error:", error);
+    }
+  }
+
 
   return (
     <div className="flex flex-col gap-4">
@@ -100,9 +126,9 @@ const Login = () => {
               </FormItem>
             )}
           />
-
-          <Button type="submit" className="w-full cursor-pointer">
-            Log In
+          {error && <p style={{ color: "red" }}>{error}</p>}
+          <Button type="submit" className="w-full cursor-pointer" disabled={isMutating}>
+          {isMutating ? "Logging in..." : "Log In"}
           </Button>
         </form>
       </Form>
