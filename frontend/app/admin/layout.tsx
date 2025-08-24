@@ -1,5 +1,3 @@
 const AdminLayout = () => {
-  return (
-    <div> Admin Lagout</div>
-  )
-}
+  return <div> Admin Layout</div>;
+};
