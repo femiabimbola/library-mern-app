@@ -7,7 +7,6 @@ import { cn, getInitials } from "@/lib/utils";
 import { usePathname } from "next/navigation";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
-// const Sidebar = ({ session }: { session: Session }) => {
 const Sidebar = ({ user }: { user: any }) => {
   const pathname = usePathname();
 
