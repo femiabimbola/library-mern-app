@@ -1,7 +1,7 @@
 "use client";
 
-import Header from "@/components/Header";
 import Sidebar from "@/components/user/Sidebar";
+import Header from "@/components/user/Header";
 import { useRouter } from "next/navigation";
 import { ReactNode, useEffect } from "react";
 import useSWR from "swr";
@@ -18,7 +18,7 @@ const fetcher = async (url: string) => {
 const UserLayout = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
   const { data, error, isLoading } = useSWR(
-    "http://localhost:5000/api/user",
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/user`,
     fetcher
   );
 
@@ -42,7 +42,7 @@ const UserLayout = ({ children }: { children: ReactNode }) => {
     <main className="flex min-h-screen w-full flex-row">
       <Sidebar user={user} />
       <div className="admin-container">
-        {/* <Header session={session} /> */}
+        <Header user={user} />
       </div>
       {/* {children} */}
     </main>
