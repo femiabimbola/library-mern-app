@@ -64,7 +64,7 @@ const Sidebar = ({ user }: { user: any }) => {
       <div className="user">
         <Avatar>
           <AvatarFallback className="bg-amber-100">
-            {getInitials(user?.user?.name || "IN")}
+            {getInitials(user?.name || "U")}
           </AvatarFallback>
         </Avatar>
 

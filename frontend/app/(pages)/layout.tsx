@@ -42,6 +42,7 @@ const UserLayout = ({ children }: { children: ReactNode }) => {
     <main className="flex min-h-screen w-full flex-row">
       <Sidebar user={user} />
       <div className="admin-container">
+        {/* <Header user={user} /> */}
         <Header user={user} />
       </div>
       {/* {children} */}
