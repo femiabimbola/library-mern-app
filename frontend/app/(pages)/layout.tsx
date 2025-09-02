@@ -17,10 +17,7 @@ const fetcher = async (url: string) => {
 
 const UserLayout = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
-  const { data, error, isLoading } = useSWR(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/user`,
-    fetcher
-  );
+  const { data, error, isLoading } = useSWR(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/user`, fetcher);
 
   useEffect(() => {
     if (error) {
@@ -42,10 +39,9 @@ const UserLayout = ({ children }: { children: ReactNode }) => {
     <main className="flex min-h-screen w-full flex-row">
       <Sidebar user={user} />
       <div className="admin-container">
-        {/* <Header user={user} /> */}
         <Header user={user} />
+        {children}
       </div>
-      {/* {children} */}
     </main>
   );
 };
