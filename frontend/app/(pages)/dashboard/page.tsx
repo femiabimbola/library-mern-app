@@ -6,68 +6,53 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Loader2 } from "lucide-react";
+import useSWR from "swr";
+import { useRouter } from "next/navigation";
 // import { useToast } from "@/components/ui/use-toast";
 
-interface AppUser {
-  id: string;
-  fullName: string;
-  email: string;
-  universityId: string;
-  universityCard: string;
-  role: string;
-  lastActivityDate: string;
-  createdAt: string;
-}
+// interface AppUser {
+//   id: string;
+//   fullName: string;
+//   email: string;
+//   universityId: string;
+//   universityCard: string;
+//   role: string;
+//   lastActivityDate: string;
+//   createdAt: string;
+// }
+
+// Fetcher function for SWR
+const fetcher = async (url: string) => {
+  const res = await fetch(url, { credentials: "include" });
+  if (!res.ok) {
+    throw new Error("Failed to fetch user data");
+  }
+  return res.json();
+};
 
 export default function Dashboard() {
-  const [user, setUser] = useState<AppUser | null>(null);
-  const [loading, setLoading] = useState(true);
-  // const { toast } = useToast();
+  const router = useRouter();
+  const { data, error, isLoading } = useSWR(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/user`, fetcher);
 
-  useEffect(
-    () => {
-      const fetchUser = async () => {
-        try {
-          const response = await fetch("/api/user", {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              // Add authorization header if needed, e.g., Bearer token
-              // 'Authorization': `Bearer ${token}`,
-            },
-          });
+  useEffect(() => {
+    if (error) {
+      router.push("/auth/login"); // Redirect to login page if not authenticated
+    }
+  }, [error, router]);
 
-          if (!response.ok) {
-            throw new Error("Failed to fetch user data");
-          }
-
-          const data = await response.json();
-          setUser(data.user);
-        } catch (error) {
-          // toast({
-          //   variant: "destructive",
-          //   title: "Error",
-          //   description: "Failed to load user data. Please try again.",
-          // });
-        } finally {
-          setLoading(false);
-        }
-      };
-
-      fetchUser();
-    },
-    [
-      // toast
-    ]
-  );
-
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="flex items-center justify-center h-screen">
         <Loader2 className="h-8 w-8 animate-spin" />
       </div>
     );
   }
+
+  if (!data || !data.user) {
+    return null; // Redirect will handle this
+  }
+
+  const user = data.user;
 
   if (!user) {
     return (
