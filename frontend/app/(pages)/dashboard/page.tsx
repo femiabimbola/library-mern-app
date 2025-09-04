@@ -12,6 +12,7 @@ import useSWR from "swr";
 import { format } from "date-fns";
 import { ErrorBoundary } from "react-error-boundary";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useUserStore } from "@/store/userStore";
 
 interface AppUser {
   id: string;
@@ -51,11 +52,12 @@ const ErrorFallback = ({ error }: { error: Error }) => {
 
 export default function Dashboard() {
   const router = useRouter();
-  const { data, error, isLoading } = useSWR<UserResponse, Error>(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/user`,
-    fetcher,
-    { revalidateOnFocus: false }
-  );
+  const { user, isLoading, error } = useUserStore();
+  // const { data, error, isLoading } = useSWR<UserResponse, Error>(
+  //   `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/user`,
+  //   fetcher,
+  //   { revalidateOnFocus: false }
+  // );
 
   useEffect(() => {
     if (error) {
@@ -97,11 +99,9 @@ export default function Dashboard() {
     );
   }
 
-  if (!data || !data.user) {
-    return null; // Redirect handled by useEffect
+  if (!user) {
+    return null; // Redirect will handle this
   }
-
-  const user = data.user;
 
   return (
     <ErrorBoundary FallbackComponent={ErrorFallback}>
