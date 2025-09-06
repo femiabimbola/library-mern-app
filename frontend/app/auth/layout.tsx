@@ -6,15 +6,29 @@ import { useUserStore } from "@/store/userStore";
 import { useRouter } from "next/navigation";
 
 const AuthLayout = ({ children }: { children: ReactNode }) => {
-  const { user } = useUserStore();
+  const { user, isLoading, fetchUser } = useUserStore();
   const router = useRouter();
-  console.log(user);
+
+  // useEffect(() => {
+  //   fetchUser(); // Fetch user data on mount
+  // }, [fetchUser]);
+
+  // useEffect(() => {
+  //   if (!isLoading && user) {
+  //     router.push("/dashboard"); // Redirect to dashboard if user is authenticated
+  //   }
+  // }, [user, isLoading, router]);
 
   useEffect(() => {
     if (user) {
-      router.push("/dashboard");
+      router.push("/dashboard"); // Redirect to dashboard if user is authenticated
     }
   }, [user, router]);
+
+  // Show loading state while fetching user data
+  // if (isLoading) {
+  //   return <div>Loading...</div>;
+  // }
 
   return (
     <main className="relative flex flex-col-reverse text-light-100 sm:flex-row">

@@ -15,8 +15,8 @@ const UserLayout = ({ children }: { children: ReactNode }) => {
   }, [fetchUser]);
 
   useEffect(() => {
-    if (error) {
-      router.push("/auth/login"); // Redirect to login page if not authenticated
+    if (error || user) {
+      return router.push("/auth/login"); // Redirect will handle this
     }
   }, [error, router]);
 
@@ -24,9 +24,6 @@ const UserLayout = ({ children }: { children: ReactNode }) => {
     return <div>Loading...</div>;
   }
 
-  if (!user) {
-    return null; // Redirect will handle this
-  }
 
   return (
     <main className="flex min-h-screen w-full flex-row">
