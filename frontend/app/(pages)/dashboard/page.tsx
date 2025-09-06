@@ -29,15 +29,6 @@ interface UserResponse {
   user: AppUser;
 }
 
-// Fetcher function for SWR
-const fetcher = async (url: string): Promise<UserResponse> => {
-  const res = await fetch(url, { credentials: "include" });
-  if (!res.ok) {
-    throw new Error("Failed to fetch user data");
-  }
-  return res.json();
-};
-
 // Error fallback component
 const ErrorFallback = ({ error }: { error: Error }) => {
   return (
@@ -53,11 +44,6 @@ const ErrorFallback = ({ error }: { error: Error }) => {
 export default function Dashboard() {
   const router = useRouter();
   const { user, isLoading, error } = useUserStore();
-  // const { data, error, isLoading } = useSWR<UserResponse, Error>(
-  //   `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/user`,
-  //   fetcher,
-  //   { revalidateOnFocus: false }
-  // );
 
   useEffect(() => {
     if (error) {

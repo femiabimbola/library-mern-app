@@ -1,7 +1,21 @@
-import Image from "next/image";
-import { ReactNode } from "react";
+"use client";
 
-const AuthLayout = async ({ children }: { children: ReactNode }) => {
+import Image from "next/image";
+import { ReactNode, useEffect } from "react";
+import { useUserStore } from "@/store/userStore";
+import { useRouter } from "next/navigation";
+
+const AuthLayout = ({ children }: { children: ReactNode }) => {
+  const { user } = useUserStore();
+  const router = useRouter();
+  console.log(user);
+
+  useEffect(() => {
+    if (user) {
+      router.push("/dashboard");
+    }
+  }, [user, router]);
+
   return (
     <main className="relative flex flex-col-reverse text-light-100 sm:flex-row">
       <section className="my-auto flex h-full min-h-screen flex-1 items-center bg-pattern bg-cover bg-top bg-dark-100 px-5 py-10">
