@@ -4,13 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import {
-  Form,  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
 import { Textarea } from "@/components/ui/textarea";
@@ -24,7 +18,6 @@ interface Props extends Partial<Book> {
   type?: "create" | "update";
 }
 
-
 export const bookSchema = z.object({
   title: z.string().trim().min(2).max(100),
   description: z.string().trim().min(10).max(1000),
@@ -33,7 +26,7 @@ export const bookSchema = z.object({
   rating: z.coerce.number().min(1).max(5),
   totalCopies: z.coerce.number().int().positive().lte(10000),
   coverUrl: z.string(),
-  coverColor: z 
+  coverColor: z
     .string()
     .trim()
     .regex(/^#[0-9A-F]{6}$/i),
@@ -49,7 +42,7 @@ const BookForm = ({ type, ...book }: Props) => {
     resolver: zodResolver(bookSchema),
     defaultValues: {
       title: "",
-      description: "", 
+      description: "",
       author: "",
       genre: "",
       rating: 1,
@@ -62,23 +55,7 @@ const BookForm = ({ type, ...book }: Props) => {
   });
 
   const onSubmit = async (values: z.infer<typeof bookSchema>) => {
-    console.log(values)
-    // const result = await createBook(values);
-
-    // if (result.success) {
-    //   toast({
-    //     title: "Success",
-    //     description: "Book created successfully",
-    //   });
-
-    //   router.push(` /books/${result.data.id}`);
-    // } else {
-    //   toast({
-    //     title: "Error",
-    //     description: result.message,
-    //     variant: "destructive",
-    //   });
-    // }
+    console.log(values);
   };
 
   return (
@@ -89,16 +66,9 @@ const BookForm = ({ type, ...book }: Props) => {
           name={"title"}
           render={({ field }) => (
             <FormItem className="flex flex-col gap-1">
-              <FormLabel className="text-base font-normal text-dark-500">
-                Book Title
-              </FormLabel>
+              <FormLabel className="text-base font-normal text-dark-500">Book Title</FormLabel>
               <FormControl>
-                <Input
-                  required
-                  placeholder="Book title"
-                  {...field}
-                  className="book-form_input"
-                />
+                <Input required placeholder="Book title" {...field} className="book-form_input" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -109,16 +79,9 @@ const BookForm = ({ type, ...book }: Props) => {
           name={"author"}
           render={({ field }) => (
             <FormItem className="flex flex-col gap-1">
-              <FormLabel className="text-base font-normal text-dark-500">
-                Author
-              </FormLabel>
+              <FormLabel className="text-base font-normal text-dark-500">Author</FormLabel>
               <FormControl>
-                <Input
-                  required
-                  placeholder="Book author"
-                  {...field}
-                  className="book-form_input"
-                />
+                <Input required placeholder="Book author" {...field} className="book-form_input" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -129,16 +92,9 @@ const BookForm = ({ type, ...book }: Props) => {
           name={"genre"}
           render={({ field }) => (
             <FormItem className="flex flex-col gap-1">
-              <FormLabel className="text-base font-normal text-dark-500">
-                Genre
-              </FormLabel>
+              <FormLabel className="text-base font-normal text-dark-500">Genre</FormLabel>
               <FormControl>
-                <Input
-                  required
-                  placeholder="Book genre"
-                  {...field}
-                  className="book-form_input"
-                />
+                <Input required placeholder="Book genre" {...field} className="book-form_input" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -150,18 +106,9 @@ const BookForm = ({ type, ...book }: Props) => {
           name={"rating"}
           render={({ field }) => (
             <FormItem className="flex flex-col gap-1">
-              <FormLabel className="text-base font-normal text-dark-500">
-                Rating
-              </FormLabel>
+              <FormLabel className="text-base font-normal text-dark-500">Rating</FormLabel>
               <FormControl>
-                <Input
-                  type="number"
-                  min={1}
-                  max={5}
-                  placeholder="Book rating"
-                  {...field}
-                  className="book-form_input"
-                />
+                <Input type="number" min={1} max={5} placeholder="Book rating" {...field} className="book-form_input" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -173,9 +120,7 @@ const BookForm = ({ type, ...book }: Props) => {
           name={"totalCopies"}
           render={({ field }) => (
             <FormItem className="flex flex-col gap-1">
-              <FormLabel className="text-base font-normal text-dark-500">
-                Total Copies
-              </FormLabel>
+              <FormLabel className="text-base font-normal text-dark-500">Total Copies</FormLabel>
               <FormControl>
                 <Input
                   type="number"
@@ -196,9 +141,7 @@ const BookForm = ({ type, ...book }: Props) => {
           name={"coverUrl"}
           render={({ field }) => (
             <FormItem className="flex flex-col gap-1">
-              <FormLabel className="text-base font-normal text-dark-500">
-                Book Image
-              </FormLabel>
+              <FormLabel className="text-base font-normal text-dark-500">Book Image</FormLabel>
               <FormControl>
                 <FileUpload
                   type="image"
@@ -219,14 +162,9 @@ const BookForm = ({ type, ...book }: Props) => {
           name={"coverColor"}
           render={({ field }) => (
             <FormItem className="flex flex-col gap-1">
-              <FormLabel className="text-base font-normal text-dark-500">
-                Primary Color
-              </FormLabel>
+              <FormLabel className="text-base font-normal text-dark-500">Primary Color</FormLabel>
               <FormControl>
-                <ColorPicker
-                  onPickerChange={field.onChange}
-                  value={field.value}
-                />
+                <ColorPicker onPickerChange={field.onChange} value={field.value} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -237,16 +175,9 @@ const BookForm = ({ type, ...book }: Props) => {
           name={"description"}
           render={({ field }) => (
             <FormItem className="flex flex-col gap-1">
-              <FormLabel className="text-base font-normal text-dark-500">
-                Book Description
-              </FormLabel>
+              <FormLabel className="text-base font-normal text-dark-500">Book Description</FormLabel>
               <FormControl>
-                <Textarea
-                  placeholder="Book description"
-                  {...field}
-                  rows={10}
-                  className="book-form_input"
-                />
+                <Textarea placeholder="Book description" {...field} rows={10} className="book-form_input" />
               </FormControl>
 
               <FormMessage />
@@ -259,9 +190,7 @@ const BookForm = ({ type, ...book }: Props) => {
           name={"videoUrl"}
           render={({ field }) => (
             <FormItem className="flex flex-col gap-1">
-              <FormLabel className="text-base font-normal text-dark-500">
-                Book Trailer
-              </FormLabel>
+              <FormLabel className="text-base font-normal text-dark-500">Book Trailer</FormLabel>
               <FormControl>
                 <FileUpload
                   type="video"
@@ -282,16 +211,9 @@ const BookForm = ({ type, ...book }: Props) => {
           name={"summary"}
           render={({ field }) => (
             <FormItem className="flex flex-col gap-1">
-              <FormLabel className="text-base font-normal text-dark-500">
-                Book Summary
-              </FormLabel>
+              <FormLabel className="text-base font-normal text-dark-500">Book Summary</FormLabel>
               <FormControl>
-                <Textarea
-                  placeholder="Book summary"
-                  {...field}
-                  rows={5}
-                  className="book-form_input"
-                />
+                <Textarea placeholder="Book summary" {...field} rows={5} className="book-form_input" />
               </FormControl>
 
               <FormMessage />

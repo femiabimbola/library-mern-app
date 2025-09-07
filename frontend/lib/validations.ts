@@ -8,7 +8,8 @@ export const bookSchema = z.object({
   rating: z.coerce.number().min(1).max(5),
   // coerce turns into number and  lower than
   totalCopies: z.coerce.number().int().positive().lte(10000),
-  coverUrl: z.string().nonempty(),
+  // coverUrl: z.string().nonempty(),
+  coverUrl: z.string(),
   coverColor: z
     .string()
     .trim()

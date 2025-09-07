@@ -19,11 +19,11 @@ const AuthLayout = ({ children }: { children: ReactNode }) => {
   //   }
   // }, [user, isLoading, router]);
 
-  useEffect(() => {
-    if (user) {
-      router.push("/dashboard"); // Redirect to dashboard if user is authenticated
-    }
-  }, [user, router]);
+  // useEffect(() => {
+  //   if (user) {
+  //     router.push("/dashboard"); // Redirect to dashboard if user is authenticated
+  //   }
+  // }, [user, router]);
 
   return (
     <main className="relative flex flex-col-reverse text-light-100 sm:flex-row">
