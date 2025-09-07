@@ -11,7 +11,7 @@ import { bookSchema } from "@/lib/validations";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import FileUpload from "@/components/FileUpload";
-import ColorPicker from "@/components/admin/ColorPicker";
+// import ColorPicker from "@/components/admin/ColorPicker";
 
 interface Props extends Partial<Book> {
   type?: "create" | "update";
@@ -38,22 +38,6 @@ const BookForm = ({ type, ...book }: Props) => {
 
   const onSubmit = async (values: z.infer<typeof bookSchema>) => {
     console.log(values);
-    const result = await createBook(values);
-
-    if (result.success) {
-      toast({
-        title: "Success",
-        description: "Book created successfully",
-      });
-
-      router.push(` /books/${result.data.id}`);
-    } else {
-      toast({
-        title: "Error",
-        description: result.message,
-        variant: "destructive",
-      });
-    }
   };
 
   return (
@@ -161,9 +145,9 @@ const BookForm = ({ type, ...book }: Props) => {
           render={({ field }) => (
             <FormItem className="flex flex-col gap-1">
               <FormLabel className="text-base font-normal text-dark-500">Primary Color</FormLabel>
-              <FormControl>
+              {/* <FormControl>
                 <ColorPicker onPickerChange={field.onChange} value={field.value} />
-              </FormControl>
+              </FormControl> */}
               <FormMessage />
             </FormItem>
           )}
