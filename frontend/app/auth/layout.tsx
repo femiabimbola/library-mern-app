@@ -25,11 +25,6 @@ const AuthLayout = ({ children }: { children: ReactNode }) => {
     }
   }, [user, router]);
 
-  // Show loading state while fetching user data
-  // if (isLoading) {
-  //   return <div>Loading...</div>;
-  // }
-
   return (
     <main className="relative flex flex-col-reverse text-light-100 sm:flex-row">
       <section className="my-auto flex h-full min-h-screen flex-1 items-center bg-pattern bg-cover bg-top bg-dark-100 px-5 py-10">
