@@ -14,3 +14,14 @@ interface Book {
   isLoanedBook?: boolean;
   createdAt?: Date | null;
 }
+
+interface AppUser {
+  id: string;
+  fullName: string;
+  email: string;
+  universityId: string;
+  universityCard: string;
+  role: string;
+  lastActivityDate: string;
+  createdAt: string;
+}
