@@ -3,7 +3,7 @@
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
 // import { User } from '@/types/user'; // Assuming you have a User type defined
 
@@ -11,9 +11,7 @@ import { cn } from "@/lib/utils";
 const getInitials = (name: string) => {
   if (!name) return "U";
   const names = name.trim().split(" ");
-  return names.length > 1
-    ? `${names[0][0]}${names[names.length - 1][0]}`
-    : names[0][0];
+  return names.length > 1 ? `${names[0][0]}${names[names.length - 1][0]}` : names[0][0];
 };
 
 interface HeaderProps {
@@ -27,7 +25,6 @@ const Header = ({ user }: HeaderProps) => {
   const navLinks = [
     { href: "/", label: "Home" },
     { href: "/library", label: "Library" },
-    { href: "/explore", label: "Explore" },
   ];
 
   return (
@@ -45,9 +42,7 @@ const Header = ({ user }: HeaderProps) => {
               className="hover:opacity-80"
               priority
             />
-            <span className="text-lg font-semibold text-gray-900 hidden sm:block">
-              BookWise
-            </span>
+            <span className="text-lg font-semibold text-gray-900 hidden sm:block">BookWise</span>
           </Link>
 
           {/* Navigation Links */}
@@ -59,9 +54,7 @@ const Header = ({ user }: HeaderProps) => {
                     href={link.href}
                     className={cn(
                       "text-sm font-medium transition-colors duration-200",
-                      pathname === link.href
-                        ? "text-blue-600"
-                        : "text-gray-600 hover:text-blue-500"
+                      pathname === link.href ? "text-blue-600" : "text-gray-600 hover:text-blue-500"
                     )}
                   >
                     {link.label}
@@ -69,17 +62,17 @@ const Header = ({ user }: HeaderProps) => {
                 </li>
               ))}
             </ul>
-
             {/* User Avatar */}
             <Link href="/my-profile" className="group">
               <Avatar className="h-10 w-10 ring-2 ring-offset-2 ring-gray-200 group-hover:ring-blue-300 transition-all">
+                {/* <AvatarImage src={`https://ui-avatars.com/api/?name=${user.fullName}`} alt={user.fullName} /> */}
                 <AvatarFallback
                   className={cn(
                     "bg-gradient-to-br from-blue-100 to-amber-100 text-gray-800 font-semibold",
                     "group-hover:from-blue-200 group-hover:to-amber-200 transition-all"
                   )}
                 >
-                  {getInitials(user?.name || "")}
+                  {/* {getInitials(user?.name || "")} */}
                 </AvatarFallback>
               </Avatar>
             </Link>

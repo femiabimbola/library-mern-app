@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React from "react";
 import BookCover from "./BookCover";
-import { BorrowBook } from "./BorrowBook";
+// import { BorrowBook } from "./BorrowBook";
 
 import { useUserStore } from "@/store/userStore";
 
@@ -61,7 +61,7 @@ const BookOverview = async ({
 
         <p className="book-description">{description}</p>
 
-        {user && <BorrowBook bookId={id} userId={userId} borrowingEligibility={borrowingEligibility} />}
+        {/* {user && <BorrowBook bookId={id} userId={userId} borrowingEligibility={borrowingEligibility} />} */}
       </div>
 
       <div className="relative flex flex-1 justify-center">
