@@ -164,4 +164,9 @@
   .admin-sidebar .link p {
     @apply text-base font-medium max-md:hidden;
   }
+
+  /* Book List */
+  .book-list {
+    @apply mt-10 flex flex-wrap gap-5 max-xs:justify-between xs:gap-10;
+  }
 }
