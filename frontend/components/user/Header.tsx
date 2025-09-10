@@ -15,8 +15,8 @@ const Header = ({ user }: HeaderProps) => {
   const pathname = usePathname();
 
   const navLinks = [
-    { href: "/", label: "Home" },
-    { href: "/library", label: "Library" },
+    { href: "/", label: "Dashboard" },
+    { href: "/books", label: "Books" },
   ];
 
   return (
