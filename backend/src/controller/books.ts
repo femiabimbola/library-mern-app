@@ -42,17 +42,16 @@ export const createBooks = async (req: Request, res: any, next: NextFunction) =>
   }
 };
 
-export const getAllBooks = async (req: Request, res: Response, next: NextFunction) => {
+export const getAllBooks = async (req: Request, res: Response) => {
   try {
     const allBooks = await db.select().from(books);
-
-    return res.status(200).json({
+    res.status(200).json({
       success: true,
       data: allBooks,
     });
   } catch (error) {
     console.error("Error fetching books:", error);
-    return res.status(500).json({
+    res.status(500).json({
       success: false,
       message: "An error occurred while fetching books",
     });
