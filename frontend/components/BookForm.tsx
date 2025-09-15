@@ -11,6 +11,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import FileUpload from "@/components/FileUpload";
 import ColorPicker from "./ColorPicker";
+import axios from "axios";
+import useSWRMutation from "swr/mutation";
+import { useState } from "react";
 
 interface Props extends Partial<Book> {
   type?: "create" | "update";
@@ -33,8 +36,14 @@ export const bookSchema = z.object({
   summary: z.string().trim().min(10),
 });
 
+const SavedBookFetcher = async (url: string, { arg }: { arg: z.infer<typeof bookSchema> }) => {
+  const response = await axios.post(url, arg, { withCredentials: true });
+  return response.data;
+};
+
 const BookForm = ({ type, ...book }: Props) => {
   const router = useRouter();
+  const [error, setError] = useState<string | undefined>("");
 
   const form = useForm<z.infer<typeof bookSchema>>({
     resolver: zodResolver(bookSchema),
@@ -52,8 +61,23 @@ const BookForm = ({ type, ...book }: Props) => {
     },
   });
 
+  const {
+    trigger,
+    isMutating,
+    error: swrError,
+  } = useSWRMutation(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/book`, SavedBookFetcher);
+
   const onSubmit = async (values: z.infer<typeof bookSchema>) => {
     console.log(values);
+    setError("");
+
+    try {
+      const data = await trigger(values);
+      console.log(data);
+    } catch (error: any) {
+      const errorMessage = error?.response?.data?.message || swrError?.message || "An unexpected error occurred";
+      setError(errorMessage);
+    }
   };
 
   return (

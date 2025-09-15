@@ -7,7 +7,6 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
 
 interface HeaderProps {
-  // user: User | null;
   user: AppUser | null;
 }
 
