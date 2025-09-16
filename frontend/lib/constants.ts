@@ -25,12 +25,12 @@ export const adminSideBarLinks = [
   },
   {
     img: "/icons/admin/book.svg",
-    route: "/admin/books",
+    route: "/books",
     text: "All Books",
   },
   {
     img: "/icons/admin/bookmark.svg",
-    route: "/admin/borrow-records",
+    route: "/borrow-records",
     text: "Borrow Records",
   },
   {

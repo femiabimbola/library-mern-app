@@ -10,7 +10,7 @@ import useSWRMutation from "swr/mutation";
 import { Button } from "../ui/button";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-// import { useUserStore } from "@/store/userStore";
+import { useUserStore } from "@/store/userStore";
 
 export const LogInSchema = z.object({
   email: z.string().email(),
@@ -27,7 +27,6 @@ const Login = () => {
   const [error, setError] = useState<string | undefined>("");
   const router = useRouter();
 
-
   const form = useForm<z.infer<typeof LogInSchema>>({
     resolver: zodResolver(LogInSchema),
     defaultValues: {
@@ -37,7 +36,8 @@ const Login = () => {
   });
 
   const {
-    trigger, isMutating,
+    trigger,
+    isMutating,
     error: swrError,
   } = useSWRMutation(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/login`, loginFetcher);
 

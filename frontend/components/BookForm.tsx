@@ -65,7 +65,7 @@ const BookForm = ({ type, ...book }: Props) => {
     trigger,
     isMutating,
     error: swrError,
-  } = useSWRMutation(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/book`, SavedBookFetcher);
+  } = useSWRMutation(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/books`, SavedBookFetcher);
 
   const onSubmit = async (values: z.infer<typeof bookSchema>) => {
     console.log(values);
@@ -73,7 +73,7 @@ const BookForm = ({ type, ...book }: Props) => {
 
     try {
       const data = await trigger(values);
-      console.log(data);
+      console.log("After trigger", data);
     } catch (error: any) {
       const errorMessage = error?.response?.data?.message || swrError?.message || "An unexpected error occurred";
       setError(errorMessage);
