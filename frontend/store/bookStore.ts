@@ -35,11 +35,15 @@ export const useBookStore = create<BookState>((set) => ({
     set({ isLoading: true, error: null });
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/books`);
+
       if (!response.ok) {
         throw new Error("Failed to fetch books");
       }
       const data = await response.json();
-      set({ books: data.books || [], isLoading: false });
+     
+      // set({ books: data.books || [], isLoading: false });
+      set({ books: data.data || [], isLoading: false })
+      // console.log(books);
     } catch (error) {
       set({ error: error as Error, isLoading: false });
     }
