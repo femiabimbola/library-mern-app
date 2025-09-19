@@ -6,8 +6,8 @@ import dayjs from "dayjs";
 
 // Define the shape of the request body
 interface BorrowBookRequestBody {
-  userId: number;
-  bookId: number;
+  userId: string;
+  bookId: string;
 }
 
 // Express route handler for borrowing a book
