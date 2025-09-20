@@ -47,9 +47,9 @@ export const MediaUpload = ({ field, folder }: MediaUploadProps) => {
     setError("");
 
     // Check file size (1MB = 1,048,576 bytes)
-    const MAX_FILE_SIZE = 1048576;
+    const MAX_FILE_SIZE = 21048576;
     if (file.size > MAX_FILE_SIZE) {
-      setUploadStatus("File size exceeds 1MB limit");
+      setUploadStatus("File size exceeds 21MB limit");
       return;
     }
 
