@@ -27,7 +27,7 @@ const AuthLayout = ({ children }: { children: ReactNode }) => {
 
   return (
     <main className="relative flex flex-col-reverse text-light-100 sm:flex-row">
-      <section className="my-auto flex h-full min-h-screen flex-1 items-center bg-pattern bg-cover bg-top bg-dark-100 px-5 py-10">
+      <section className="my-auto flex h-full min-h-screen flex-1 items-center bg-pattern bg-cover bg-top px-5 py-10">
         <div className="gradient-vertical mx-auto flex max-w-xl flex-col gap-6 rounded-lg p-10">
           <div className="flex flex-row gap-3 m-auto ">
             <Image src="/images/logo/mern.png" alt="logo" width={45} height={45} />
