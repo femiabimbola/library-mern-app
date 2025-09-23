@@ -56,7 +56,6 @@ const Register = () => {
         setError(error.response.data.message);
       }
     });
-    console.log(values);
   };
 
   return (

@@ -24,9 +24,8 @@ const UserLayout = ({ children }: { children: ReactNode }) => {
     return <div>Loading...</div>;
   }
 
-
   return (
-    <main className="flex min-h-screen w-full flex-row">
+    <main className="flex flex-row bg-pattern bg-cover">
       <Sidebar user={user} />
       <div className="admin-container">
         <Header user={user} />

@@ -9,6 +9,8 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import useSWRMutation from "swr/mutation";
 import axios from "axios";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "./ui/form";
+import { Input } from "./ui/input";
 
 // Error fallback component
 const ErrorFallback = ({ error }: { error: Error }) => {
@@ -80,13 +82,44 @@ export const BookForm = () => {
 
   return (
     <ErrorBoundary FallbackComponent={ErrorFallback}>
-      <div className="container mx-auto p-4 space-y-6">
+      <div className="container mx-auto px-6 py-12 space-y-6">
         <Card>
           <CardHeader>
-            <CardTitle>Add Books</CardTitle>
-            <CardDescription>Add more books to the Library</CardDescription>
+            <CardTitle className="text-center text-3xl">Add Books</CardTitle>
+            <CardDescription className="text-center">Add books to the Library</CardDescription>
           </CardHeader>
-          <CardContent className="flex items-center space-x-4"></CardContent>
+          <CardContent className="flex items-center space-x-4">
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                <FormField
+                  control={form.control}
+                  name={"title"}
+                  render={({ field }) => (
+                    <FormItem className="flex flex-col gap-1">
+                      <FormLabel className="text-base font-normal text-dark-500">Book Title</FormLabel>
+                      <FormControl>
+                        <Input required placeholder="Book title" {...field} className="book-form_input" />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name={"author"}
+                  render={({ field }) => (
+                    <FormItem className="flex flex-col gap-1">
+                      <FormLabel className="text-base font-normal text-dark-500">Author</FormLabel>
+                      <FormControl>
+                        <Input required placeholder="Book author" {...field} className="book-form_input" />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </form>
+            </Form>
+          </CardContent>
         </Card>
       </div>
     </ErrorBoundary>
