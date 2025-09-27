@@ -88,9 +88,37 @@ export const BookForm = () => {
             <CardTitle className="text-center text-3xl">Add Books</CardTitle>
             <CardDescription className="text-center">Add books to the Library</CardDescription>
           </CardHeader>
-          <CardContent className="flex items-center space-x-4">
+          <CardContent className="mx-auto">
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                <div className="flex flex-row gap-4">
+                  <FormField
+                    control={form.control}
+                    name={"title"}
+                    render={({ field }) => (
+                      <FormItem className="flex flex-col gap-1">
+                        <FormLabel className="text-base font-normal">Book Title</FormLabel>
+                        <FormControl>
+                          <Input required placeholder="Book title" {...field} className="" />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name={"author"}
+                    render={({ field }) => (
+                      <FormItem className="">
+                        <FormLabel className="text-base font-normal text-dark-500">Author</FormLabel>
+                        <FormControl>
+                          <Input required placeholder="Book author" {...field} className="w-full" />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
                 <FormField
                   control={form.control}
                   name={"title"}
@@ -99,19 +127,6 @@ export const BookForm = () => {
                       <FormLabel className="text-base font-normal text-dark-500">Book Title</FormLabel>
                       <FormControl>
                         <Input required placeholder="Book title" {...field} className="book-form_input" />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name={"author"}
-                  render={({ field }) => (
-                    <FormItem className="flex flex-col gap-1">
-                      <FormLabel className="text-base font-normal text-dark-500">Author</FormLabel>
-                      <FormControl>
-                        <Input required placeholder="Book author" {...field} className="book-form_input" />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
