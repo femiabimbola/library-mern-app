@@ -88,7 +88,7 @@ export const BookForm = () => {
             <CardTitle className="text-center text-3xl">Add Books</CardTitle>
             <CardDescription className="text-center">Add books to the Library</CardDescription>
           </CardHeader>
-          <CardContent className="mx-auto">
+          <CardContent className="px-16">
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                 <div className="flex flex-row gap-4">
@@ -99,7 +99,7 @@ export const BookForm = () => {
                       <FormItem className="flex flex-col gap-1">
                         <FormLabel className="text-base font-normal">Book Title</FormLabel>
                         <FormControl>
-                          <Input required placeholder="Book title" {...field} className="" />
+                          <Input required placeholder="Book title" {...field} className="form_input" />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
