@@ -11,6 +11,8 @@ import useSWRMutation from "swr/mutation";
 import axios from "axios";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "./ui/form";
 import { Input } from "./ui/input";
+import { Button } from "./ui/button";
+import { Textarea } from "./ui/textarea";
 
 // Error fallback component
 const ErrorFallback = ({ error }: { error: Error }) => {
@@ -90,7 +92,7 @@ export const BookForm = () => {
           </CardHeader>
           <CardContent className="px-16">
             <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                 <div className="flex flex-row gap-4">
                   <FormField
                     control={form.control}
@@ -99,7 +101,7 @@ export const BookForm = () => {
                       <FormItem className="flex flex-col gap-1">
                         <FormLabel className="text-base font-normal">Book Title</FormLabel>
                         <FormControl>
-                          <Input required placeholder="Book title" {...field} className="form_input" />
+                          <Input required placeholder="Book title" {...field} className="w-full" />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -132,6 +134,23 @@ export const BookForm = () => {
                     </FormItem>
                   )}
                 />
+                <FormField
+                  control={form.control}
+                  name={"summary"}
+                  render={({ field }) => (
+                    <FormItem className="flex flex-col gap-1">
+                      <FormLabel className="text-base font-normal text-dark-500">Book Summary</FormLabel>
+                      <FormControl>
+                        <Textarea placeholder="Book summary" {...field} rows={5} className="book-form_input" />
+                      </FormControl>
+
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <Button type="submit" className="mx-auto text-white">
+                  Add Book to Library
+                </Button>
               </form>
             </Form>
           </CardContent>
