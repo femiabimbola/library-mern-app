@@ -103,54 +103,13 @@ export const BookForm = () => {
                       <FormItem className="flex flex-col gap-1 w-1/2">
                         <FormLabel className="text-base font-normal">Book Title</FormLabel>
                         <FormControl>
-                          <Input required placeholder="Book title" {...field} className="w-full" />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name={"rating"}
-                    render={({ field }) => (
-                      <FormItem className="flex flex-col gap-1">
-                        <FormLabel className="text-base font-normal text-dark-500">Rating</FormLabel>
-                        <FormControl>
                           <Input
-                            type="number"
-                            min={1}
-                            max={5}
-                            placeholder="Book rating"
+                            required
+                            placeholder="Book title"
                             {...field}
-                            className="book-form_input"
+                            // className="border-1 h-11 focus-visible:ring-0 focus-visible:ring-offset-0 "
+                            className="border-1 h-12 focus-visible:ring-0 focus-visible:border-1"
                           />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={form.control}
-                    name={"coverUrl"}
-                    render={({ field }) => (
-                      <FormItem className="flex flex-col gap-1">
-                        <FormLabel className="text-base font-normal text-dark-500">Book Image</FormLabel>
-                        <FormControl>
-                          <MediaUpload field={field} folder="/libApp/images" />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name={"coverColor"}
-                    render={({ field }) => (
-                      <FormItem className="flex flex-col gap-1">
-                        <FormLabel className="text-base font-normal text-dark-500">Primary Color</FormLabel>
-                        <FormControl>
-                          <ColorPicker onPickerChange={field.onChange} value={field.value} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -163,13 +122,53 @@ export const BookForm = () => {
                       <FormItem className="w-1/2">
                         <FormLabel className="text-base font-normal text-dark-500">Author</FormLabel>
                         <FormControl>
-                          <Input required placeholder="Book author" {...field} className="w-full" />
+                          <Input required placeholder="Book author" {...field} className="input-style" />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name={"rating"}
+                    render={({ field }) => (
+                      <FormItem className="flex flex-col gap-1">
+                        <FormLabel className="text-base font-normal text-dark-500">Rating</FormLabel>
+                        <FormControl>
+                          <Input type="number" min={1} max={5} placeholder="Book rating" {...field} className="" />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
                   />
                 </div>
+                <FormField
+                  control={form.control}
+                  name={"coverUrl"}
+                  render={({ field }) => (
+                    <FormItem className="flex flex-col gap-1">
+                      <FormLabel className="text-base font-normal text-dark-500">Book Image</FormLabel>
+                      <FormControl>
+                        <MediaUpload field={field} folder="/libApp/images" />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name={"coverColor"}
+                  render={({ field }) => (
+                    <FormItem className="flex flex-col gap-1">
+                      <FormLabel className="text-base font-normal text-dark-500">Primary Color</FormLabel>
+                      <FormControl>
+                        <ColorPicker onPickerChange={field.onChange} value={field.value} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
                 <FormField
                   control={form.control}
                   name={"title"}

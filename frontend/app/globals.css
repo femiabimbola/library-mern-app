@@ -134,6 +134,10 @@
   .upload-btn {
     @apply flex min-h-14 w-full items-center justify-center gap-1.5 rounded-md;
   }
+
+  .input-style {
+    @apply border-1 h-12 focus-visible:ring-0 focus-visible:border-1;
+  }
 }
 
 @layer components {
