@@ -40,10 +40,9 @@ export const useBookStore = create<BookState>((set) => ({
         throw new Error("Failed to fetch books");
       }
       const data = await response.json();
-     
+
       // set({ books: data.books || [], isLoading: false });
-      set({ books: data.data || [], isLoading: false })
-      // console.log(books);
+      set({ books: data.data || [], isLoading: false });
     } catch (error) {
       set({ error: error as Error, isLoading: false });
     }
