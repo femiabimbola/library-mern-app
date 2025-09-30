@@ -1,7 +1,7 @@
-"use client";
+import AllBooks from "@/components/AllBooks";
 
 const AllBooksPage = () => {
-  return <div> All books</div>;
+  return <AllBooks />;
 };
 
 export default AllBooksPage;

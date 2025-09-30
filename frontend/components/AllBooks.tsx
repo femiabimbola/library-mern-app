@@ -1,9 +1,11 @@
 "use client";
 
-import { Card, CardDescription, CardTitle } from "./ui/card";
+import { Card, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { ErrorBoundary } from "react-error-boundary";
 import { useEffect } from "react";
 import { useBookStore } from "@/store/bookStore";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+// import ErrorFallback from "./ErrorFallback";
 
 const ErrorFallback = ({ error }: { error: Error }) => {
   return (
@@ -16,6 +18,10 @@ const ErrorFallback = ({ error }: { error: Error }) => {
   );
 };
 
+{
+  /* <ErrorFallback errorMessage={""} />; */
+}
+
 const AllBooks = () => {
   const { books, isLoading, error, fetchBooks } = useBookStore();
 
@@ -26,7 +32,12 @@ const AllBooks = () => {
   console.log(books);
   return (
     <ErrorBoundary FallbackComponent={ErrorFallback}>
-      <Card></Card>
+      <Card className="py-10">
+        <CardHeader>
+          <CardTitle> List of all the books</CardTitle>
+          <CardDescription> These are the lists of your books</CardDescription>
+        </CardHeader>
+      </Card>
     </ErrorBoundary>
   );
 };
