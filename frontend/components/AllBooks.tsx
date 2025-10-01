@@ -14,13 +14,25 @@ const AllBooks = () => {
     fetchBooks();
   }, [fetchBooks]);
 
-  console.log(books);
   return (
     <ErrorBoundary FallbackComponent={ErrorBoundaryAdapter}>
       <Card className="my-10">
         <CardHeader>
           <CardTitle> List of all the books</CardTitle>
           <CardDescription> These are the lists of your books</CardDescription>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="w-[100px]">Invoice</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead>Method</TableHead>
+                <TableHead className="text-right">Amount</TableHead>
+              </TableRow>
+            </TableHeader>
+          </Table>
+          {books.map((book) => (
+            <p key={book.id}>{book.title}</p>
+          ))}
         </CardHeader>
       </Card>
     </ErrorBoundary>
