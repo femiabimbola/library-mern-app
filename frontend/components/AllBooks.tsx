@@ -42,7 +42,9 @@ const AllBooks = () => {
                   <TableCell className="">{book.rating}</TableCell>
                   <TableCell className="">
                     <div className="flex gap-x-2">
-                      <Button className="outline"> Edit</Button>
+                      <Button variant="link" className="pointer">
+                        Edit
+                      </Button>
                       <Button className="outline"> Delete</Button>
                     </div>
                   </TableCell>
