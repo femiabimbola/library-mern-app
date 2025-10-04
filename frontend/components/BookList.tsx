@@ -9,7 +9,6 @@ const BookList = ({ title, books, containerClassName }: BookProps) => {
     <section>
       <ul className="book-list">
         {books.map((book) => (
-          // ...book spreads the property
           // <BookCard key={book.title} {...book} />
           <p>book</p>
         ))}
