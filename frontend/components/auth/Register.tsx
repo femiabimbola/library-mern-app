@@ -6,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Input } from "../ui/input";
 import { useState, useTransition } from "react";
-import { ImageUpload } from "../MediaUploadOld";
+import { ImageUpload } from "../MediaUpload";
 import { MediaUpload } from "../MediaUpload1";
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";

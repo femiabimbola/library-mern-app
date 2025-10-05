@@ -14,7 +14,8 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { Textarea } from "./ui/textarea";
 import ColorPicker from "./ColorPicker";
-import { MediaUpload } from "./MediaUpload1";
+// import { MediaUpload } from "./MediaUpload1";
+import { MediaUpload } from "./MediaUpload";
 
 // Error fallback component
 const ErrorFallback = ({ error }: { error: Error }) => {
@@ -78,6 +79,7 @@ export const BookForm = () => {
   const onSubmit = async (values: z.infer<typeof bookSchema>) => {
     try {
       const data = await trigger(values);
+      form.reset();
     } catch (error: any) {
       const errorMessage = error?.response?.data?.message || swrError?.message || "An unexpected error occurred";
       setError(errorMessage);
@@ -182,7 +184,14 @@ export const BookForm = () => {
                     <FormItem className="flex flex-col gap-1">
                       <FormLabel className="text-base font-normal text-dark-500">Book Image</FormLabel>
                       <FormControl>
-                        <MediaUpload field={field} folder="/libApp/images" />
+                        {/* <MediaUpload field={field} folder="/libApp/images" /> */}
+                        <MediaUpload
+                          field={field}
+                          folder="/libApp/images"
+                          mediaType="image"
+                          previewWidth={1200}
+                          previewHeight={600}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -222,7 +231,14 @@ export const BookForm = () => {
                     <FormItem className="flex flex-col gap-1">
                       <FormLabel className="text-base font-normal text-dark-500">Book Trailer</FormLabel>
                       <FormControl>
-                        <MediaUpload field={field} folder="/libApp/video" />
+                        {/* <MediaUpload field={field} folder="/libApp/video" />  */}
+                        <MediaUpload
+                          field={field}
+                          folder="/libApp/images"
+                          mediaType="video"
+                          previewWidth={1200}
+                          previewHeight={600}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
