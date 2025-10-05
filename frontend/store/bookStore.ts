@@ -16,19 +16,16 @@ interface Book {
 
 interface BookState {
   books: Book[];
-  cart: Book[];
   isLoading: boolean;
   error: Error | null;
   fetchBooks: () => Promise<void>;
   addBook: (book: Book) => void;
-  addToCart: (book: Book) => void;
-  removeFromCart: (id: string) => void;
+  deleteBook: (id: string) => Promise<void>;
   clearBooks: () => void;
 }
 
 export const useBookStore = create<BookState>((set) => ({
   books: [],
-  cart: [],
   isLoading: false,
   error: null,
   fetchBooks: async () => {
@@ -48,7 +45,20 @@ export const useBookStore = create<BookState>((set) => ({
     }
   },
   addBook: (book) => set((state) => ({ books: [...state.books, book] })),
-  addToCart: (book) => set((state) => ({ cart: [...state.cart, book] })),
-  removeFromCart: (id) => set((state) => ({ cart: state.cart.filter((item) => item.id !== id) })),
+  deleteBook: async (id: string) => {
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/books/${id}`, {
+        method: "DELETE",
+      });
+      if (!response.ok) {
+        throw new Error("Failed to delete book");
+      }
+      set((state) => ({
+        books: state.books.filter((book) => book.id !== id),
+      }));
+    } catch (error) {
+      set({ error: error as Error, isLoading: false });
+    }
+  },
   clearBooks: () => set({ books: [], error: null, isLoading: false }),
 }));

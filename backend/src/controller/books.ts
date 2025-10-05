@@ -72,6 +72,15 @@ export const deleteBook = async (req: Request, res: Response) => {
       });
     }
 
+    const book = await db.select().from(books).where(eq(books.id, id)).limit(1);
+
+    if (book.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "Book not found",
+      });
+    }
+
     // 2. Perform the deletion query
     const deletedBook = await db
       .delete(books) // Specify the table
@@ -79,12 +88,12 @@ export const deleteBook = async (req: Request, res: Response) => {
       .returning(); // Optional: returns the deleted rows
 
     // 3. Check if any book was actually deleted
-    if (deletedBook.length === 0) {
-      return res.status(404).json({
-        success: false,
-        message: `Book with ID ${id} not found`,
-      });
-    }
+    // if (deletedBook.length === 0) {
+    //   return res.status(404).json({
+    //     success: false,
+    //     message: `Book with ID ${id} not found`,
+    //   });
+    // }
 
     // 4. Respond with success
     return res.status(200).json({
