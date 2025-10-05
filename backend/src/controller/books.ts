@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { db } from "../database/connectdb";
 import { books } from "../database/schema";
+import { eq } from "drizzle-orm";
 
 export const createBooks = async (req: Request, res: any, next: NextFunction) => {
   try {
@@ -54,6 +55,48 @@ export const getAllBooks = async (req: Request, res: Response) => {
     res.status(500).json({
       success: false,
       message: "An error occurred while fetching books",
+    });
+  }
+};
+
+export const deleteBook = async (req: Request, res: Response) => {
+  try {
+    // 1. Get the book ID from the request parameters
+    const { id } = req.params;
+
+    // Validate if ID is present
+    if (!id) {
+      return res.status(400).json({
+        success: false,
+        message: "Book ID is required for deletion",
+      });
+    }
+
+    // 2. Perform the deletion query
+    const deletedBook = await db
+      .delete(books) // Specify the table
+      .where(eq(books.id, id)) // Specify the condition (assuming the primary key is 'id' and 'eq' is a function for equality comparison from the ORM)
+      .returning(); // Optional: returns the deleted rows
+
+    // 3. Check if any book was actually deleted
+    if (deletedBook.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: `Book with ID ${id} not found`,
+      });
+    }
+
+    // 4. Respond with success
+    return res.status(200).json({
+      success: true,
+      message: `Book with ID ${id} deleted successfully`,
+      data: deletedBook[0], // Optionally return the deleted book
+    });
+  } catch (error) {
+    console.error(`Error deleting book with ID ${req.params.id}:`, error);
+    res.status(500).json({
+      success: false,
+      message: "An error occurred while deleting the book",
     });
   }
 };

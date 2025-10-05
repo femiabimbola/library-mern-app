@@ -159,7 +159,7 @@ export const MediaUpload = ({
         className="file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:bg-primary file:text-white hover:file:bg-primary/80 text-white"
       />
       {uploadProgress > 0 && uploadProgress < 100 && <Progress value={uploadProgress} className="w-full bg-white" />}
-      {uploadStatus && <p className="text-sm text-white/70">{uploadStatus}</p>}
+      {uploadStatus && <p className="text-sm text-black/70">{uploadStatus}</p>}
 
       {/* Media Preview Section - USES new props */}
       {uploadedMediaUrl && (
