@@ -3,6 +3,10 @@ import { db } from "../database/connectdb";
 import { books } from "../database/schema";
 import { eq } from "drizzle-orm";
 
+interface DeleteBookParams {
+  id: string;
+}
+
 export const createBooks = async (req: Request, res: any, next: NextFunction) => {
   try {
     const { title, author, genre, rating, coverUrl, coverColor, description, totalCopies, videoUrl, summary } =
@@ -66,19 +70,21 @@ export const deleteBook = async (req: Request, res: Response) => {
 
     // Validate if ID is present
     if (!id) {
-      return res.status(400).json({
+      res.status(400).json({
         success: false,
         message: "Book ID is required for deletion",
       });
+      return;
     }
 
     const book = await db.select().from(books).where(eq(books.id, id)).limit(1);
 
     if (book.length === 0) {
-      return res.status(404).json({
+      res.status(404).json({
         success: false,
         message: "Book not found",
       });
+      return;
     }
 
     // 2. Perform the deletion query
@@ -87,25 +93,18 @@ export const deleteBook = async (req: Request, res: Response) => {
       .where(eq(books.id, id)) // Specify the condition (assuming the primary key is 'id' and 'eq' is a function for equality comparison from the ORM)
       .returning(); // Optional: returns the deleted rows
 
-    // 3. Check if any book was actually deleted
-    // if (deletedBook.length === 0) {
-    //   return res.status(404).json({
-    //     success: false,
-    //     message: `Book with ID ${id} not found`,
-    //   });
-    // }
-
     // 4. Respond with success
-    return res.status(200).json({
+    res.status(200).json({
       success: true,
       message: `Book with ID ${id} deleted successfully`,
       data: deletedBook[0], // Optionally return the deleted book
     });
+    return;
   } catch (error) {
-    console.error(`Error deleting book with ID ${req.params.id}:`, error);
     res.status(500).json({
       success: false,
       message: "An error occurred while deleting the book",
     });
+    return;
   }
 };
