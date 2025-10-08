@@ -5,8 +5,9 @@ import { ErrorBoundary } from "react-error-boundary";
 import { useCallback, useEffect, useState } from "react";
 import { useBookStore } from "@/store/bookStore";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import ErrorBoundaryAdapter, { GlobalErrorFallback } from "./GlobalErrorFallback";
+import ErrorBoundaryAdapter from "./GlobalErrorFallback";
 import { Button } from "./ui/button";
+import ConfirmationDialog from "./ConfirmationDeletion";
 
 const AllBooks = () => {
   const { books, isLoading, error, fetchBooks, deleteBook } = useBookStore();
@@ -18,9 +19,23 @@ const AllBooks = () => {
   }, [fetchBooks]);
 
   // Handler to open the confirmation modal
-  // const handleDeleteClick = useCallback((bookId) => {
-  //   setBookToDeleteId(bookId);
-  // }, []);
+  const handleDeleteClick = useCallback((bookId: any) => {
+    setBookToDeleteId(bookId);
+  }, []);
+
+  // Handler for confirmed deletion
+  const handleConfirmDelete = useCallback(
+    async (id: string) => {
+      if (isDeleting) return;
+      try {
+      } catch (error) {
+      } finally {
+        setIsDeleting(false);
+        setBookToDeleteId(null);
+      }
+    },
+    [deleteBook]
+  );
 
   if (isLoading && books.length === 0) {
     return <p className="text-center text-blue-600 my-10">Loading books...</p>;
@@ -63,12 +78,12 @@ const AllBooks = () => {
                         <Button variant="link" className="pointer">
                           Edit
                         </Button>
-                        <Button className="outline" onClick={() => deleteBook(book.id)}>
+                        {/* <Button className="outline" onClick={() => deleteBook(book.id)}>
                           Delete
-                        </Button>
-                        {/* <Button className="outline" onClick={() => handleDeleteClick(book.id)} disabled={isDeleting}>
-                          {isDeleting && bookToDeleteId === book.id ? "Deleting..." : "Delete"}
                         </Button> */}
+                        <Button className="outline" onClick={() => handleDeleteClick(book.id)} disabled={isDeleting}>
+                          {isDeleting && bookToDeleteId === book.id ? "Deleting..." : "Delete"}
+                        </Button>
                       </div>
                     </TableCell>
                   </TableRow>
@@ -78,6 +93,12 @@ const AllBooks = () => {
           )}
         </CardHeader>
       </Card>
+      {/* There must be props for dialog */}
+      <ConfirmationDialog
+        bookId={bookToDeleteId}
+        // onConfirm={handleConfirmDelete}
+        onCancel={() => setBookToDeleteId(null)}
+      />
     </ErrorBoundary>
   );
 };

@@ -2,11 +2,11 @@ import { Button } from "./ui/button";
 import { Card, CardDescription, CardTitle } from "./ui/card";
 
 // Not used yet
-const ConfirmationDialog = ({ bookId, onConfirm, onCancel }: any) => {
+const ConfirmationDeletion = ({ bookId, onConfirm, onCancel }: any) => {
   if (!bookId) return null;
 
   return (
-    <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50 p-4 ">
+    <div className="fixed inset-0 bg-opacity-50 flex items-center justify-center z-50 p-4 ">
       <Card className="max-w-md w-full p-6 text-center shadow-2xl animate-in fade-in-0 zoom-in-95 duration-200">
         <CardTitle>Confirm Deletion</CardTitle>
         <CardDescription className="my-4">
@@ -25,4 +25,4 @@ const ConfirmationDialog = ({ bookId, onConfirm, onCancel }: any) => {
   );
 };
 
-export default ConfirmationDialog;
+export default ConfirmationDeletion;
