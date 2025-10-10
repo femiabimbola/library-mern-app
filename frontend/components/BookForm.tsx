@@ -190,8 +190,8 @@ export const BookForm = () => {
                             field={field}
                             folder="/libApp/images"
                             mediaType="image"
-                            previewWidth={1200}
-                            previewHeight={600}
+                            previewWidth={700}
+                            previewHeight={400}
                           />
                         </FormControl>
                         <FormMessage />
@@ -209,8 +209,8 @@ export const BookForm = () => {
                             field={field}
                             folder="/libApp/images"
                             mediaType="video"
-                            previewWidth={1200}
-                            previewHeight={600}
+                            previewWidth={700}
+                            previewHeight={400}
                           />
                         </FormControl>
                         <FormMessage />
@@ -256,7 +256,6 @@ export const BookForm = () => {
                         <FormControl>
                           <Textarea placeholder="Book summary" {...field} rows={5} className="book-form_input" />
                         </FormControl>
-
                         <FormMessage />
                       </FormItem>
                     )}
