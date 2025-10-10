@@ -97,26 +97,26 @@ export const BookForm = () => {
           <CardContent className="px-16">
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                <FormField
+                  control={form.control}
+                  name={"title"}
+                  render={({ field }) => (
+                    <FormItem className="flex flex-col gap-1">
+                      <FormLabel className="text-base font-normal">Book Title</FormLabel>
+                      <FormControl>
+                        <Input
+                          required
+                          placeholder="Book title"
+                          {...field}
+                          // className="border-1 h-11 focus-visible:ring-0 focus-visible:ring-offset-0 "
+                          className="border-1 h-12 focus-visible:ring-0 focus-visible:border-1"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
                 <div className="flex flex-row gap-4">
-                  <FormField
-                    control={form.control}
-                    name={"title"}
-                    render={({ field }) => (
-                      <FormItem className="flex flex-col gap-1 w-1/2">
-                        <FormLabel className="text-base font-normal">Book Title</FormLabel>
-                        <FormControl>
-                          <Input
-                            required
-                            placeholder="Book title"
-                            {...field}
-                            // className="border-1 h-11 focus-visible:ring-0 focus-visible:ring-offset-0 "
-                            className="border-1 h-12 focus-visible:ring-0 focus-visible:border-1"
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
                   <FormField
                     control={form.control}
                     name={"author"}
@@ -125,6 +125,19 @@ export const BookForm = () => {
                         <FormLabel className="text-base font-normal text-dark-500">Author</FormLabel>
                         <FormControl>
                           <Input required placeholder="Book author" {...field} className="input-style" />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name={"genre"}
+                    render={({ field }) => (
+                      <FormItem className="">
+                        <FormLabel className="text-base font-normal text-dark-500">Genre</FormLabel>
+                        <FormControl>
+                          <Input required placeholder="Book genre" {...field} className="input-style" />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -143,73 +156,82 @@ export const BookForm = () => {
                       </FormItem>
                     )}
                   />
+                  <FormField
+                    control={form.control}
+                    name={"totalCopies"}
+                    render={({ field }) => (
+                      <FormItem className="flex flex-col gap-1">
+                        <FormLabel className="text-base font-normal text-dark-500">Total Copies</FormLabel>
+                        <FormControl>
+                          <Input
+                            type="number"
+                            min={1}
+                            max={10000}
+                            placeholder="Total copies"
+                            {...field}
+                            className="book-form_input"
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
                 </div>
-                <FormField
-                  control={form.control}
-                  name={"genre"}
-                  render={({ field }) => (
-                    <FormItem className="flex flex-col gap-1">
-                      <FormLabel className="text-base font-normal text-dark-500">Genre</FormLabel>
-                      <FormControl>
-                        <Input required placeholder="Book genre" {...field} className="book-form_input" />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name={"totalCopies"}
-                  render={({ field }) => (
-                    <FormItem className="flex flex-col gap-1">
-                      <FormLabel className="text-base font-normal text-dark-500">Total Copies</FormLabel>
-                      <FormControl>
-                        <Input
-                          type="number"
-                          min={1}
-                          max={10000}
-                          placeholder="Total copies"
-                          {...field}
-                          className="book-form_input"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name={"coverUrl"}
-                  render={({ field }) => (
-                    <FormItem className="flex flex-col gap-1">
-                      <FormLabel className="text-base font-normal text-dark-500">Book Image</FormLabel>
-                      <FormControl>
-                        {/* <MediaUpload field={field} folder="/libApp/images" /> */}
-                        <MediaUpload
-                          field={field}
-                          folder="/libApp/images"
-                          mediaType="image"
-                          previewWidth={1200}
-                          previewHeight={600}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name={"coverColor"}
-                  render={({ field }) => (
-                    <FormItem className="flex flex-col gap-1">
-                      <FormLabel className="text-base font-normal text-dark-500">Primary Color</FormLabel>
-                      <FormControl>
-                        <ColorPicker onPickerChange={field.onChange} value={field.value} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                <div>
+                  <FormField
+                    control={form.control}
+                    name={"coverUrl"}
+                    render={({ field }) => (
+                      <FormItem className="flex flex-col gap-1 w-1/3">
+                        <FormLabel className="text-base font-normal text-dark-500">Book Image</FormLabel>
+                        <FormControl>
+                          {/* <MediaUpload field={field} folder="/libApp/images" /> */}
+                          <MediaUpload
+                            field={field}
+                            folder="/libApp/images"
+                            mediaType="image"
+                            previewWidth={1200}
+                            previewHeight={600}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name={"videoUrl"}
+                    render={({ field }) => (
+                      <FormItem className="flex flex-col gap-1 w-1/3">
+                        <FormLabel className="text-base font-normal text-dark-500">Book Trailer</FormLabel>
+                        <FormControl>
+                          <MediaUpload
+                            field={field}
+                            folder="/libApp/images"
+                            mediaType="video"
+                            previewWidth={1200}
+                            previewHeight={600}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name={"coverColor"}
+                    render={({ field }) => (
+                      <FormItem className="flex flex-col gap-1 w-1/3">
+                        <FormLabel className="text-base font-normal text-dark-500">Primary Color</FormLabel>
+                        <FormControl>
+                          <ColorPicker onPickerChange={field.onChange} value={field.value} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
                 <FormField
                   control={form.control}
                   name={"description"}
@@ -224,26 +246,7 @@ export const BookForm = () => {
                     </FormItem>
                   )}
                 />
-                <FormField
-                  control={form.control}
-                  name={"videoUrl"}
-                  render={({ field }) => (
-                    <FormItem className="flex flex-col gap-1">
-                      <FormLabel className="text-base font-normal text-dark-500">Book Trailer</FormLabel>
-                      <FormControl>
-                        {/* <MediaUpload field={field} folder="/libApp/video" />  */}
-                        <MediaUpload
-                          field={field}
-                          folder="/libApp/images"
-                          mediaType="video"
-                          previewWidth={1200}
-                          previewHeight={600}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+
                 <FormField
                   control={form.control}
                   name={"summary"}

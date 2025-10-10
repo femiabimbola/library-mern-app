@@ -28,7 +28,17 @@ const AllBooks = () => {
     async (id: string) => {
       if (isDeleting) return;
       try {
+        const result = await deleteBook(id);
+        console.log(result);
+        await fetchBooks();
+        //  The state needs to be fixed
+        // if (result.success) {
+        //   await fetchBooks();
+        // } else {
+        //   console.error("Deletion failed:", result.message);
+        // }
       } catch (error) {
+        console.error("An unexpected error occurred during deletion:", error);
       } finally {
         setIsDeleting(false);
         setBookToDeleteId(null);
@@ -38,7 +48,7 @@ const AllBooks = () => {
   );
 
   if (isLoading && books.length === 0) {
-    return <p className="text-center text-blue-600 my-10">Loading books...</p>;
+    return <p className="text-center text-white my-10">Loading books...</p>;
   }
 
   // if (error) {
@@ -96,7 +106,7 @@ const AllBooks = () => {
       {/* There must be props for dialog */}
       <ConfirmationDialog
         bookId={bookToDeleteId}
-        // onConfirm={handleConfirmDelete}
+        onConfirm={handleConfirmDelete}
         onCancel={() => setBookToDeleteId(null)}
       />
     </ErrorBoundary>
