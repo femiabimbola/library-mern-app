@@ -14,6 +14,7 @@ const AllBooks = () => {
   const { books, isLoading, error, fetchBooks, deleteBook } = useBookStore();
   const [bookToDeleteId, setBookToDeleteId] = useState(null);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [bookToEditId, setBookToEditId] = useState(null);
 
   useEffect(() => {
     fetchBooks();
@@ -22,6 +23,10 @@ const AllBooks = () => {
   // Handler to open the confirmation modal
   const handleDeleteClick = useCallback((bookId: any) => {
     setBookToDeleteId(bookId);
+  }, []);
+
+  const handleEditClick = useCallback((bookId: any) => {
+    setBookToEditId(bookId);
   }, []);
 
   // Handler for confirmed deletion
@@ -86,12 +91,10 @@ const AllBooks = () => {
                     <TableCell className="">{book.rating}</TableCell>
                     <TableCell className="">
                       <div className="flex gap-x-2">
-                        <Button variant="link" className="pointer">
+                        <Button variant="link" className="pointer" onClick={() => handleEditClick(book.id)}>
                           Edit
                         </Button>
-                        {/* <Button className="outline" onClick={() => deleteBook(book.id)}>
-                          Delete
-                        </Button> */}
+
                         <Button className="outline" onClick={() => handleDeleteClick(book.id)} disabled={isDeleting}>
                           {isDeleting && bookToDeleteId === book.id ? "Deleting..." : "Delete"}
                         </Button>
@@ -111,7 +114,7 @@ const AllBooks = () => {
         onCancel={() => setBookToDeleteId(null)}
       />
       {/* For the edit */}
-      <EditDialog />
+      <EditDialog bookId={bookToEditId} />
     </ErrorBoundary>
   );
 };

@@ -261,9 +261,11 @@ export const BookForm = () => {
                     )}
                   />
                 </div>
-                <Button type="submit" className=" text-white">
-                  Add Book to Library
-                </Button>
+                <div className="flex justify-center items-center py-4">
+                  <Button type="submit" className=" text-white w-80 cursor-pointer">
+                    Add Book to Library
+                  </Button>
+                </div>
               </form>
             </Form>
           </CardContent>
