@@ -177,7 +177,7 @@ export const BookForm = () => {
                     )}
                   />
                 </div>
-                <div>
+                <div className="flex gap-x-4">
                   <FormField
                     control={form.control}
                     name={"coverUrl"}
@@ -222,7 +222,7 @@ export const BookForm = () => {
                     control={form.control}
                     name={"coverColor"}
                     render={({ field }) => (
-                      <FormItem className="flex flex-col gap-1 w-1/3">
+                      <FormItem className="flex flex-col gap-1 w-1/4">
                         <FormLabel className="text-base font-normal text-dark-500">Primary Color</FormLabel>
                         <FormControl>
                           <ColorPicker onPickerChange={field.onChange} value={field.value} />
@@ -232,36 +232,37 @@ export const BookForm = () => {
                     )}
                   />
                 </div>
-                <FormField
-                  control={form.control}
-                  name={"description"}
-                  render={({ field }) => (
-                    <FormItem className="flex flex-col gap-1">
-                      <FormLabel className="text-base font-normal text-dark-500">Book Description</FormLabel>
-                      <FormControl>
-                        <Textarea placeholder="Book description" {...field} rows={10} className="book-form_input" />
-                      </FormControl>
+                <div className="flex gap-x-4">
+                  <FormField
+                    control={form.control}
+                    name={"description"}
+                    render={({ field }) => (
+                      <FormItem className="flex flex-col gap-1 w-1/2">
+                        <FormLabel className="text-base font-normal text-dark-500">Book Description</FormLabel>
+                        <FormControl>
+                          <Textarea placeholder="Book description" {...field} rows={10} className="book-form_input" />
+                        </FormControl>
 
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name={"summary"}
+                    render={({ field }) => (
+                      <FormItem className="flex flex-col gap-1 w-1/2">
+                        <FormLabel className="text-base font-normal text-dark-500">Book Summary</FormLabel>
+                        <FormControl>
+                          <Textarea placeholder="Book summary" {...field} rows={5} className="book-form_input" />
+                        </FormControl>
 
-                <FormField
-                  control={form.control}
-                  name={"summary"}
-                  render={({ field }) => (
-                    <FormItem className="flex flex-col gap-1">
-                      <FormLabel className="text-base font-normal text-dark-500">Book Summary</FormLabel>
-                      <FormControl>
-                        <Textarea placeholder="Book summary" {...field} rows={5} className="book-form_input" />
-                      </FormControl>
-
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <Button type="submit" className="mx-auto text-white">
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <Button type="submit" className=" text-white">
                   Add Book to Library
                 </Button>
               </form>

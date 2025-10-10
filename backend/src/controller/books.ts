@@ -108,3 +108,80 @@ export const deleteBook = async (req: Request, res: Response) => {
     return;
   }
 };
+
+export const editBook = async (req: Request, res: any, next: NextFunction) => {
+  try {
+    const { id } = req.params; // Book ID from URL parameters
+    const { title, author, genre, rating, coverUrl, coverColor, description, totalCopies, videoUrl, summary } =
+      req.body;
+
+    // Validate book ID
+    if (!id) {
+      return res.status(400).json({
+        success: false,
+        message: "Book ID is required",
+      });
+    }
+
+    // Validate at least one field is provided for update
+    if (
+      !title &&
+      !author &&
+      !genre &&
+      !rating &&
+      !coverUrl &&
+      !coverColor &&
+      !description &&
+      !totalCopies &&
+      !videoUrl &&
+      !summary
+    ) {
+      return res.status(400).json({
+        success: false,
+        message: "At least one field must be provided to update",
+      });
+    }
+
+    // Prepare update data
+    const updateData: any = {};
+    if (title !== undefined) updateData.title = title;
+    if (author !== undefined) updateData.author = author;
+    if (genre !== undefined) updateData.genre = genre;
+    if (rating !== undefined) updateData.rating = rating;
+    if (coverUrl !== undefined) updateData.coverUrl = coverUrl;
+    if (coverColor !== undefined) updateData.coverColor = coverColor;
+    if (description !== undefined) updateData.description = description;
+    if (totalCopies !== undefined) {
+      updateData.totalCopies = totalCopies;
+      updateData.availableCopies = totalCopies; // Update availableCopies to match totalCopies
+    }
+    if (videoUrl !== undefined) updateData.videoUrl = videoUrl;
+    if (summary !== undefined) updateData.summary = summary;
+
+    // Perform the update with Drizzle ORM
+    const updatedBook = await db
+      .update(books)
+      .set(updateData)
+      .where(eq(books.id, id)) // Use eq for precise ID matching
+      .returning();
+
+    // Check if the book was found and updated
+    if (!updatedBook[0]) {
+      return res.status(404).json({
+        success: false,
+        message: "Book not found",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      data: updatedBook[0],
+    });
+  } catch (error) {
+    console.error("Error updating book:", error);
+    return res.status(500).json({
+      success: false,
+      message: "An error occurred while updating the book",
+    });
+  }
+};
