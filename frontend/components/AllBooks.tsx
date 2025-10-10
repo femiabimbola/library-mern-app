@@ -8,6 +8,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import ErrorBoundaryAdapter from "./GlobalErrorFallback";
 import { Button } from "./ui/button";
 import ConfirmationDialog from "./ConfirmationDeletion";
+import EditDialog from "./EditDialog";
 
 const AllBooks = () => {
   const { books, isLoading, error, fetchBooks, deleteBook } = useBookStore();
@@ -109,6 +110,8 @@ const AllBooks = () => {
         onConfirm={handleConfirmDelete}
         onCancel={() => setBookToDeleteId(null)}
       />
+      {/* For the edit */}
+      <EditDialog />
     </ErrorBoundary>
   );
 };
