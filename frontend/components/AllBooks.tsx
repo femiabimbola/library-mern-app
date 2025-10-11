@@ -114,7 +114,7 @@ const AllBooks = () => {
         onCancel={() => setBookToDeleteId(null)}
       />
       {/* For the edit */}
-      <EditDialog bookId={bookToEditId} />
+      <EditDialog bookId={bookToEditId} onCancel={() => setBookToEditId(null)} />
     </ErrorBoundary>
   );
 };

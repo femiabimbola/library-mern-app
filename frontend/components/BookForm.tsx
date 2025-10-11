@@ -262,7 +262,7 @@ export const BookForm = () => {
                   />
                 </div>
                 <div className="flex justify-center items-center py-4">
-                  <Button type="submit" className=" text-white w-80 cursor-pointer">
+                  <Button type="submit" className=" text-white w-80 cursor-pointer py-6">
                     Add Book to Library
                   </Button>
                 </div>
