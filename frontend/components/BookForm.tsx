@@ -81,7 +81,7 @@ export const BookForm = () => {
       const data = await trigger(values);
       form.reset();
       const { title, author } = values;
-      router.push(`/success?title=${encodeURIComponent(title)}&author=${encodeURIComponent(author)}`);
+      router.push(`/add-success?title=${encodeURIComponent(title)}&author=${encodeURIComponent(author)}`);
     } catch (error: any) {
       const errorMessage = error?.response?.data?.message || swrError?.message || "An unexpected error occurred";
       setError(errorMessage);
