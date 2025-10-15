@@ -77,13 +77,13 @@ const AddSuccess = () => {
             </div>
           )}
           <div className="flex flex-col gap-3 w-full max-w-md">
-            <Button onClick={handleGoToInventory} className="w-full py-6">
+            <Button onClick={handleGoToInventory} className="w-full py-6 cursor-pointer">
               View Book Inventory
             </Button>
-            <Button onClick={handleAddAnother} variant="outline" className="w-full py-6">
+            <Button onClick={handleAddAnother} variant="outline" className="w-full py-6 cursor-pointer">
               Add Another Book
             </Button>
-            <Button onClick={handleGoHome} variant="ghost" className="w-full py-6">
+            <Button onClick={handleGoHome} variant="ghost" className="w-full py-6 cursor-pointer">
               Go to Home
             </Button>
           </div>

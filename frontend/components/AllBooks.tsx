@@ -8,7 +8,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import ErrorBoundaryAdapter from "./GlobalErrorFallback";
 import { Button } from "./ui/button";
 import ConfirmationDialog from "./ConfirmationDeletion";
-import EditDialog from "./EditDialog";
+// import EditDialog from "./EditDialog";
+import { EditBookForm } from "./EditDialog";
 
 const AllBooks = () => {
   const { books, isLoading, error, fetchBooks, deleteBook } = useBookStore();
@@ -114,7 +115,8 @@ const AllBooks = () => {
         onCancel={() => setBookToDeleteId(null)}
       />
       {/* For the edit */}
-      <EditDialog bookId={bookToEditId} onCancel={() => setBookToEditId(null)} />
+      {/* <EditDialog bookId={bookToEditId} onCancel={() => setBookToEditId(null)} /> */}
+      {/* <EditBookForm bookId={bookToEditId} onCancel={() => setBookToEditId(null)} /> */}
     </ErrorBoundary>
   );
 };

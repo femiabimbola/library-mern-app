@@ -110,7 +110,6 @@ export const BookForm = () => {
                           required
                           placeholder="Book title"
                           {...field}
-                          // className="border-1 h-11 focus-visible:ring-0 focus-visible:ring-offset-0 "
                           className="border-1 h-12 focus-visible:ring-0 focus-visible:border-1"
                         />
                       </FormControl>
