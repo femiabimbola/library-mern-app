@@ -51,7 +51,7 @@ const UpdatedBookFetcher = async (url: string, { arg }: { arg: BookFormData }) =
 // --- Main Component ---
 
 interface EditBookFormProps {
-  bookId: string;
+  bookId: string | null;
   onSuccess: () => void;
   onCancel: () => void;
 }
@@ -62,7 +62,11 @@ export const EditBookForm = ({ bookId, onSuccess, onCancel }: EditBookFormProps)
 
   // 1. FETCH existing book data
   const bookApiUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/books/${bookId}`;
-  const { data: bookData, isLoading, error: swrFetchError } = useSWR<BookFormData>(
+  const {
+    data: bookData,
+    isLoading,
+    error: swrFetchError,
+  } = useSWR<BookFormData>(
     bookId ? bookApiUrl : null, // Only fetch if bookId exists
     BookFetcher
   );
@@ -70,9 +74,9 @@ export const EditBookForm = ({ bookId, onSuccess, onCancel }: EditBookFormProps)
   // 2. SETUP Form with default values from fetched data
   const form = useForm<BookFormData>({
     resolver: zodResolver(bookSchema),
-    // Use an empty object as default if data is not yet loaded, 
+    // Use an empty object as default if data is not yet loaded,
     // it will be updated by the useEffect hook below.
-    defaultValues: bookData || {}, 
+    defaultValues: bookData || {},
   });
 
   // Effect to populate form fields once data is loaded
@@ -89,11 +93,7 @@ export const EditBookForm = ({ bookId, onSuccess, onCancel }: EditBookFormProps)
   }, [bookData, form]);
 
   // 3. SETUP SWRMutation for updating the book
-  const {
-    trigger,
-    isMutating,
-    error: swrMutationError,
-  } = useSWRMutation(bookApiUrl, UpdatedBookFetcher);
+  const { trigger, isMutating, error: swrMutationError } = useSWRMutation(bookApiUrl, UpdatedBookFetcher);
 
   // 4. HANDLE form submission
   const onSubmit = async (values: BookFormData) => {
@@ -101,12 +101,15 @@ export const EditBookForm = ({ bookId, onSuccess, onCancel }: EditBookFormProps)
       await trigger(values);
       onSuccess(); // Call the parent's onSuccess handler
     } catch (error: any) {
-      const errorMessage = error?.response?.data?.message || swrMutationError?.message || "An unexpected error occurred during update";
+      const errorMessage =
+        error?.response?.data?.message || swrMutationError?.message || "An unexpected error occurred during update";
       setError(errorMessage);
     }
   };
 
   // --- Render Logic ---
+
+  if (!bookId) return null;
 
   if (isLoading) {
     return (
@@ -121,12 +124,16 @@ export const EditBookForm = ({ bookId, onSuccess, onCancel }: EditBookFormProps)
     return (
       <Card className="p-8 text-center">
         <CardTitle className="text-red-500">Error</CardTitle>
-        <CardDescription className="mt-2">Failed to load book: {swrFetchError?.message || "Book not found."}</CardDescription>
-        <Button onClick={onCancel} className="mt-4">Close</Button>
+        <CardDescription className="mt-2">
+          Failed to load book: {swrFetchError?.message || "Book not found."}
+        </CardDescription>
+        <Button onClick={onCancel} className="mt-4">
+          Close
+        </Button>
       </Card>
     );
   }
-  
+
   // Combine all errors for display
   const displayError = error || swrMutationError?.message || swrFetchError?.message;
 
@@ -322,11 +329,7 @@ export const EditBookForm = ({ bookId, onSuccess, onCancel }: EditBookFormProps)
                   >
                     Cancel
                   </Button>
-                  <Button 
-                    type="submit" 
-                    disabled={isMutating}
-                    className=" text-white w-80 cursor-pointer py-6"
-                  >
+                  <Button type="submit" disabled={isMutating} className=" text-white w-80 cursor-pointer py-6">
                     {isMutating ? "Saving..." : "Update Book Details"}
                   </Button>
                 </div>

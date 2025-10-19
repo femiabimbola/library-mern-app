@@ -116,7 +116,24 @@ const AllBooks = () => {
       />
       {/* For the edit */}
       {/* <EditDialog bookId={bookToEditId} onCancel={() => setBookToEditId(null)} /> */}
-      {/* <EditBookForm bookId={bookToEditId} onCancel={() => setBookToEditId(null)} /> */}
+      <EditBookForm
+        bookId={bookToEditId}
+        onCancel={() => setBookToEditId(null)}
+        onSuccess={() => {
+          setBookToEditId(null);
+          // You'll likely want to refresh your data here
+        }}
+      />
+      {/* {bookToEditId && (
+        <EditBookForm
+          bookId={bookToEditId}
+          onCancel={() => setBookToEditId(null)}
+          onSuccess={() => {
+            setBookToEditId(null);
+            // You'll likely want to refresh your data here
+          }}
+        />
+      )} */}
     </ErrorBoundary>
   );
 };
