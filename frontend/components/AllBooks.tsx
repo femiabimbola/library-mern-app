@@ -8,7 +8,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import ErrorBoundaryAdapter from "./GlobalErrorFallback";
 import { Button } from "./ui/button";
 import ConfirmationDialog from "./ConfirmationDeletion";
-// import EditDialog from "./EditDialog";
+import EditDialog2 from "./EditDialog2";
 import { EditBookForm } from "./EditDialog";
 
 const AllBooks = () => {
@@ -96,7 +96,11 @@ const AllBooks = () => {
                           Edit
                         </Button>
 
-                        <Button className="outline" onClick={() => handleDeleteClick(book.id)} disabled={isDeleting}>
+                        <Button
+                          className="cursor-pointer"
+                          onClick={() => handleDeleteClick(book.id)}
+                          disabled={isDeleting}
+                        >
                           {isDeleting && bookToDeleteId === book.id ? "Deleting..." : "Delete"}
                         </Button>
                       </div>
@@ -116,24 +120,15 @@ const AllBooks = () => {
       />
       {/* For the edit */}
       {/* <EditDialog bookId={bookToEditId} onCancel={() => setBookToEditId(null)} /> */}
-      <EditBookForm
+      {/* <EditBookForm
         bookId={bookToEditId}
         onCancel={() => setBookToEditId(null)}
         onSuccess={() => {
           setBookToEditId(null);
           // You'll likely want to refresh your data here
         }}
-      />
-      {/* {bookToEditId && (
-        <EditBookForm
-          bookId={bookToEditId}
-          onCancel={() => setBookToEditId(null)}
-          onSuccess={() => {
-            setBookToEditId(null);
-            // You'll likely want to refresh your data here
-          }}
-        />
-      )} */}
+      /> */}
+      <EditDialog2 bookId={bookToEditId} onConfirm={handleConfirmDelete} onCancel={() => setBookToEditId(null)} />
     </ErrorBoundary>
   );
 };
