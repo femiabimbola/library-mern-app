@@ -92,7 +92,7 @@ const AllBooks = () => {
                     <TableCell className="">{book.rating}</TableCell>
                     <TableCell className="">
                       <div className="flex gap-x-2">
-                        <Button variant="link" className="pointer" onClick={() => handleEditClick(book.id)}>
+                        <Button variant="link" className="cursor-pointer" onClick={() => handleEditClick(book.id)}>
                           Edit
                         </Button>
 
