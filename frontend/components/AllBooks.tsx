@@ -9,7 +9,8 @@ import ErrorBoundaryAdapter from "./GlobalErrorFallback";
 import { Button } from "./ui/button";
 import ConfirmationDialog from "./ConfirmationDeletion";
 import EditDialog2 from "./EditDialog2";
-import { EditBookForm } from "./EditDialog";
+import { EditBookForm } from "./EditBookForm";
+import EditDialog from "./EditDialog";
 
 const AllBooks = () => {
   const { books, isLoading, error, fetchBooks, deleteBook } = useBookStore();
@@ -119,16 +120,9 @@ const AllBooks = () => {
         onCancel={() => setBookToDeleteId(null)}
       />
       {/* For the edit */}
-      {/* <EditDialog bookId={bookToEditId} onCancel={() => setBookToEditId(null)} /> */}
-      {/* <EditBookForm
-        bookId={bookToEditId}
-        onCancel={() => setBookToEditId(null)}
-        onSuccess={() => {
-          setBookToEditId(null);
-          // You'll likely want to refresh your data here
-        }}
-      /> */}
-      <EditDialog2 bookId={bookToEditId} onConfirm={handleConfirmDelete} onCancel={() => setBookToEditId(null)} />
+
+      {/* <EditDialog2 bookId={bookToEditId} onConfirm={handleConfirmDelete} onCancel={() => setBookToEditId(null)} /> */}
+      <EditDialog bookId={bookToEditId} onConfirm={handleConfirmDelete} onCancel={() => setBookToEditId(null)} />
     </ErrorBoundary>
   );
 };
