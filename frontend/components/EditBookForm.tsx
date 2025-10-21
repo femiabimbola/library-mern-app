@@ -39,7 +39,7 @@ const ErrorFallback = ({ error }: { error: Error }) => {
 // Fetch function for SWR to get book data
 const BookFetcher = async (url: string) => {
   const response = await axios.get(url, { withCredentials: true });
-  return response.data;
+  return response.data.data;
 };
 
 // Update function for SWRMutation (using PUT for full replacement)
@@ -66,23 +66,23 @@ export const EditBookForm = ({ bookId, onSuccess, onCancel }: EditBookFormProps)
     data: bookData,
     isLoading,
     error: swrFetchError,
-  } = useSWR<BookFormData>(
+  } = useSWR(
     bookId ? bookApiUrl : null, // Only fetch if bookId exists
     BookFetcher
   );
-
+  console.log(bookData);
   // 2. SETUP Form with default values from fetched data
   const form = useForm<BookFormData>({
     resolver: zodResolver(bookSchema),
     // Use an empty object as default if data is not yet loaded,
     // it will be updated by the useEffect hook below.
-    defaultValues: bookData || {},
+    // defaultValues: bookData || {},
+    defaultValues: bookData,
   });
 
   // Effect to populate form fields once data is loaded
   useEffect(() => {
     if (bookData) {
-      // Convert number fields that might be strings from the server to numbers for react-hook-form
       const numericData = {
         ...bookData,
         rating: Number(bookData.rating),
