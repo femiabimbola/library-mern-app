@@ -109,6 +109,54 @@ export const deleteBook = async (req: Request, res: Response) => {
   }
 };
 
+export const getBookById = async (req: Request, res: Response) => {
+  try {
+    // 1. Get the book ID from the request parameters
+    const { id } = req.params;
+
+    // Validate if ID is present
+    if (!id) {
+      res.status(400).json({
+        success: false,
+        message: "Book ID is required",
+      });
+      return;
+    }
+
+    // 2. Perform the selection query
+    const book = await db
+      .select()
+      .from(books) // Specify the table
+      .where(eq(books.id, id)) // Specify the condition
+      .limit(1); // Limit the result to one
+
+    // 3. Check if the book was found
+    if (book.length === 0) {
+      res.status(404).json({
+        success: false,
+        message: `Book with ID ${id} not found`,
+      });
+      return;
+    }
+
+    // 4. Respond with the found book
+    res.status(200).json({
+      success: true,
+      message: `Book with ID ${id} retrieved successfully`,
+      data: book[0], // Return the single found book object
+    });
+    return;
+  } catch (error) {
+    // 5. Handle potential server errors
+    console.error("Error retrieving book:", error);
+    res.status(500).json({
+      success: false,
+      message: "An error occurred while retrieving the book",
+    });
+    return;
+  }
+};
+
 export const editBook = async (req: Request, res: any, next: NextFunction) => {
   try {
     const { id } = req.params; // Book ID from URL parameters
