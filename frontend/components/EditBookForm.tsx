@@ -74,10 +74,8 @@ export const EditBookForm = ({ bookId, onSuccess, onCancel }: EditBookFormProps)
   // 2. SETUP Form with default values from fetched data
   const form = useForm<BookFormData>({
     resolver: zodResolver(bookSchema),
-    // Use an empty object as default if data is not yet loaded,
     // it will be updated by the useEffect hook below.
-    // defaultValues: bookData || {},
-    defaultValues: bookData,
+    defaultValues: bookData || {},
   });
 
   // Effect to populate form fields once data is loaded
