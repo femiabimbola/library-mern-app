@@ -16,23 +16,11 @@ import { Button } from "./ui/button";
 import { Textarea } from "./ui/textarea";
 import ColorPicker from "./ColorPicker";
 import { MediaUpload } from "./MediaUpload";
-// Import your existing schema
+import ErrorBoundaryAdapter from "./GlobalErrorFallback";
 import { bookSchema } from "./BookForm"; // Assuming you export bookSchema from the file where BookForm is defined
 
 // Type for the book data based on your schema
 type BookFormData = z.infer<typeof bookSchema>;
-
-// Error fallback component (copied from your original code)
-const ErrorFallback = ({ error }: { error: Error }) => {
-  return (
-    <div className="flex items-center justify-center h-screen">
-      <Card className="p-4">
-        <CardTitle className="text-red-500">Something went wrong</CardTitle>
-        <CardDescription>{error.message}</CardDescription>
-      </Card>
-    </div>
-  );
-};
 
 // --- Fetcher Functions ---
 
@@ -58,6 +46,7 @@ interface EditBookFormProps {
 
 export const EditBookForm = ({ bookId, onSuccess, onCancel }: EditBookFormProps) => {
   const [error, setError] = useState<string | undefined>("");
+  const [success, setSuccess] = useState<string | undefined>("");
   const router = useRouter();
 
   // 1. FETCH existing book data
@@ -74,7 +63,6 @@ export const EditBookForm = ({ bookId, onSuccess, onCancel }: EditBookFormProps)
   // 2. SETUP Form with default values from fetched data
   const form = useForm<BookFormData>({
     resolver: zodResolver(bookSchema),
-    // it will be updated by the useEffect hook below.
     defaultValues: bookData || {},
   });
 
@@ -97,8 +85,8 @@ export const EditBookForm = ({ bookId, onSuccess, onCancel }: EditBookFormProps)
   const onSubmit = async (values: BookFormData) => {
     try {
       await trigger(values);
-      console.log("after trigger value");
-      // onSuccess(); // Call the parent's onSuccess handler
+      setSuccess("The book is successfully updated");
+      router.push("/books");
     } catch (error: any) {
       const errorMessage =
         error?.response?.data?.message || swrMutationError?.message || "An unexpected error occurred during update";
@@ -107,14 +95,13 @@ export const EditBookForm = ({ bookId, onSuccess, onCancel }: EditBookFormProps)
   };
 
   // --- Render Logic ---
-
   if (!bookId) return null;
 
   if (isLoading) {
     return (
       <Card className="p-8 text-center">
         <CardTitle>Loading Book Details...</CardTitle>
-        <CardDescription className="mt-2">Fetching data for book ID: {bookId}</CardDescription>
+        <CardDescription className="mt-2">Fetching data for book ID</CardDescription>
       </Card>
     );
   }
@@ -135,9 +122,10 @@ export const EditBookForm = ({ bookId, onSuccess, onCancel }: EditBookFormProps)
 
   // Combine all errors for display
   const displayError = error || swrMutationError?.message || swrFetchError?.message;
+  const successMessage = success;
 
   return (
-    <ErrorBoundary FallbackComponent={ErrorFallback}>
+    <ErrorBoundary FallbackComponent={ErrorBoundaryAdapter}>
       <div className="container mx-auto px-6 py-12 space-y-6">
         <Card>
           <CardHeader>
@@ -147,6 +135,9 @@ export const EditBookForm = ({ bookId, onSuccess, onCancel }: EditBookFormProps)
           <CardContent className="px-16">
             {displayError && (
               <p className="text-red-500 text-center mb-4 border border-red-500 p-2 rounded">{displayError}</p>
+            )}
+            {successMessage && (
+              <p className="text-green-500 text-center mb-4 border border-green-500 p-2 rounded">{successMessage}</p>
             )}
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">

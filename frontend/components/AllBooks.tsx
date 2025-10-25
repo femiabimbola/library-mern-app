@@ -8,8 +8,6 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import ErrorBoundaryAdapter from "./GlobalErrorFallback";
 import { Button } from "./ui/button";
 import ConfirmationDialog from "./ConfirmationDeletion";
-import EditDialog2 from "./EditDialog2";
-import { EditBookForm } from "./EditBookForm";
 import EditDialog from "./EditDialog";
 
 const AllBooks = () => {
@@ -39,12 +37,6 @@ const AllBooks = () => {
         const result = await deleteBook(id);
         console.log(result);
         await fetchBooks();
-        //  The state needs to be fixed
-        // if (result.success) {
-        //   await fetchBooks();
-        // } else {
-        //   console.error("Deletion failed:", result.message);
-        // }
       } catch (error) {
         console.error("An unexpected error occurred during deletion:", error);
       } finally {
@@ -58,10 +50,6 @@ const AllBooks = () => {
   if (isLoading && books.length === 0) {
     return <p className="text-center text-white my-10">Loading books...</p>;
   }
-
-  // if (error) {
-  //   return <ErrorBoundaryAdapter error={{ message: error }} />;
-  // }
 
   return (
     <ErrorBoundary FallbackComponent={ErrorBoundaryAdapter}>
@@ -96,7 +84,6 @@ const AllBooks = () => {
                         <Button variant="link" className="cursor-pointer" onClick={() => handleEditClick(book.id)}>
                           Edit
                         </Button>
-
                         <Button
                           className="cursor-pointer"
                           onClick={() => handleDeleteClick(book.id)}
