@@ -1,9 +1,7 @@
-import { Button } from "./ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { EditBookForm } from "./EditBookForm"; // Assuming you put the form in a file named EditBookForm
 
 // Rename to EditModal or keep EditDialog, but its purpose is to contain the form
-const EditDialog = ({ bookId, onConfirm, onCancel, onSuccess }: any) => {
+const EditDialog = ({ bookId, onCancel, onSuccess }: any) => {
   if (!bookId) return null;
 
   return (

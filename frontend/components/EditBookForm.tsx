@@ -44,7 +44,6 @@ const BookFetcher = async (url: string) => {
 
 // Update function for SWRMutation (using PUT for full replacement)
 const UpdatedBookFetcher = async (url: string, { arg }: { arg: BookFormData }) => {
-  console.log("frontend here");
   const response = await axios.put(url, arg, { withCredentials: true });
   return response.data;
 };
@@ -71,7 +70,7 @@ export const EditBookForm = ({ bookId, onSuccess, onCancel }: EditBookFormProps)
     bookId ? bookApiUrl : null, // Only fetch if bookId exists
     BookFetcher
   );
-  console.log(bookData);
+
   // 2. SETUP Form with default values from fetched data
   const form = useForm<BookFormData>({
     resolver: zodResolver(bookSchema),
@@ -98,7 +97,8 @@ export const EditBookForm = ({ bookId, onSuccess, onCancel }: EditBookFormProps)
   const onSubmit = async (values: BookFormData) => {
     try {
       await trigger(values);
-      onSuccess(); // Call the parent's onSuccess handler
+      console.log("after trigger value");
+      // onSuccess(); // Call the parent's onSuccess handler
     } catch (error: any) {
       const errorMessage =
         error?.response?.data?.message || swrMutationError?.message || "An unexpected error occurred during update";

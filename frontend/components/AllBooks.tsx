@@ -121,8 +121,7 @@ const AllBooks = () => {
       />
       {/* For the edit */}
 
-      {/* <EditDialog2 bookId={bookToEditId} onConfirm={handleConfirmDelete} onCancel={() => setBookToEditId(null)} /> */}
-      <EditDialog bookId={bookToEditId} onConfirm={handleConfirmDelete} onCancel={() => setBookToEditId(null)} />
+      <EditDialog bookId={bookToEditId} onCancel={() => setBookToEditId(null)} />
     </ErrorBoundary>
   );
 };
