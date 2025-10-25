@@ -221,6 +221,7 @@ export const editBook = async (req: Request, res: any, next: NextFunction) => {
       });
     }
 
+    console.log(updatedBook);
     return res.status(200).json({
       success: true,
       data: updatedBook[0],

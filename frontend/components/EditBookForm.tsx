@@ -44,6 +44,7 @@ const BookFetcher = async (url: string) => {
 
 // Update function for SWRMutation (using PUT for full replacement)
 const UpdatedBookFetcher = async (url: string, { arg }: { arg: BookFormData }) => {
+  console.log("frontend here");
   const response = await axios.put(url, arg, { withCredentials: true });
   return response.data;
 };
