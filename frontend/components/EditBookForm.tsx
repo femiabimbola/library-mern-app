@@ -44,7 +44,7 @@ interface EditBookFormProps {
   onCancel: () => void;
 }
 
-export const EditBookForm = ({ bookId, onSuccess, onCancel }: EditBookFormProps) => {
+export const EditBookForm = ({ bookId, onCancel }: EditBookFormProps) => {
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
   const router = useRouter();
