@@ -14,7 +14,6 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { Textarea } from "./ui/textarea";
 import ColorPicker from "./ColorPicker";
-// import { MediaUpload } from "./MediaUpload1";
 import { MediaUpload } from "./MediaUpload";
 
 // Error fallback component
@@ -80,6 +79,7 @@ export const BookForm = () => {
     try {
       const data = await trigger(values);
       form.reset();
+      // TODO - redesign the add success
       const { title, author } = values;
       router.push(`/add-success?title=${encodeURIComponent(title)}&author=${encodeURIComponent(author)}`);
     } catch (error: any) {
@@ -186,7 +186,6 @@ export const BookForm = () => {
                       <FormItem className="flex flex-col gap-1 w-1/3">
                         <FormLabel className="text-base font-normal text-dark-500">Book Image</FormLabel>
                         <FormControl>
-                          {/* <MediaUpload field={field} folder="/libApp/images" /> */}
                           <MediaUpload
                             field={field}
                             folder="/libApp/images"

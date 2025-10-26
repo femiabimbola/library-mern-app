@@ -4,6 +4,7 @@ import { useBookStore } from "@/store/bookStore";
 import { useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
+import { SingleBookCard } from "@/components/SingleBook";
 
 const Books = () => {
   const { books, isLoading, error, fetchBooks } = useBookStore();
@@ -43,17 +44,25 @@ const Books = () => {
       (
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 w-full max-w-6xl">
         {books.map((book) => (
-          <Card key={book.id} className="shadow-lg hover:shadow-xl transition-shadow">
-            <CardHeader>
-              <CardTitle className="text-lg font-semibold truncate">{book.title}</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-gray-600">Author: {book.author || "Unknown"}</p>
-              <p className="text-sm text-gray-500 mt-2 line-clamp-3">
-                {book.description || "No description available."}
-              </p>
-            </CardContent>
-          </Card>
+          // <Card key={book.id} className="shadow-lg hover:shadow-xl transition-shadow">
+          //   <CardHeader>
+          //     <CardTitle className="text-lg font-semibold truncate">{book.title}</CardTitle>
+          //   </CardHeader>
+          //   <CardContent>
+          //     <p className="text-sm text-gray-600">Author: {book.author || "Unknown"}</p>
+          //     <p className="text-sm text-gray-500 mt-2 line-clamp-3">
+          //       {book.description || "No description available."}
+          //     </p>
+          //   </CardContent>
+          // </Card>
+
+          <SingleBookCard
+            key={book.id}
+            id={book.id}
+            title={book.title}
+            author={book.author}
+            uploadedImageUrl={book.coverUrl}
+          />
         ))}
       </div>
       )

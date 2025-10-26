@@ -1,3 +1,14 @@
+import { Image, ImageKitProvider } from "@imagekit/next";
+import Link from "next/link";
+
+interface BookCoverProps {
+  id: string;
+  title: string;
+  author: string;
+  uploadedImageUrl: string;
+  coverColor?: string;
+}
+
 const BookCoverSvg = ({ coverColor }: { coverColor: string }) => {
   return (
     <svg
@@ -50,6 +61,22 @@ const BookCoverSvg = ({ coverColor }: { coverColor: string }) => {
   );
 };
 
-export const SingleBookCard = () => {
-  return <div> The Single book card </div>;
+const imageKitEndpoint = process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT!;
+
+export const SingleBookCard = ({ id, uploadedImageUrl, title, author, coverColor = "#012B48" }: BookCoverProps) => {
+  return (
+    <Link href={`/books/${id}`}>
+      {/* <BookCoverSvg coverColor={coverColor} /> */}
+      {/* <div className="absolute z-10" style={{ left: "12%", width: "87.5%", height: "88%" }}>
+        <ImageKitProvider urlEndpoint={imageKitEndpoint}>
+          <Image src={uploadedImageUrl} alt="Uploaded Media" width={42} height={52} className="rounded-md" />
+        </ImageKitProvider>
+      </div> */}
+      <ImageKitProvider urlEndpoint={imageKitEndpoint}>
+        <Image src={uploadedImageUrl} alt="Uploaded Media" width={42} height={52} className="rounded-md" />
+      </ImageKitProvider>
+      <p className="book-title">{title}</p>
+      <p className="book-genre">{author}</p>
+    </Link>
+  );
 };
