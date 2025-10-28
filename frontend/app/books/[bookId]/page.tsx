@@ -14,10 +14,11 @@ const getBook = async (bookId: string) => {
 
   try {
     const response = await axios.get(bookApiUrl);
+
     if (response.status === 404) {
       // originalNotFound();
     }
-    return response.data; // Axios returns the JSON payload inside the 'data' property
+    return response.data.data; // Axios returns the JSON payload inside the 'data' property
   } catch (error) {
     console.error("Axios error:", error);
     // You would handle errors like network failures or non-2xx status codes here
@@ -26,7 +27,7 @@ const getBook = async (bookId: string) => {
 };
 
 const SingleBookPage = async ({ params }: { params: { bookId: string } }) => {
-  const { bookId } = params;
+  const { bookId } = await params;
   const book: Book | null = await getBook(bookId);
 
   if (!book) {
