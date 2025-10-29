@@ -1,3 +1,4 @@
+import BorrowBook from "@/components/BorrowBook";
 import axios from "axios";
 import { notFound } from "next/navigation";
 
@@ -7,8 +8,8 @@ interface Book {
   author: string;
   genre: string;
   coverImageUrl: string;
+  availableCopies?: number;
 }
-
 const getBook = async (bookId: string) => {
   const bookApiUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/books/${bookId}`;
 
@@ -30,6 +31,8 @@ const SingleBookPage = async ({ params }: { params: { bookId: string } }) => {
 
   const { bookId } = await params;
   const book: Book | null = await getBook(bookId);
+  // Simulate logged-in user (replace with real auth in production)
+  const userId = "user-123"; // In real app: get from session, context, etc.
 
   if (!book) {
     return (
@@ -46,16 +49,17 @@ const SingleBookPage = async ({ params }: { params: { bookId: string } }) => {
       <p>
         <strong>Author:</strong> {book?.author}
       </p>
-      <p>{book?.title}</p>
 
       <p>
         <strong>Genre:</strong> {book.genre}
       </p>
+
       {/* <img 
         src={book.coverImage} //
         alt="Book Cover" 
         className="w-64 h-auto mt-4" 
       /> */}
+      <BorrowBook bookId={book.id} availableCopies={book.availableCopies ?? 0} userId={userId} />
     </div>
   );
 };
