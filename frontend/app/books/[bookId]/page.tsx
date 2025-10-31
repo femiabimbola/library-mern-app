@@ -31,6 +31,7 @@ const SingleBookPage = async ({ params }: { params: { bookId: string } }) => {
 
   const { bookId } = await params;
   const book: Book | null = await getBook(bookId);
+
   const userId = "user-123"; // In real app: get from session, context, etc.
 
   if (!book) {
@@ -58,7 +59,7 @@ const SingleBookPage = async ({ params }: { params: { bookId: string } }) => {
         alt="Book Cover" 
         className="w-64 h-auto mt-4" 
       /> */}
-      <BorrowBook bookId={book.id} availableCopies={book.availableCopies ?? 0} userId={userId} />
+      <BorrowBook bookId={book.id} availableCopies={book.availableCopies ?? 0} />
     </div>
   );
 };

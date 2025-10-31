@@ -1,5 +1,6 @@
 "use client";
 
+import { useUserStore } from "@/store/userStore";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -7,17 +8,27 @@ import { useState } from "react";
 interface BorrowButtonProps {
   bookId: string;
   availableCopies: number;
-  userId: string;
 }
 
-const BorrowBook = ({ bookId, availableCopies, userId }: BorrowButtonProps) => {
+const BorrowBook = ({ bookId, availableCopies }: BorrowButtonProps) => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
   const router = useRouter();
+  const { user, isLoading, fetchUser } = useUserStore();
+
+  console.log(user, "line 19");
+  const userId = user?.id;
 
   const handleBorrow = async () => {
     setLoading(true);
     setMessage(null);
+    // try {
+    //   const response = await axios.post(
+    //     `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/borrow`,
+    //     { userId, bookId },
+    //     { headers: { "Content-Type": "application/json" } }
+    //   );
+
     try {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/borrow`,
@@ -44,7 +55,7 @@ const BorrowBook = ({ bookId, availableCopies, userId }: BorrowButtonProps) => {
       <button
         onClick={handleBorrow}
         disabled={!isAvailable || loading}
-        className={`px-6 py-3 rounded-lg font-medium transition-all ${
+        className={`px-6 py-3 rounded-lg font-medium transition-all cursor-pointer ${
           isAvailable
             ? loading
               ? "bg-gray-400 text-white cursor-not-allowed"
@@ -61,7 +72,7 @@ const BorrowBook = ({ bookId, availableCopies, userId }: BorrowButtonProps) => {
         </p>
       )}
 
-      <p className="mt-2 text-sm text-gray-600">{availableCopies} copy(ies) available</p>
+      <p className="mt-2 text-sm text-gray-600">{availableCopies} copies available</p>
     </div>
   );
 };
