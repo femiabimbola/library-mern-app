@@ -45,7 +45,6 @@ const Login = () => {
     setError("");
     try {
       const data = await trigger(values);
-      console.log("Login response:", data);
       router.push("/dashboard");
     } catch (error: any) {
       const errorMessage = error?.response?.data?.message || swrError?.message || "An unexpected error occurred";

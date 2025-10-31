@@ -31,7 +31,6 @@ const SingleBookPage = async ({ params }: { params: { bookId: string } }) => {
 
   const { bookId } = await params;
   const book: Book | null = await getBook(bookId);
-  // Simulate logged-in user (replace with real auth in production)
   const userId = "user-123"; // In real app: get from session, context, etc.
 
   if (!book) {
