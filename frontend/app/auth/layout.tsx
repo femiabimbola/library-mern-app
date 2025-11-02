@@ -1,24 +1,27 @@
-"use client";
+// "use client";
 
 import Image from "next/image";
-import { ReactNode, useEffect } from "react";
-import { useUserStore } from "@/store/userStore";
-import { useRouter } from "next/navigation";
+// import { ReactNode, useEffect } from "react";
+import { ReactNode } from "react";
+// import { useUserStore } from "@/store/userStore";
+// import { useRouter } from "next/navigation";
 
 const AuthLayout = ({ children }: { children: ReactNode }) => {
-  const { user, isLoading, fetchUser } = useUserStore();
-  const router = useRouter();
+  // const { user, isLoading, fetchUser } = useUserStore();
+  // const router = useRouter();
 
-  useEffect(() => {
-    // Only run after loading is complete
-    if (!isLoading) {
-      if (user) {
-        router.push("/dashboard");
-      } else {
-        router.push("/auth/login");
-      }
-    }
-  }, [user, isLoading, router]);
+  // // useEffect(() => {
+  // //   const checkAuth = async () => {
+  // //     if (isLoading) return;
+  // //     if (user) {
+  // //       await router.push("/dashboard");
+  // //     } else {
+  // //       await router.push("/auth/login");
+  // //     }
+  // //   };
+
+  // //   checkAuth();
+  // // }, [user, isLoading, router]);
 
   return (
     <main className="relative flex flex-col-reverse text-light-100 sm:flex-row">

@@ -14,16 +14,16 @@ const UserLayout = ({ children }: { children: ReactNode }) => {
     fetchUser(); // Fetch user data on mount
   }, [fetchUser]);
 
-  useEffect(() => {
-    // Only run after loading is complete
-    if (!isLoading) {
-      if (user) {
-        router.push("/dashboard");
-      } else {
-        router.push("/auth/login");
-      }
-    }
-  }, [user, isLoading, router]);
+  // useEffect(() => {
+  //   // Only run after loading is complete
+  //   if (!isLoading) {
+  //     if (user) {
+  //       router.push("/dashboard");
+  //     } else {
+  //       router.push("/auth/login");
+  //     }
+  //   }
+  // }, [user, isLoading, router]);
 
   if (isLoading) {
     return <div>Loading...</div>;
