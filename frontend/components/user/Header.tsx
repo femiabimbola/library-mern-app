@@ -24,15 +24,7 @@ const Header = ({ user }: HeaderProps) => {
         <div className="flex items-center justify-between h-16">
           {/* Logo Section */}
           <Link href="/" className="flex items-center space-x-2">
-            <Image
-              src="/icons/logo.svg"
-              alt="Logo"
-              width={40}
-              height={40}
-              // className="hover:opacity-80 transition-opacity"
-              className="hover:opacity-80"
-              priority
-            />
+            <Image src="/icons/logo.svg" alt="Logo" width={40} height={40} className="hover:opacity-80" priority />
             <span className="text-lg font-semibold text-gray-900 hidden sm:block">BookWise</span>
           </Link>
 

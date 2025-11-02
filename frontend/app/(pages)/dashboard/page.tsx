@@ -7,7 +7,6 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Badge } from "@/components/ui/badge";
 import { useRouter } from "next/navigation";
 import { toast, Toaster } from "sonner";
-import useSWR from "swr";
 import { format } from "date-fns";
 import { ErrorBoundary } from "react-error-boundary";
 import { Skeleton } from "@/components/ui/skeleton";
