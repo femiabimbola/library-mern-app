@@ -67,10 +67,10 @@ export const SingleBookCard = ({ id, uploadedImageUrl, title, author, coverColor
   return (
     <Link href={`/books/${id}`}>
       <ImageKitProvider urlEndpoint={imageKitEndpoint}>
-        <Image src={uploadedImageUrl} alt="Uploaded Media" width={42} height={52} className="rounded-md" />
+        <Image src={uploadedImageUrl} alt="Uploaded Media" width={250} height={300} className="rounded-md" />
       </ImageKitProvider>
-      <p className="book-title">{title}</p>
-      <p className="book-genre">{author}</p>
+      <p className="book-title text-white">{title}</p>
+      <p className="book-genre text-white">{author}</p>
     </Link>
   );
 };
