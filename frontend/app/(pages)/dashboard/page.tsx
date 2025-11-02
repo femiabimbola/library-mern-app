@@ -50,7 +50,7 @@ export default function Dashboard() {
         description: "Please log in to access the dashboard.",
         duration: 3000,
       });
-      setTimeout(() => router.push("/auth/login"), 3000); // Delay redirect for toast visibility
+      setTimeout(() => router.push("/auth/login"), 2000); // Delay redirect for toast visibility
     }
   }, [error, router]);
 
