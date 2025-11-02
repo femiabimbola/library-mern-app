@@ -14,6 +14,7 @@ const BorrowBook = ({ bookId, availableCopies }: BorrowButtonProps) => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
   const router = useRouter();
+
   const { user, isLoading, fetchUser } = useUserStore();
 
   console.log(user, "line 19");
@@ -22,12 +23,6 @@ const BorrowBook = ({ bookId, availableCopies }: BorrowButtonProps) => {
   const handleBorrow = async () => {
     setLoading(true);
     setMessage(null);
-    // try {
-    //   const response = await axios.post(
-    //     `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/borrow`,
-    //     { userId, bookId },
-    //     { headers: { "Content-Type": "application/json" } }
-    //   );
 
     try {
       const response = await axios.post(

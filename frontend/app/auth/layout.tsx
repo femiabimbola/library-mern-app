@@ -9,21 +9,16 @@ const AuthLayout = ({ children }: { children: ReactNode }) => {
   const { user, isLoading, fetchUser } = useUserStore();
   const router = useRouter();
 
-  // useEffect(() => {
-  //   fetchUser(); // Fetch user data on mount
-  // }, [fetchUser]);
-
-  // useEffect(() => {
-  //   if (!isLoading && user) {
-  //     router.push("/dashboard"); // Redirect to dashboard if user is authenticated
-  //   }
-  // }, [user, isLoading, router]);
-
-  // useEffect(() => {
-  //   if (user) {
-  //     router.push("/dashboard"); // Redirect to dashboard if user is authenticated
-  //   }
-  // }, [user, router]);
+  useEffect(() => {
+    // Only run after loading is complete
+    if (!isLoading) {
+      if (user) {
+        router.push("/dashboard");
+      } else {
+        router.push("/auth/login");
+      }
+    }
+  }, [user, isLoading, router]);
 
   return (
     <main className="relative flex flex-col-reverse text-light-100 sm:flex-row">

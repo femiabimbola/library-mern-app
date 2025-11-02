@@ -11,6 +11,8 @@ import { format } from "date-fns";
 import { ErrorBoundary } from "react-error-boundary";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useUserStore } from "@/store/userStore";
+import { ImageKitProvider } from "@imagekit/next";
+import Image from "next/image";
 
 interface AppUser {
   id: string;
@@ -26,6 +28,8 @@ interface AppUser {
 interface UserResponse {
   user: AppUser;
 }
+
+const imageKitEndpoint = process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT!;
 
 // Error fallback component
 const ErrorFallback = ({ error }: { error: Error }) => {
@@ -100,6 +104,10 @@ export default function Dashboard() {
           <CardContent className="flex items-center space-x-4">
             <Avatar className="h-16 w-16" aria-label={`Avatar of ${user.fullName}`}>
               <AvatarImage src={`https://ui-avatars.com/api/?name=${user.fullName}`} alt={user.fullName} />
+              <ImageKitProvider urlEndpoint={imageKitEndpoint}>
+                <Image src={user.universityCard} alt="Uploaded Media" width={42} height={52} className="rounded-md" />
+              </ImageKitProvider>
+
               <AvatarFallback>{user.fullName.charAt(0)}</AvatarFallback>
             </Avatar>
             <div>

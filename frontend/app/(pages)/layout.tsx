@@ -15,10 +15,15 @@ const UserLayout = ({ children }: { children: ReactNode }) => {
   }, [fetchUser]);
 
   useEffect(() => {
-    if (error || user) {
-      return router.push("/auth/login"); // Redirect will handle this
+    // Only run after loading is complete
+    if (!isLoading) {
+      if (user) {
+        router.push("/dashboard");
+      } else {
+        router.push("/auth/login");
+      }
     }
-  }, [error, router]);
+  }, [user, isLoading, router]);
 
   if (isLoading) {
     return <div>Loading...</div>;
