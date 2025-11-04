@@ -3,7 +3,7 @@
 import { useUserStore } from "@/store/userStore";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface BorrowButtonProps {
   bookId: string;
@@ -16,6 +16,10 @@ const BorrowBook = ({ bookId, availableCopies }: BorrowButtonProps) => {
   const router = useRouter();
 
   const { user, isLoading, fetchUser } = useUserStore();
+
+  useEffect(() => {
+    fetchUser(); // Fetch user data on mount
+  }, [fetchUser]);
 
   console.log(user, "line 19");
   const userId = user?.id;
