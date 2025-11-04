@@ -61,7 +61,7 @@ const BorrowBook = ({ bookId, availableCopies }: BorrowButtonProps) => {
   // ────── LOGIN HANDLER ──────
   const handleLoginRedirect = () => {
     // Preserve the book page so user returns after login
-    router.push(`/login?redirect=/books/${bookId}`);
+    router.push(`/auth/login?redirect=/books/${bookId}`);
   };
 
   // ────── UI LOGIC ──────

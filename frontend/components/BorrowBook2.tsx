@@ -25,7 +25,8 @@ const BorrowBook = ({ bookId, availableCopies }: BorrowButtonProps) => {
   // --- State Booleans for Clearer Logic ---
   const isUserLoggedIn = !!user?.id;
   const isBookAvailable = availableCopies > 0;
-  const isBorrowApiLoading = loading; // Renamed for clarity
+  // const isBorrowApiLoading = loading; // Renamed for clarity
+  const isBorrowApiLoading = isUserLoggedIn && isBookAvailable; // Renamed for clarity
 
   const handleBorrow = async () => {
     // Guard clause: Ensure user is logged in before proceeding
