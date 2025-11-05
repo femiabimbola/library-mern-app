@@ -4,22 +4,24 @@ import { db } from "../database/connectdb";
 import { eq } from "drizzle-orm";
 import dayjs from "dayjs";
 
-// ... your imports
-
 interface BorrowBookRequestBody {
   userId: string;
   bookId: string;
 }
 
-//req: Request<{}, any, BorrowBookRequestBody>
-export const borrowBook2 = async (req: Request, res: Response) => {
+//Request<P, ResBody, ReqBody, ReqQuery>
+export const borrowBook2: RequestHandler<{}, any, BorrowBookRequestBody> = async (
+  req: Request<{}, any, BorrowBookRequestBody>,
+  res: Response
+) => {
   const { userId, bookId } = req.body;
 
   if (!userId || !bookId) {
-    return res.status(400).json({
+    res.status(400).json({
       success: false,
       error: "userId and bookId are required",
     });
+    return;
   }
 
   try {
@@ -30,15 +32,16 @@ export const borrowBook2 = async (req: Request, res: Response) => {
       .limit(1);
 
     if (!book.length || book[0].availableCopies <= 0) {
-      return res.status(400).json({
+      res.status(400).json({
         success: false,
         error: "Book is not available for borrowing",
       });
+      return;
     }
 
     const dueDate = dayjs().add(7, "day").format("YYYY-MM-DD");
 
-    const record = await db
+    const [record] = await db
       .insert(borrowRecords)
       .values({
         userId,
