@@ -21,7 +21,7 @@ const BorrowBook = ({ bookId, availableCopies }: BorrowButtonProps) => {
     fetchUser(); // Fetch user data on mount
   }, [fetchUser]);
 
-  console.log(user, "line 19");
+
   const userId = user?.id;
 
   const handleBorrow = async () => {
@@ -29,6 +29,7 @@ const BorrowBook = ({ bookId, availableCopies }: BorrowButtonProps) => {
     setMessage(null);
 
     try {
+      console.log(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/borrow`);
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/borrow`,
         { userId, bookId },

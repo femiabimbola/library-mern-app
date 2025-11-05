@@ -36,6 +36,7 @@ const BorrowBook = ({ bookId, availableCopies }: BorrowButtonProps) => {
     setLoading(true);
     setMessage(null);
 
+    console.log(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/borrow`);
     try {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/borrow`,

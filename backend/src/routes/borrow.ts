@@ -5,6 +5,6 @@ import { borrowBook2 } from "../controller/borrowBook2";
 
 const router = Router();
 
-router.post("/books", borrowBook2);
+router.post("/borrow", borrowBook2);
 
 export default router;
