@@ -1,9 +1,10 @@
 import { Router } from "express";
 
 import { borrowBook } from "../controller/borrowBooks";
+import { borrowBook2 } from "../controller/borrowBook2";
 
 const router = Router();
 
-// router.post("/books", borrowBook);
+router.post("/books", borrowBook2);
 
 export default router;
