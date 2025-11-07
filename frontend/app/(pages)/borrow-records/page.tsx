@@ -1,5 +1,7 @@
+import BorrowBookRecord from "@/components/BorrowBookRecord";
+
 const BorrowRecordPage = () => {
-  return <p> Borrow Record</p>;
+  return <BorrowBookRecord />;
 };
 
 export default BorrowRecordPage;
