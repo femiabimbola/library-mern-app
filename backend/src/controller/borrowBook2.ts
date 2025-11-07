@@ -10,19 +10,18 @@ interface BorrowBookRequestBody {
 }
 
 //Request<P, ResBody, ReqBody, ReqQuery>
-export const borrowBook2: RequestHandler<{ bookId: string }, any, { userId: string }> = async (
-  req: Request<{ bookId: string }, any, { userId: string }>,
+export const borrowBook2: RequestHandler<{}, any, BorrowBookRequestBody> = async (
+  req: Request<{}, any, BorrowBookRequestBody>,
   res: Response
 ) => {
-  const { bookId } = req.params; // ← from URL
-  const { userId } = req.body;
+  const { userId, bookId } = req.body;
 
   console.log("Borrow request:", { userId, bookId });
 
   if (!userId || !bookId) {
     res.status(400).json({
       success: false,
-      error: "userId and bookId are required",
+      error: "userId and bookId are required right",
     });
     return;
   }

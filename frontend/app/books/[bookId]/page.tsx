@@ -61,7 +61,7 @@ const SingleBookPage = async ({ params }: { params: { bookId: string } }) => {
       /> */}
       <BorrowBook bookId={book.id} availableCopies={book.availableCopies ?? 0} />
       <BorrowBook1 bookId={book.id} availableCopies={book.availableCopies ?? 0} />
-      <BorrowBook2 bookId={book.id} availableCopies={book.availableCopies ?? 0} />
+      {/* <BorrowBook2 bookId={book.id} availableCopies={book.availableCopies ?? 0} /> */}
     </div>
   );
 };
