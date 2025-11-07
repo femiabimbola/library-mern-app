@@ -1,6 +1,6 @@
-import BorrowBook from "@/components/BorrowBook";
-import BorrowBook1 from "@/components/BorrowBook1";
-import BorrowBook2 from "@/components/BorrowBook2";
+import BorrowButton from "@/components/BorrowBookButton";
+import BorrowButton1 from "@/components/BorrowBookButton1";
+import BorrowBook2 from "@/components/BorrowBookButton2";
 import axios from "axios";
 import { notFound } from "next/navigation";
 
@@ -59,8 +59,8 @@ const SingleBookPage = async ({ params }: { params: { bookId: string } }) => {
         alt="Book Cover" 
         className="w-64 h-auto mt-4" 
       /> */}
-      <BorrowBook bookId={book.id} availableCopies={book.availableCopies ?? 0} />
-      <BorrowBook1 bookId={book.id} availableCopies={book.availableCopies ?? 0} />
+      <BorrowButton bookId={book.id} availableCopies={book.availableCopies ?? 0} />
+      <BorrowButton1 bookId={book.id} availableCopies={book.availableCopies ?? 0} />
       {/* <BorrowBook2 bookId={book.id} availableCopies={book.availableCopies ?? 0} /> */}
     </div>
   );
