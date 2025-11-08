@@ -1,7 +1,7 @@
 import { Request, Response, RequestHandler } from "express";
-import { books, borrowRecords } from "../database/schema";
+import { books, borrowRecords, users } from "../database/schema";
 import { db } from "../database/connectdb";
-import { eq } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 import dayjs from "dayjs";
 
 interface BorrowBookRequestBody {
@@ -15,8 +15,6 @@ export const borrowBook: RequestHandler<{}, any, BorrowBookRequestBody> = async 
   res: Response
 ) => {
   const { userId, bookId } = req.body;
-
-  console.log("Borrow request:", { userId, bookId });
 
   if (!userId || !bookId) {
     res.status(400).json({
@@ -67,6 +65,49 @@ export const borrowBook: RequestHandler<{}, any, BorrowBookRequestBody> = async 
     res.status(500).json({
       success: false,
       error: "An error occurred while borrowing the book",
+    });
+  }
+};
+
+export const getAllBorrowRecords = async (req: Request, res: Response) => {
+  try {
+    const records = await db
+      .select({
+        id: borrowRecords.id,
+        userId: borrowRecords.userId,
+        bookId: borrowRecords.bookId,
+        borrowedAt: borrowRecords.borrowDate,
+        dueDate: borrowRecords.dueDate,
+        returnDate: borrowRecords.returnDate,
+        status: borrowRecords.status,
+        bookTitle: books.title,
+        userName: users.fullName, // assuming users table has a 'name' field
+      })
+      .from(borrowRecords)
+      .leftJoin(books, eq(borrowRecords.bookId, books.id))
+      .leftJoin(users, eq(borrowRecords.userId, users.id))
+      .orderBy(desc(borrowRecords.borrowDate)); // newest first
+
+    // Optional: Enhance with overdue status
+    const enrichedRecords = records.map((record) => {
+      const isOverdue = record.status === "BORROWED" && dayjs().isAfter(dayjs(record.dueDate), "day");
+
+      return {
+        ...record,
+        status: isOverdue ? "OVERDUE" : record.status,
+      };
+    });
+
+    res.status(200).json({
+      success: true,
+      data: enrichedRecords,
+      count: enrichedRecords.length,
+    });
+  } catch (error) {
+    console.error("Error fetching borrow records:", error);
+    res.status(500).json({
+      success: false,
+      error: "An error occurred while fetching borrow records",
     });
   }
 };
