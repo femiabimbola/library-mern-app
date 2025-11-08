@@ -1,10 +1,9 @@
 import { Router } from "express";
 
-import { borrowBook } from "../controller/borrowBooks";
-import { borrowBook2 } from "../controller/borrowBook2";
+import { borrowBook } from "../controller/borrowBook";
 
 const router = Router();
 
-router.post("/borrow", borrowBook2);
+router.post("/borrow", borrowBook);
 
 export default router;

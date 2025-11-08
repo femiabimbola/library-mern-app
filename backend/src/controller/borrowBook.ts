@@ -1,29 +1,32 @@
-import { Request, Response } from "express";
+import { Request, Response, RequestHandler } from "express";
 import { books, borrowRecords } from "../database/schema";
 import { db } from "../database/connectdb";
 import { eq } from "drizzle-orm";
 import dayjs from "dayjs";
 
-// Define the shape of the request body
 interface BorrowBookRequestBody {
   userId: string;
   bookId: string;
 }
 
-// Express route handler for borrowing a book
-export const borrowBook = async (req: Request<BorrowBookRequestBody>, res: Response) => {
+//Request<P, ResBody, ReqBody, ReqQuery>
+export const borrowBook: RequestHandler<{}, any, BorrowBookRequestBody> = async (
+  req: Request<{}, any, BorrowBookRequestBody>,
+  res: Response
+) => {
   const { userId, bookId } = req.body;
 
-  // Validate request body
+  console.log("Borrow request:", { userId, bookId });
+
   if (!userId || !bookId) {
-    return res.status(400).json({
+    res.status(400).json({
       success: false,
-      error: "userId and bookId are required!!!",
+      error: "userId and bookId are required right",
     });
+    return;
   }
 
   try {
-    // Check book availability
     const book = await db
       .select({ availableCopies: books.availableCopies })
       .from(books)
@@ -31,33 +34,33 @@ export const borrowBook = async (req: Request<BorrowBookRequestBody>, res: Respo
       .limit(1);
 
     if (!book.length || book[0].availableCopies <= 0) {
-      return res.status(400).json({
+      res.status(400).json({
         success: false,
         error: "Book is not available for borrowing",
       });
+      return;
     }
 
-    // Calculate due date (7 days from now)
-    const dueDate = dayjs().add(7, "day").toDate().toDateString();
+    const dueDate = dayjs().add(7, "day").format("YYYY-MM-DD");
 
-    // Insert borrow record
-    const record = await db.insert(borrowRecords).values({
-      userId,
-      bookId,
-      dueDate,
-      status: "BORROWED",
-    });
+    const [record] = await db
+      .insert(borrowRecords)
+      .values({
+        userId,
+        bookId,
+        dueDate,
+        status: "BORROWED",
+      })
+      .returning(); // optional: use .returning() if supported
 
-    // Update available copies
     await db
       .update(books)
       .set({ availableCopies: book[0].availableCopies - 1 })
       .where(eq(books.id, bookId));
 
-    // Return success response
     res.status(200).json({
       success: true,
-      data: JSON.parse(JSON.stringify(record)),
+      data: record,
     });
   } catch (error) {
     console.error("Error borrowing book:", error);
@@ -65,6 +68,5 @@ export const borrowBook = async (req: Request<BorrowBookRequestBody>, res: Respo
       success: false,
       error: "An error occurred while borrowing the book",
     });
-    return;
   }
 };
