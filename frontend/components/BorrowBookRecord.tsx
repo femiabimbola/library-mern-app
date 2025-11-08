@@ -1,3 +1,5 @@
+"use client";
+
 import ErrorBoundaryAdapter from "./GlobalErrorFallback";
 import { ErrorBoundary } from "react-error-boundary";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -19,12 +21,25 @@ type BorrowRecord = {
   returnDate: string | null;
   status: "BORROWED" | "RETURNED" | "OVERDUE";
   createdAt: string;
-  // Optional: if backend joins book title
   bookTitle?: string;
 };
 
 // --- Fetcher ---
-const fetcher = (url: string) => axios.get<BorrowRecord[]>(url).then((res) => res.data);
+const fetcher = async (url: string): Promise<BorrowRecord[]> => {
+  const { data } = await axios.get<{
+    success: boolean;
+    data: BorrowRecord[];
+    count: number;
+  }>(url);
+
+  // Only return the array inside `data`
+  if (data.success && Array.isArray(data.data)) {
+    return data.data;
+  }
+
+  // Fallback
+  return [];
+};
 
 const BorrowBookRecord = () => {
   const {
