@@ -55,7 +55,7 @@ const BorrowBookRecord = () => {
   const formatDate = (dateStr: string | null) => {
     if (!dateStr) return "—";
     try {
-      return format(new Date(dateStr), "MMM d, yyyy");
+      return format(new Date(dateStr), "d MMM, yyyy");
     } catch {
       return dateStr.split("T")[0];
     }
