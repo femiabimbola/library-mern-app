@@ -5,13 +5,16 @@ import Link from "next/link";
 import Image from "next/image";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
+import { useUserStore } from "@/store/userStore";
 
 interface HeaderProps {
   user: AppUser | null;
 }
 
-const Header = ({ user }: HeaderProps) => {
+const Header = () => {
   const pathname = usePathname();
+
+  const { user, isLoading, error, fetchUser } = useUserStore();
 
   const navLinks = [
     { href: "/", label: "Dashboard" },
@@ -23,6 +26,7 @@ const Header = ({ user }: HeaderProps) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo Section */}
+
           <Link href="/" className="flex items-center space-x-2">
             <Image src="/icons/logo.svg" alt="Logo" width={40} height={40} className="hover:opacity-80" priority />
             <span className="text-lg font-semibold text-gray-900 hidden sm:block">BookWise</span>

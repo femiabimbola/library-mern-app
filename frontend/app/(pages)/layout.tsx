@@ -7,23 +7,11 @@ import { ReactNode, useEffect } from "react";
 import { useUserStore } from "@/store/userStore";
 
 const UserLayout = ({ children }: { children: ReactNode }) => {
-  const router = useRouter();
   const { user, isLoading, error, fetchUser } = useUserStore();
 
   useEffect(() => {
     fetchUser(); // Fetch user data on mount
   }, [fetchUser]);
-
-  // useEffect(() => {
-  //   // Only run after loading is complete
-  //   if (!isLoading) {
-  //     if (user) {
-  //       router.push("/dashboard");
-  //     } else {
-  //       router.push("/auth/login");
-  //     }
-  //   }
-  // }, [user, isLoading, router]);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -33,7 +21,7 @@ const UserLayout = ({ children }: { children: ReactNode }) => {
     <main className="flex flex-row bg-pattern bg-cover">
       <Sidebar user={user} />
       <div className="admin-container">
-        <Header user={user} />
+        <Header />
         {children}
       </div>
     </main>

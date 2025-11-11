@@ -71,7 +71,6 @@ const SingleBookPage = async ({ params }: { params: { bookId: string } }) => {
           </CardContent>
           <CardFooter className="flex justify-center">
             <Button asChild>
-              {/* Assuming you have a /books route */}
               <Link href="/books">Back to Library</Link>
             </Button>
           </CardFooter>
@@ -85,12 +84,7 @@ const SingleBookPage = async ({ params }: { params: { bookId: string } }) => {
 
   return (
     <div className="container mx-auto p-4 md:p-8">
-      {/* Main content wrapped in a Card for a clean container */}
       <Card className="overflow-hidden">
-        {/* Responsive Grid:
-          - On mobile (default): 1 column (image stacks on top of info)
-          - On medium screens (md) and up: 3 columns (1 for image, 2 for info)
-        */}
         <div className="grid grid-cols-1 md:grid-cols-3 md:gap-x-8">
           {/* Column 1: Book Cover Image */}
           <div className="md:col-span-1 p-6 md:p-8 bg-muted/50 flex justify-center items-center">

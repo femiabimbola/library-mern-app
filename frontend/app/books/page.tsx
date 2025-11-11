@@ -15,10 +15,8 @@ const Books = () => {
 
   if (isLoading) {
     return (
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 w-full max-w-6xl">
-        {[...Array(6)].map((_, index) => (
-          <Skeleton key={index} className="h-48 w-full rounded-lg" />
-        ))}
+      <div className="">
+        <p> The book is loading </p>
       </div>
     );
   }
@@ -40,8 +38,7 @@ const Books = () => {
   }
 
   return (
-    <section className="my-auto flex h-full min-h-screen flex-1 flex-col items-center bg-pattern bg-cover bg-top px-5 py-10">
-      (
+    <section className="">
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 w-full max-w-6xl">
         {books.map((book) => (
           <SingleBookCard
