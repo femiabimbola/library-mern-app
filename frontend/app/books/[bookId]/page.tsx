@@ -55,14 +55,13 @@ const SingleBookPage = async ({ params }: { params: { bookId: string } }) => {
         <strong>Genre:</strong> {book.genre}
       </p>
 
-      {/* <img 
-        src={book.coverImage} //
-        alt="Book Cover" 
-        className="w-64 h-auto mt-4" 
-      /> */}
+      <img
+        src={book.coverImageUrl} //
+        alt="Book Cover"
+        className="w-64 h-auto mt-4"
+      />
       <BorrowButton bookId={book.id} availableCopies={book.availableCopies ?? 0} />
       <BorrowButton1 bookId={book.id} availableCopies={book.availableCopies ?? 0} />
-      {/* <BorrowBook2 bookId={book.id} availableCopies={book.availableCopies ?? 0} /> */}
     </div>
   );
 };
