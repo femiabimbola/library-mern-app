@@ -14,7 +14,7 @@ interface HeaderProps {
 const Header = () => {
   const pathname = usePathname();
 
-  const { user, isLoading, error, fetchUser } = useUserStore();
+  const { user, isLoading, error } = useUserStore();
 
   const navLinks = [
     { href: "/", label: "Dashboard" },

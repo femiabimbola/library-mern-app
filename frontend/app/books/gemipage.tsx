@@ -1,9 +1,12 @@
+// app/books/page.tsx
+
 "use client";
 
 import { useBookStore } from "@/store/bookStore";
 import { useEffect } from "react";
-import { SingleBookCard, SingleBookCard2, SingleBookCard3 } from "@/components/SingleBook";
+import { SingleBookCard } from "@/components/SingleBook";
 
+// Shadcn/Lucide Imports
 import { Skeleton } from "@/components/ui/skeleton";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AlertCircle, FileText } from "lucide-react"; // Icons
@@ -68,9 +71,9 @@ const Books = () => {
 
     // 4. Success State
     return (
-      <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3 w-full max-w-6xl mx-auto">
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 w-full max-w-6xl mx-auto">
         {books.map((book) => (
-          <SingleBookCard2
+          <SingleBookCard
             key={book.id}
             id={book.id}
             title={book.title}
@@ -85,9 +88,9 @@ const Books = () => {
   return (
     // Page layout with standard padding and heading
     <section className="container mx-auto px-4 py-12">
-      <div className="mb-8 text-center">
+      <div className="mb-8">
         <h1 className="text-3xl font-bold tracking-tight">Book Archive</h1>
-        <p className="text-muted-foreground ">
+        <p className="text-muted-foreground">
           {/* Dynamically update subtitle based on state */}
           {isLoading ? "Browsing our collection..." : `Browse all ${books.length} books in our collection.`}
         </p>
