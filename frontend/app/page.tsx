@@ -7,7 +7,7 @@ import Header3 from "@/components/Header2";
 const Home = () => {
   return (
     <>
-      <Header3 />
+      <Header2 />
       <Hero />
       <Footer />
     </>

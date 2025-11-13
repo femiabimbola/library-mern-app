@@ -82,10 +82,10 @@ const Header = () => {
               // 3. Unauthenticated State (Sign In / Sign Up)
               <div className="flex items-center space-x-2">
                 <Button asChild variant="ghost" size="sm">
-                  <Link href="/auth/sign-in">Sign In</Link>
+                  <Link href="/auth/sign-in">Log In</Link>
                 </Button>
                 <Button asChild size="sm">
-                  <Link href="/auth/sign-up">Sign Up</Link>
+                  <Link href="/auth/sign-up">Register</Link>
                 </Button>
               </div>
             )}

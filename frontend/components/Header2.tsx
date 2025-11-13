@@ -64,10 +64,10 @@ const Header = () => {
             ) : (
               <div className="flex items-center space-x-4">
                 <Button variant="outline" asChild>
-                  <Link href="/sign-in">Sign In</Link>
+                  <Link href="/auth/login">Log In</Link>
                 </Button>
                 <Button asChild>
-                  <Link href="/sign-up">Sign Up</Link>
+                  <Link href="/auth/register">Sign Up</Link>
                 </Button>
               </div>
             )}

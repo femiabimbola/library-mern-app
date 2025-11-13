@@ -1,16 +1,16 @@
 "use client";
 
 import Sidebar from "@/components/user/Sidebar";
-import Header from "@/components/user/Header";
-import { useRouter } from "next/navigation";
+import Header from "@/components/Header1";
 import { ReactNode, useEffect } from "react";
 import { useUserStore } from "@/store/userStore";
 
 const UserLayout = ({ children }: { children: ReactNode }) => {
-  const { user, isLoading, error, fetchUser } = useUserStore();
+  const { user, isLoading, fetchUser } = useUserStore();
 
+  // Fetch user data on mount
   useEffect(() => {
-    fetchUser(); // Fetch user data on mount
+    fetchUser();
   }, [fetchUser]);
 
   if (isLoading) {
