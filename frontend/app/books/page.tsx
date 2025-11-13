@@ -11,7 +11,6 @@ import { AlertCircle, FileText } from "lucide-react"; // Icons
 // A reusable skeleton component for the loading state
 const BookSkeleton = () => (
   <div className="flex flex-col space-y-3">
-    {/* Matches the aspect ratio of the card image */}
     <Skeleton className="aspect-[5/6] w-full rounded-lg" />
     <div className="space-y-2">
       <Skeleton className="h-5 w-3/4" />

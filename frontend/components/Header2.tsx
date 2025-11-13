@@ -4,12 +4,9 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useUserStore } from "@/store/userStore";
-
-interface HeaderProps {
-  user: AppUser | null;
-}
 
 const Header = () => {
   const pathname = usePathname();
@@ -49,20 +46,31 @@ const Header = () => {
                 </li>
               ))}
             </ul>
-            {/* User Avatar */}
-            <Link href="/my-profile" className="group">
-              <Avatar className="h-10 w-10 ring-2 ring-offset-2 ring-gray-200 group-hover:ring-blue-300 transition-all">
-                <AvatarImage src={`https://ui-avatars.com/api/?name=${user?.fullName}`} alt={user?.fullName} />
-                <AvatarFallback
-                  className={cn(
-                    "bg-gradient-to-br from-blue-100 to-amber-100 text-gray-800 font-semibold",
-                    "group-hover:from-blue-200 group-hover:to-amber-200 transition-all"
-                  )}
-                >
-                  {/* {getInitials(user?.name || "")} */}
-                </AvatarFallback>
-              </Avatar>
-            </Link>
+            {/* User Section */}
+            {user ? (
+              <Link href="/my-profile" className="group">
+                <Avatar className="h-10 w-10 ring-2 ring-offset-2 ring-gray-200 group-hover:ring-blue-300 transition-all">
+                  <AvatarImage src={`https://ui-avatars.com/api/?name=${user?.fullName}`} alt={user?.fullName} />
+                  <AvatarFallback
+                    className={cn(
+                      "bg-gradient-to-br from-blue-100 to-amber-100 text-gray-800 font-semibold",
+                      "group-hover:from-blue-200 group-hover:to-amber-200 transition-all"
+                    )}
+                  >
+                    {/* {getInitials(user?.name || "")} */}
+                  </AvatarFallback>
+                </Avatar>
+              </Link>
+            ) : (
+              <div className="flex items-center space-x-4">
+                <Button variant="outline" asChild>
+                  <Link href="/sign-in">Sign In</Link>
+                </Button>
+                <Button asChild>
+                  <Link href="/sign-up">Sign Up</Link>
+                </Button>
+              </div>
+            )}
           </nav>
         </div>
       </div>
