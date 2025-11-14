@@ -1,16 +1,13 @@
 import { Request, NextFunction, Router } from "express";
-import { createUser,  PassportLocal, } from "../controller/auth";
+import { createUser, PassportLocal } from "../controller/auth";
 import { validateSignUp, validateSignIn } from "../middleware/authValidation";
 import { rateLimiter } from "../middleware/ratelimit";
-import "../lib/passportStrategy/localStrategy"
-
+import "../lib/passportStrategy/localStrategy";
 
 const router = Router();
 
+router.post("/auth/register", validateSignUp, rateLimiter, createUser);
 
-router.post("/auth/register", validateSignUp, rateLimiter, createUser)
-
-router.post('/auth/login', PassportLocal);
-
+router.post("/auth/login", validateSignIn, PassportLocal);
 
 export default router;
