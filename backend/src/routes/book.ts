@@ -1,9 +1,10 @@
 import { Router } from "express";
 import { createBooks, getAllBooks, deleteBook, getBookById, editBook } from "../controller/books";
+import { validateBook } from "../middleware/bookValidation";
 
 const router = Router();
 
-router.post("/books", createBooks);
+router.post("/books", validateBook, createBooks);
 
 /**
  * @swagger
