@@ -65,7 +65,7 @@ const Header = () => {
               <Skeleton className="h-10 w-10 rounded-full" />
             ) : user ? (
               // 2. Authenticated State (User Avatar)
-              <Link href="/my-profile" className="group">
+              <Link href="/dashboard" className="group">
                 <Avatar className="h-10 w-10 ring-2 ring-offset-2 ring-gray-200 group-hover:ring-blue-300 transition-all">
                   <AvatarImage src={`https://ui-avatars.com/api/?name=${user.fullName}`} alt={user.fullName} />
                   <AvatarFallback
@@ -82,10 +82,10 @@ const Header = () => {
               // 3. Unauthenticated State (Sign In / Sign Up)
               <div className="flex items-center space-x-2">
                 <Button asChild variant="ghost" size="sm">
-                  <Link href="/auth/sign-in">Log In</Link>
+                  <Link href="/auth/login">Log In</Link>
                 </Button>
                 <Button asChild size="sm">
-                  <Link href="/auth/sign-up">Register</Link>
+                  <Link href="/auth/register">Register</Link>
                 </Button>
               </div>
             )}

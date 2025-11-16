@@ -12,6 +12,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useUserStore } from "@/store/userStore";
 import { ImageKitProvider } from "@imagekit/next";
+import { ErrorFallback } from "@/components/ErrorFallBack";
 import Image from "next/image";
 
 interface AppUser {
@@ -30,18 +31,6 @@ interface UserResponse {
 }
 
 const imageKitEndpoint = process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT!;
-
-// Error fallback component
-const ErrorFallback = ({ error }: { error: Error }) => {
-  return (
-    <div className="flex items-center justify-center h-screen">
-      <Card className="p-4">
-        <CardTitle className="text-red-500">Something went wrong</CardTitle>
-        <CardDescription>{error.message}</CardDescription>
-      </Card>
-    </div>
-  );
-};
 
 export default function Dashboard() {
   const router = useRouter();

@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
-import localFont from 'next/font/local';
+import localFont from "next/font/local";
 import "./globals.css";
-
-
 
 const ibmPlexSans = localFont({
   src: [
@@ -14,26 +12,21 @@ const ibmPlexSans = localFont({
 });
 
 const bebasNeue = localFont({
-  src: [
-    { path: "../public/fonts/BebasNeue-Regular.ttf", weight: "400", style: "normal" },
-  ],
+  src: [{ path: "../public/fonts/BebasNeue-Regular.ttf", weight: "400", style: "normal" }],
   variable: "--bebas-neue",
 });
 
-
 export const metadata: Metadata = {
   title: "The MERN Library App",
-  description: "Developed by ",
+  description: "Developed by Femi Abimbola",
 };
 
-const RootLayout = ({ children}: {children: React.ReactNode;}) => {
+const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="en">
-      <body className={`${ibmPlexSans.className} ${bebasNeue.variable} antialiased`}>
-        {children}
-      </body>
+      <body className={`${ibmPlexSans.className} ${bebasNeue.variable} antialiased`}>{children}</body>
     </html>
   );
-}
+};
 
-export default RootLayout
+export default RootLayout;
