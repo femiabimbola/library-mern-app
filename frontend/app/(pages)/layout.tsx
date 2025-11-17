@@ -13,7 +13,7 @@ const UserLayout = ({ children }: { children: ReactNode }) => {
     fetchUser();
   }, [fetchUser]);
 
-  if (isLoading) {
+  if (isLoading && !user) {
     return <div>Loading...</div>;
   }
 

@@ -11,6 +11,7 @@ import useSWR from "swr";
 import axios from "axios";
 import { format } from "date-fns";
 
+// Major learning
 // --- Type Definition ---
 type BorrowRecord = {
   id: string;
