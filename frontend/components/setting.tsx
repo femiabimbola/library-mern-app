@@ -83,7 +83,7 @@ export const Setting = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Left Column: User Profile Summary */}
           <div className="space-y-6">
-            <Card>
+            <Card className="lg:col-span-1">
               <CardHeader className="text-center pb-2">
                 <div className="mx-auto mb-4">
                   <Avatar className="h-24 w-24">
@@ -193,6 +193,19 @@ export const Setting = () => {
                 </CardFooter>
               </Card>
             </div>
+
+            {/* Danger Zone */}
+            <Card className="border-destructive">
+              <CardHeader>
+                <CardTitle className="text-destructive">Danger Zone</CardTitle>
+                <CardDescription>Irreversible actions that affect your account</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Button variant="destructive" className="w-full sm:w-auto">
+                  Delete Account
+                </Button>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </div>
