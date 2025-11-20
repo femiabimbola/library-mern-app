@@ -83,6 +83,7 @@ export const Setting = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Left Column: User Profile Summary */}
           <div className="space-y-6">
+            {/* h-full flex flex-col justify-between  forbellow */}
             <Card className="lg:col-span-1">
               <CardHeader className="text-center pb-2">
                 <div className="mx-auto mb-4">
