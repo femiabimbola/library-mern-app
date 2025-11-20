@@ -1,9 +1,8 @@
-import Login from "@/components/auth/Login"
+import Login from "@/components/auth/Login";
 
+// TODO: callbackUrl=%2Fsetting
 const LoginPage = () => {
-  return (
-    <Login />
-  )
-}
+  return <Login />;
+};
 
-export default LoginPage
+export default LoginPage;
