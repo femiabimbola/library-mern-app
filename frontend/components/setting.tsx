@@ -6,12 +6,12 @@ import { ErrorFallback } from "@/components/ErrorFallBack";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { ImageKitProvider } from "@imagekit/next";
-import { format } from "date-fns"; // Optional: helpful for date formatting
+import { format } from "date-fns";
 
 // Store
 import { useUserStore } from "@/store/userStore";
 
-// Shadcn UI Components (Ensure these are installed)
+// Shadcn UI Components
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Label } from "@/components/ui/label";
@@ -21,18 +21,6 @@ import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Loader2, LogOut, UserCheck, Building2, CalendarDays } from "lucide-react";
-
-// Types
-interface AppUser {
-  id: string;
-  fullName: string;
-  email: string;
-  universityId: string;
-  universityCard: string;
-  role: string;
-  lastActivityDate: string;
-  createdAt: string;
-}
 
 export const Setting = () => {
   const router = useRouter();
@@ -80,15 +68,15 @@ export const Setting = () => {
 
         <Separator />
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Left Column: User Profile Summary */}
-          <div className="space-y-6">
-            {/* h-full flex flex-col justify-between  forbellow */}
-            <Card className="lg:col-span-1">
+        {/* Main Grid Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
+          {/* --- LEFT COLUMN --- */}
+          <div className="lg:col-span-1 flex flex-col gap-6">
+            {/* Profile Card - set to flex-1 to stretch and fill available space */}
+            <Card className="flex flex-col justify-between flex-1">
               <CardHeader className="text-center pb-2">
                 <div className="mx-auto mb-4">
                   <Avatar className="h-24 w-24">
-                    {/* Fallback to University Card if no dedicated avatar, or just initials */}
                     <AvatarImage src={user.universityCard} className="object-cover" />
                     <AvatarFallback className="text-lg font-bold">{getInitials(user.fullName)}</AvatarFallback>
                   </Avatar>
@@ -101,7 +89,7 @@ export const Setting = () => {
                   </Badge>
                 </div>
               </CardHeader>
-              <CardContent className="text-sm text-muted-foreground space-y-3">
+              <CardContent className="text-sm text-muted-foreground space-y-3 pb-6">
                 <div className="flex items-center gap-2">
                   <UserCheck className="h-4 w-4" />
                   <span>Member since {format(new Date(user.createdAt), "MMMM yyyy")}</span>
@@ -112,17 +100,30 @@ export const Setting = () => {
                 </div>
               </CardContent>
             </Card>
+
+            {/* Danger Zone - Moved to Left Column */}
+            <Card className="border-destructive">
+              <CardHeader>
+                <CardTitle className="text-destructive">Danger Zone</CardTitle>
+                <CardDescription>Irreversible actions</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Button variant="destructive" className="w-full">
+                  Delete Account
+                </Button>
+              </CardContent>
+            </Card>
           </div>
 
-          {/* Right Column: Details & Settings */}
-          <div className="lg:col-span-2 space-y-6">
-            {/* Personal Information Card */}
-            <Card>
+          {/* --- RIGHT COLUMN --- */}
+          <div className="lg:col-span-2 flex flex-col gap-6">
+            {/* Personal Information Card - set to flex-1 to match height of left side if needed */}
+            <Card className="flex-1 flex flex-col">
               <CardHeader>
                 <CardTitle>Personal Information</CardTitle>
                 <CardDescription>Your identification details within the university system.</CardDescription>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="space-y-4 flex-1">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label htmlFor="fullName">Full Name</Label>
@@ -143,15 +144,15 @@ export const Setting = () => {
               </CardContent>
             </Card>
 
-            {/* University Card & Role Settings */}
+            {/* Bottom Grid: University Card & Role Settings */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* University Card Image */}
-              <Card className="overflow-hidden">
+              <Card className="overflow-hidden flex flex-col h-full">
                 <CardHeader>
                   <CardTitle className="text-base">University ID Card</CardTitle>
                   <CardDescription>Digital copy of your ID</CardDescription>
                 </CardHeader>
-                <CardContent className="flex justify-center pb-6">
+                <CardContent className="flex justify-center pb-6 flex-1 items-center">
                   <div className="relative w-full aspect-[3/2] max-w-[280px] rounded-xl overflow-hidden border shadow-sm">
                     <ImageKitProvider urlEndpoint={imageKitEndpoint}>
                       <Image
@@ -167,24 +168,24 @@ export const Setting = () => {
               </Card>
 
               {/* Role Configuration */}
-              <Card>
+              <Card className="flex flex-col h-full">
                 <CardHeader>
                   <CardTitle className="text-base">Role Configuration</CardTitle>
-                  <CardDescription>Manage your account permissions.</CardDescription>
+                  <CardDescription>Manage your permissions.</CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-6">
+                <CardContent className="space-y-6 flex-1">
                   <div className="flex items-center justify-between space-x-2 border p-3 rounded-lg">
                     <div className="space-y-0.5">
                       <Label className="text-base">Active Status</Label>
                       <p className="text-xs text-muted-foreground">
-                        Current Role: <span className="font-semibold text-primary">{user.role}</span>
+                        Role: <span className="font-semibold text-primary">{user.role}</span>
                       </p>
                     </div>
                     <Switch checked={isRoleActive} onCheckedChange={setIsRoleActive} />
                   </div>
 
                   <div className="text-xs text-muted-foreground bg-muted p-3 rounded-md">
-                    Note: Changing your primary role requires administrative approval.
+                    Note: Role changes require administrative approval.
                   </div>
                 </CardContent>
                 <CardFooter>
@@ -194,19 +195,6 @@ export const Setting = () => {
                 </CardFooter>
               </Card>
             </div>
-
-            {/* Danger Zone */}
-            <Card className="border-destructive">
-              <CardHeader>
-                <CardTitle className="text-destructive">Danger Zone</CardTitle>
-                <CardDescription>Irreversible actions that affect your account</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Button variant="destructive" className="w-full sm:w-auto">
-                  Delete Account
-                </Button>
-              </CardContent>
-            </Card>
           </div>
         </div>
       </div>
