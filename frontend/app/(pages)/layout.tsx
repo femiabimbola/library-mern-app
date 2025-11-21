@@ -19,7 +19,7 @@ const UserLayout = ({ children }: { children: ReactNode }) => {
 
   return (
     <main className="flex flex-row bg-pattern bg-cover">
-      <Sidebar user={user} />
+      <Sidebar />
       <div className="admin-container">
         <Header />
         {children}
