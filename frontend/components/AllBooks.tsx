@@ -11,7 +11,7 @@ import ConfirmationDialog from "./ConfirmationDeletion";
 import EditDialog from "./EditDialog";
 
 const AllBooks = () => {
-  const { books, isLoading, error, fetchBooks, deleteBook } = useBookStore();
+  const { books, isLoading, fetchBooks, deleteBook } = useBookStore();
   const [bookToDeleteId, setBookToDeleteId] = useState(null);
   const [isDeleting, setIsDeleting] = useState(false);
   const [bookToEditId, setBookToEditId] = useState(null);

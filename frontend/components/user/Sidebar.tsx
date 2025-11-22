@@ -3,38 +3,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-// import { adminSideBarLinks } from "@/lib/constants";
+import { adminSideBarLinks } from "@/lib/constants";
 import { cn, getInitials } from "@/lib/utils";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { useUserStore } from "@/store/userStore";
-
-export const adminSideBarLinks = [
-  {
-    img: "/icons/admin/home.svg",
-    route: "/dashboard",
-    text: "Dashboard",
-  },
-  {
-    img: "/icons/admin/book.svg",
-    route: "/addbook",
-    text: "Add Book",
-  },
-  {
-    img: "/icons/admin/book.svg",
-    route: "/allbooks",
-    text: "All Books",
-  },
-  {
-    img: "/icons/admin/bookmark.svg",
-    route: "/borrow-records",
-    text: "Borrow Records",
-  },
-  {
-    img: "/icons/admin/user.svg",
-    route: "/setting",
-    text: "Account Setting",
-  },
-];
 
 export const Sidebar = () => {
   const pathname = usePathname();
@@ -50,7 +22,6 @@ export const Sidebar = () => {
   return (
     <div className="sticky top-0 left-0 flex h-screen w-[280px] flex-col justify-between bg-white border-r border-gray-200 pt-8 pb-6 shadow-sm max-md:hidden">
       {/* --- TOP SECTION --- */}
-
       <div>
         {/* Logo */}
         <div className="flex items-center gap-3 px-8 mb-10">
@@ -80,14 +51,9 @@ export const Sidebar = () => {
                       src={link.img}
                       alt="icon"
                       fill
-                      className={cn(
-                        "object-contain transition-all",
-                        // If selected, turn icon white using filter. If not, opacity reduced.
-                        isSelected ? "brightness-0 invert" : "opacity-50"
-                      )}
+                      className={cn("object-contain transition-all", isSelected ? "brightness-0 invert" : "opacity-50")}
                     />
                   </div>
-
                   <p className="text-base font-medium">{link.text}</p>
                 </div>
               </Link>
