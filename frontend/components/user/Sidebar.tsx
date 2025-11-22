@@ -7,6 +7,7 @@ import { adminSideBarLinks } from "@/lib/constants";
 import { cn, getInitials } from "@/lib/utils";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { useUserStore } from "@/store/userStore";
+import { LogOutDialog } from "../LogoutDialog";
 
 export const Sidebar = () => {
   const pathname = usePathname();
