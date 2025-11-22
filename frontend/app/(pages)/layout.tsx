@@ -1,6 +1,8 @@
 "use client";
 
 import Sidebar from "@/components/user/Sidebar";
+import { Sidebar2 } from "@/components/user/sidebar2";
+import { Sidebar3 } from "@/components/user/sidebar3";
 import Header from "@/components/Header1";
 import { ReactNode, useEffect } from "react";
 import { useUserStore } from "@/store/userStore";
@@ -19,7 +21,7 @@ const UserLayout = ({ children }: { children: ReactNode }) => {
 
   return (
     <main className="flex flex-row bg-pattern bg-cover">
-      <Sidebar />
+      <Sidebar2 />
       <div className="admin-container">
         <Header />
         {children}
