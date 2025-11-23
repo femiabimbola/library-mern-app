@@ -43,9 +43,6 @@ export const Sidebar = () => {
       });
 
       if (response.ok) {
-        // Optional: clear user from store here if needed
-        // useUserStore.getState().logout();
-
         router.push("/auth/login");
       } else {
         console.error("Logout failed:", response.statusText);
@@ -131,7 +128,7 @@ export const Sidebar = () => {
             >
               <div className="relative size-5">
                 <Image
-                  src="/icons/admin/logout.svg"
+                  src="/icons/logout.svg"
                   alt="logout"
                   fill
                   className="object-contain opacity-50 transition-all group-hover:opacity-100 group-hover:brightness-0 group-hover:invert-[.25] group-hover:sepia group-hover:saturate-[50] group-hover:hue-rotate-[320deg]"

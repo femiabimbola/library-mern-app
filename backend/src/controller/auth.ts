@@ -45,12 +45,26 @@ export const PassportLocal = (req: Request, res: Response, next: NextFunction) =
 };
 
 export const logOut = (req: Request, res: Response, next: NextFunction) => {
+  console.log("Logout route hit");
+
+  // 1. Passport Logout: Removes req.user and clears login session
   req.logout((err) => {
     if (err) {
-      return res.status(500).json({ message: "Logout failed" });
+      return res.status(500).json({ message: "Logout failed during passport cleanup" });
     }
-    req.session.destroy(() => {
-      res.status(200).json({ message: "Logged out successfully" });
+
+    // 2. Destroy Session: Removes the session data from the store (Redis/Mongo/Memory)
+    req.session.destroy((destroyErr) => {
+      if (destroyErr) {
+        return res.status(500).json({ message: "Logout failed during session destruction" });
+      }
+
+      // 3. Clear Cookie: Tells the browser to delete the session cookie
+      // IMPORTANT: 'connect.sid' is the default name.
+      // If you named your session cookie something else in app.use(session({...})), use that name here.
+      res.clearCookie("connect.sid", { path: "/" });
+
+      return res.status(200).json({ message: "Logged out successfully" });
     });
   });
 };
