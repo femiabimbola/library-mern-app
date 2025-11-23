@@ -1,4 +1,4 @@
-import { Request, NextFunction, Router } from "express";
+import { Router } from "express";
 import { createUser, PassportLocal, logOut } from "../controller/auth";
 import { validateSignUp, validateSignIn } from "../middleware/authValidation";
 import { rateLimiter } from "../middleware/ratelimit";

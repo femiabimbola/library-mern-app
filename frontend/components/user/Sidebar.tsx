@@ -34,9 +34,8 @@ export const Sidebar = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/logout`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/logout`, {
         method: "GET",
-        // 'include' sends cookies/credentials if your backend relies on them for session Auth
         credentials: "include",
         headers: {
           "Content-Type": "application/json",
@@ -47,7 +46,7 @@ export const Sidebar = () => {
         // Optional: clear user from store here if needed
         // useUserStore.getState().logout();
 
-        router.push("/sign-in");
+        router.push("/auth/login");
       } else {
         console.error("Logout failed:", response.statusText);
         // Optional: Add a toast notification here for error
@@ -128,7 +127,7 @@ export const Sidebar = () => {
             {/* Logout Button */}
             <button
               onClick={handleLogoutClick}
-              className="group flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left transition-colors hover:bg-red-50"
+              className="group flex cursor-pointer w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left transition-colors hover:bg-red-50"
             >
               <div className="relative size-5">
                 <Image

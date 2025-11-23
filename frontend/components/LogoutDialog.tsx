@@ -1,4 +1,4 @@
-import { Button } from "./ui/button"; // Adjust import path if necessary
+import { Button } from "./ui/button";
 import { Card, CardDescription, CardTitle } from "./ui/card"; // Adjust import path if necessary
 
 interface LogOutDialogProps {
@@ -13,7 +13,7 @@ export const LogOutDialog = ({ onConfirm, onCancel, isLoading }: LogOutDialogPro
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-[9999] p-4 animate-in fade-in duration-200">
       <Card className="max-w-md w-full p-6 text-center shadow-2xl bg-white">
         <CardTitle className="text-lg font-bold text-dark-100">Confirm Logout</CardTitle>
-        <CardDescription className="my-4 text-gray-500">
+        <CardDescription className="my-4 text-grey-800">
           Are you sure you want to logout? You will be redirected to the login page.
         </CardDescription>
 
