@@ -60,8 +60,7 @@ export const logOut = (req: Request, res: Response, next: NextFunction) => {
       }
 
       // 3. Clear Cookie: Tells the browser to delete the session cookie
-      // IMPORTANT: 'connect.sid' is the default name.
-      // If you named your session cookie something else in app.use(session({...})), use that name here.
+      // IMPORTANT: 'connect.sid' is the default name
       res.clearCookie("connect.sid", { path: "/" });
 
       return res.status(200).json({ message: "Logged out successfully" });

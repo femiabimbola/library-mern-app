@@ -1,8 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { AppUser } from "../../types/express";
 
-
-
 // Endpoint to get the authenticated user's data
 
 export const getUser = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -29,8 +27,6 @@ export const getUser = async (req: Request, res: Response, next: NextFunction): 
     next(error);
   }
 };
-
-
 
 // Middleware to check if user is authenticated
 export const isAuthenticated = (req: Request, res: Response, next: NextFunction) => {

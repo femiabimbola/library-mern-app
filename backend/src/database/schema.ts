@@ -1,8 +1,6 @@
-import { pgTable,  integer, text, uuid, varchar, timestamp, boolean, date, pgEnum } from "drizzle-orm/pg-core"
-import { sql } from "drizzle-orm"
+import { pgTable, integer, text, uuid, varchar, timestamp, date, pgEnum } from "drizzle-orm/pg-core";
 
-
-export const BORROW_STATUS_ENUM = pgEnum("borrow_status", ["BORROWED","RETURNED"]);
+export const BORROW_STATUS_ENUM = pgEnum("borrow_status", ["BORROWED", "RETURNED"]);
 export const ROLE_ENUM = pgEnum("role", ["USER", "ADMIN"]);
 
 export const users = pgTable("users", {
@@ -15,8 +13,7 @@ export const users = pgTable("users", {
   role: ROLE_ENUM("role").default("USER"),
   lastActivityDate: date("last_activity_date").defaultNow(),
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow(),
-})
-
+});
 
 export const books = pgTable("books", {
   id: uuid("id").notNull().primaryKey().defaultRandom().unique(),
@@ -34,13 +31,15 @@ export const books = pgTable("books", {
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow(),
 });
 
-
 export const borrowRecords = pgTable("borrow_records", {
   id: uuid("id").notNull().primaryKey().defaultRandom().unique(),
-  userId: uuid("user_id").references(() => users.id).notNull(),
-  bookId: uuid("book_id").references(() => books.id).notNull(),
-  borrowDate: timestamp("borrow_date", { withTimezone: true })
-    .defaultNow().notNull(),
+  userId: uuid("user_id")
+    .references(() => users.id)
+    .notNull(),
+  bookId: uuid("book_id")
+    .references(() => books.id)
+    .notNull(),
+  borrowDate: timestamp("borrow_date", { withTimezone: true }).defaultNow().notNull(),
   dueDate: date("due_date").notNull(),
   returnDate: date("return_date"),
   status: BORROW_STATUS_ENUM("status").default("BORROWED").notNull(),
