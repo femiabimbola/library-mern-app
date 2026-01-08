@@ -17,7 +17,6 @@ const getInitials = (name: string) => {
   if (names.length > 1) {
     return (names[0][0] + names[names.length - 1][0]).toUpperCase();
   }
-  // Or just first two letters if only one name
   return name.substring(0, 2).toUpperCase();
 };
 
@@ -27,16 +26,17 @@ const Header = () => {
 
   const navLinks = [
     { href: "/", label: "Home" },
-    { href: "/books", label: "Books" },
+    { href: "/books", label: "Borrow Books" },
   ];
 
   return (
     <header className="sticky top-0 z-50 bg-white/35 backdrop-blur-sm shadow-sm border-b border-gray-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
+          
           {/* Logo Section */}
           <Link href="/" className="flex items-center space-x-2">
-            <Image src="/icons/logo.svg" alt="Logo" width={40} height={40} className="hover:opacity-80" priority />
+            <Image src="/images/logo/mern.png" alt="Logo" width={40} height={40} className="hover:opacity-80" priority />
             <span className="text-lg font-semibold text-gray-900 hidden sm:block">BookWise</span>
           </Link>
 
