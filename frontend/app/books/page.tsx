@@ -58,7 +58,7 @@ const Books = () => {
         <div className="max-w-lg mx-auto">
           <Alert>
             <FileText className="h-4 w-4" />
-            <AlertTitle>Archive is Empty</AlertTitle>
+            <AlertTitle>There are no Books</AlertTitle>
             <AlertDescription>There are currently no books in the collection. Check back soon!</AlertDescription>
           </Alert>
         </div>
@@ -85,7 +85,7 @@ const Books = () => {
     // Page layout with standard padding and heading
     <section className="container mx-auto px-4 py-12">
       <div className="mb-8 text-center">
-        <h1 className="text-3xl font-bold tracking-tight">Book Archive</h1>
+        <h1 className="text-3xl font-bold tracking-tight">Welcome to our Book Page</h1>
         <p className="text-muted-foreground ">
           {/* Dynamically update subtitle based on state */}
           {isLoading ? "Browsing our collection..." : `Browse all ${books.length} books in our collection.`}

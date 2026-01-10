@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import Header from "@/components/Header1";
+import Header from "@/components/frontpage/Header1";
 
 const bookLayout = ({ children }: { children: ReactNode }) => {
   return (
