@@ -2,22 +2,11 @@
 
 import { useBookStore } from "@/store/bookStore";
 import { useEffect } from "react";
-import { SingleBookCard, SingleBookCard2, SingleBookCard3 } from "@/components/SingleBook";
-
-import { Skeleton } from "@/components/ui/skeleton";
+import {  SingleBookCard2 } from "@/components/SingleBook";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AlertCircle, FileText } from "lucide-react"; // Icons
+import { BookSkeleton } from "@/components/bookdesign/BookSkeleton";
 
-// A reusable skeleton component for the loading state
-const BookSkeleton = () => (
-  <div className="flex flex-col space-y-3">
-    <Skeleton className="aspect-[5/6] w-full rounded-lg" />
-    <div className="space-y-2">
-      <Skeleton className="h-5 w-3/4" />
-      <Skeleton className="h-4 w-1/2" />
-    </div>
-  </div>
-);
 
 const Books = () => {
   const { books, isLoading, error, fetchBooks } = useBookStore();
@@ -85,7 +74,7 @@ const Books = () => {
     // Page layout with standard padding and heading
     <section className="container mx-auto px-4 py-12">
       <div className="mb-8 text-center">
-        <h1 className="text-3xl font-bold tracking-tight">Welcome to our Book Page</h1>
+        <h1 className="text-3xl font-bold tracking-tight">Welcome to our Book Store</h1>
         <p className="text-muted-foreground ">
           {/* Dynamically update subtitle based on state */}
           {isLoading ? "Browsing our collection..." : `Browse all ${books.length} books in our collection.`}

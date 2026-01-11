@@ -12,20 +12,7 @@ interface BookCoverProps {
   coverColor?: string;
 }
 
-
 const imageKitEndpoint = process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT!;
-
-export const SingleBookCard = ({ id, uploadedImageUrl, title, author, coverColor = "#012B48" }: BookCoverProps) => {
-  return (
-    <Link href={`/books/${id}`}>
-      <ImageKitProvider urlEndpoint={imageKitEndpoint}>
-        <Image src={uploadedImageUrl} alt="Uploaded Media" width={250} height={300} className="rounded-md" />
-      </ImageKitProvider>
-      <p className="book-title ">{title}</p>
-      <p className="book-genre ">{author}</p>
-    </Link>
-  );
-};
 
 // Assuming Image is from 'imagekitio-react' based on your provider
 
@@ -57,20 +44,3 @@ export const SingleBookCard2 = ({ id, uploadedImageUrl, title, author }: BookCov
   );
 };
 
-export const SingleBookCard3 = ({ id, uploadedImageUrl, title, author, coverColor = "#012B48" }: BookCoverProps) => {
-  return (
-    <Link href={`/books/${id}`} className="block">
-      <Card className="overflow-hidden hover:shadow-xl transition-shadow duration-300 border-none">
-        <CardContent className="p-0">
-          <ImageKitProvider urlEndpoint={imageKitEndpoint}>
-            <Image src={uploadedImageUrl} alt={title} width={250} height={300} className="w-full h-auto object-cover" />
-          </ImageKitProvider>
-        </CardContent>
-        <CardHeader style={{ backgroundColor: coverColor }} className="text-white py-4">
-          <CardTitle className="text-lg font-semibold truncate">{title}</CardTitle>
-          <CardDescription className="text-sm text-gray-300">{author}</CardDescription>
-        </CardHeader>
-      </Card>
-    </Link>
-  );
-};
