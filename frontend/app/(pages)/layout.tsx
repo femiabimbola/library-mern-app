@@ -1,7 +1,7 @@
 "use client";
 
 import { Sidebar } from "@/components/user/Sidebar";
-import Header from "@/components/Header1";
+import Header from "@/components/frontpage/Header1";
 import { ReactNode, useEffect } from "react";
 import { useUserStore } from "@/store/userStore";
 

@@ -6,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Input } from "../ui/input";
 import { useState, useTransition } from "react";
-import { ImageUpload } from "../MediaUpload";
+import Link from "next/link";
 import { MediaUpload } from "../MediaUpload1";
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
@@ -167,6 +167,7 @@ const Register = () => {
           Sign In{" "}
         </a>
       </p>
+      <Link  className="text-center text-base font-light text-white/50" href="/books"> Return to book</Link>
     </div>
   );
 };

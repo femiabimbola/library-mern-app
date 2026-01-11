@@ -1,11 +1,13 @@
 import { ReactNode } from "react";
-import Header from "@/components/Header1";
+import Header from "@/components/frontpage/Header1";
+import Footer from "@/components/frontpage/Footer";
 
 const bookLayout = ({ children }: { children: ReactNode }) => {
   return (
-    <main className="">
+    <main>
       <Header />
       {children}
+      <Footer />
     </main>
   );
 };

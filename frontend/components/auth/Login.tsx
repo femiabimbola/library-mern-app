@@ -3,6 +3,7 @@
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { Input } from "../ui/input";
 import { useState } from "react";
@@ -113,6 +114,7 @@ const Login = () => {
           Create an account{" "}
         </a>
       </p>
+      <Link  className="text-center text-base font-light text-white/50" href="/books"> Return to book</Link>
     </div>
   );
 };

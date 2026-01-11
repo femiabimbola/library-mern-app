@@ -4,7 +4,7 @@ const Hero = () => {
   return (
     <section
       id=""
-      className="pb-16 pt-[120px] md:pb-[120px] md:pt-[150px] xl:pb-[160px] xl:pt-[180px] 2xl:pb-[200px]  border border-amber-500"
+      className="pb-16 pt-[110px] md:pb-[120px] md:pt-[120px] xl:pb-[130px] xl:pt-[110px] 2xl:pb-[150px]  border border-amber-500"
     >
       <div className="">
         <div className="mx-auto max-w-[900px] text-center">

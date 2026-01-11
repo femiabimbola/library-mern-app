@@ -1,14 +1,14 @@
 "use client"
 
 import { cn } from "@/lib/utils";
+import { BookCoverSvg } from "./bookdesign/BookCoverSvg";
+import { ImageKitProvider } from "@imagekit/next";
+import Link from "next/link";
 import Image from "next/image";
-import BookCoverSvg from "./BookCoverSvg";
-import { IKImage } from "imagekitio-next";
-import config from "@/lib/config";
 
-// type BookCoverVariant = "extraSmall" | "small" | "medium" | "regular" | "wide";
 
-const variantStyles: Record<BookCoverVariant, string> = {
+
+const variantStyles: Record<any, string> = {
   extraSmall: "book-cover_extra_small",
   small: "book-cover_small",
   medium: "book-cover_medium",
@@ -16,13 +16,14 @@ const variantStyles: Record<BookCoverVariant, string> = {
   wide: "book-cover_wide",
 };
 
+const imageKitEndpoint = process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT!;
+
 const BookCover = ({
   className,
   variant = "regular",
   coverColor = "#012B48",
-  // coverUrl = "https://placehold.co/400x600.png",
   coverUrl,
-}: BookCoverProps) => {
+}: any) => {
   return (
     <div
       className={cn(
@@ -36,16 +37,10 @@ const BookCover = ({
         className="absolute z-10"
         style={{ left: "12%", width: "87.5%", height: "88%" }}
       >
-        <IKImage
-          // src={coverUrl}
-          path={coverUrl}
-          urlEndpoint={config.env.imagekit.urlEndpoint}
-          alt="Book cover"
-          fill
-          className="rounded-sm object-fill"
-          loading="lazy"
-          lqip={{active:true}}
-        />
+
+        <ImageKitProvider urlEndpoint={imageKitEndpoint}>
+                <Image src={coverUrl} alt="Uploaded Media" width={250} height={300} className="rounded-md" />
+              </ImageKitProvider>
       </div>
     </div>
   );

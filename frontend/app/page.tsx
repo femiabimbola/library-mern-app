@@ -1,11 +1,11 @@
-import Footer from "@/components/Footer";
-import Hero from "@/components/Hero";
-import Header2 from "@/components/Header1";
+import Footer from "@/components/frontpage/Footer";
+import Hero from "@/components/frontpage/Hero";
+import Header from "@/components/frontpage/Header1";
 
 const Home = () => {
   return (
     <>
-      <Header2/>
+      <Header/>
       <Hero />
       <Footer />
     </>
