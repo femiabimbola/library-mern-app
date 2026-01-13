@@ -1,5 +1,5 @@
 import BorrowButton1 from "@/components/BorrowBookButton1";
-// We only import the button being used
+
 // import BorrowButton from "@/components/BorrowBookButton";
 // import BorrowBook2 from "@/components/BorrowBookButton2";
 
@@ -41,13 +41,12 @@ const getBook = async (bookId: string) => {
     return response.data.data;
   } catch (error) {
     console.error("Axios error:", error);
-    // Let notFound() handle it, or throw to be caught by Next.js
     notFound();
   }
 };
 
 const SingleBookPage = async ({ params }: { params: { bookId: string } }) => {
-  const { bookId } = params; // No need to await params
+  const { bookId } = await params; 
   const book: Book | null = await getBook(bookId);
 
   // The getBook function now calls notFound(), so Next.js will

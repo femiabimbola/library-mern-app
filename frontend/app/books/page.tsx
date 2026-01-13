@@ -2,9 +2,9 @@
 
 import { useBookStore } from "@/store/bookStore";
 import { useEffect } from "react";
-import {  SingleBookCard2 } from "@/components/SingleBook";
+import { BookArchive } from "@/components/bookdesign/BookArchive2";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { AlertCircle, FileText } from "lucide-react"; // Icons
+import { AlertCircle, FileText } from "lucide-react"; 
 import { BookSkeleton } from "@/components/bookdesign/BookSkeleton";
 
 
@@ -20,7 +20,7 @@ const Books = () => {
     // 1. Loading State
     if (isLoading) {
       return (
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 w-full max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 w-full max-w-3xl mx-auto">
           {Array.from({ length: 6 }).map((_, index) => (
             <BookSkeleton key={index} />
           ))}
@@ -56,9 +56,9 @@ const Books = () => {
 
     // 4. Success State
     return (
-      <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3 w-full max-w-6xl mx-auto">
+      <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 w-[1200px] max-w-5xl mx-auto">
         {books.map((book) => (
-          <SingleBookCard2
+          <BookArchive
             key={book.id}
             id={book.id}
             title={book.title}
