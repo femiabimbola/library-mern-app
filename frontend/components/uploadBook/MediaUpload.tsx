@@ -11,7 +11,7 @@ import {
 } from "@imagekit/next";
 import { useState, useRef } from "react";
 import { Progress } from "@/components/ui/progress";
-import { FormError } from "./FormMessage";
+import { FormError } from "../FormMessage";
 
 interface UploadResponse {
   url?: string;
@@ -55,6 +55,7 @@ export const MediaUpload = ({
   const [uploadProgress, setUploadProgress] = useState<number>(0);
   const [uploadedMediaUrl, setUploadedMediaUrl] = useState<string>("");
   const [uploadedMediaType, setUploadedMediaType] = useState<"image" | "video" | null>(null);
+
 
   // --- Configuration based on mediaType ---
 

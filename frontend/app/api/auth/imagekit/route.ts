@@ -1,5 +1,4 @@
 
-
 import { getUploadAuthParams } from "@imagekit/next/server";
 import { NextResponse } from 'next/server';
 

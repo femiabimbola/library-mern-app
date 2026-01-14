@@ -1,4 +1,4 @@
-import { BookForm } from "@/components/BookForm";
+import { BookForm } from "@/components/uploadBook/BookForm";
 
 const AddBookPage = () => {
   return <BookForm />;

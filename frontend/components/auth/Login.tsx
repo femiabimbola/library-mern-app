@@ -1,6 +1,13 @@
 "use client";
 
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
@@ -10,6 +17,7 @@ import { useState } from "react";
 import useSWRMutation from "swr/mutation";
 import { Button } from "../ui/button";
 import axios from "axios";
+import { Eye, EyeOff } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useUserStore } from "@/store/userStore";
 
@@ -18,7 +26,10 @@ export const LogInSchema = z.object({
   password: z.string().min(8),
 });
 
-const loginFetcher = async (url: string, { arg }: { arg: z.infer<typeof LogInSchema> }) => {
+const loginFetcher = async (
+  url: string,
+  { arg }: { arg: z.infer<typeof LogInSchema> }
+) => {
   const response = await axios.post(url, arg, { withCredentials: true });
   return response.data;
 };
@@ -40,7 +51,10 @@ const Login = () => {
     trigger,
     isMutating,
     error: swrError,
-  } = useSWRMutation(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/login`, loginFetcher);
+  } = useSWRMutation(
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/login`,
+    loginFetcher
+  );
 
   const onSubmit = async (values: z.infer<typeof LogInSchema>) => {
     setError("");
@@ -48,7 +62,10 @@ const Login = () => {
       await trigger(values);
       router.push("/dashboard");
     } catch (error: any) {
-      const errorMessage = error?.response?.data?.message || swrError?.message || "An unexpected error occurred";
+      const errorMessage =
+        error?.response?.data?.message ||
+        swrError?.message ||
+        "An unexpected error occurred";
       setError(errorMessage);
       console.error("Login error:", error);
     }
@@ -56,9 +73,12 @@ const Login = () => {
 
   return (
     <div className="flex flex-col gap-4">
-      <h1 className="text-2xl font-semibold text-white">Create your library account</h1>
+      <h1 className="text-2xl font-semibold text-white">
+        Create your library account
+      </h1>
       <p className="text-white/80">
-        Please complete all fields and upload a valid university ID to gain access to the library
+        Please complete all fields and upload a valid university ID to gain
+        access to the library
       </p>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -81,6 +101,7 @@ const Login = () => {
               </FormItem>
             )}
           />
+
           <FormField
             control={form.control}
             name="password"
@@ -88,13 +109,27 @@ const Login = () => {
               <FormItem>
                 <FormLabel className="text-white/80">Password</FormLabel>
                 <FormControl>
-                  <Input
-                    {...field}
-                    disabled={isMutating}
-                    placeholder="Enter your password"
-                    type={showPassword ? "text" : "password"}
-                    className="form-input bg-[#060911]"
-                  />
+                  {/* Container must be relative to position the icon */}
+                  <div className="relative">
+                    <Input
+                      {...field}
+                      disabled={isMutating}
+                      placeholder="Enter your password"
+                      type={showPassword ? "text" : "password"}
+                      className="form-input bg-[#060911] pr-10"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword((prev) => !prev)}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-white/50 hover:text-white cursor-pointer"
+                    >
+                      {showPassword ? (
+                        <EyeOff className="h-5 w-5" />
+                      ) : (
+                        <Eye className="h-5 w-5" />
+                      )}
+                    </button>
+                  </div>
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -102,7 +137,11 @@ const Login = () => {
           />
           {/* {error && <p style={{ color: "red" }}>{error}</p>} */}
           {error && <p className="text-red-800 text-center">{error}</p>}
-          <Button type="submit" className="w-full cursor-pointer" disabled={isMutating}>
+          <Button
+            type="submit"
+            className="w-full cursor-pointer"
+            disabled={isMutating}
+          >
             {isMutating ? "Logging in..." : "Log In"}
           </Button>
         </form>
@@ -114,7 +153,13 @@ const Login = () => {
           Create an account{" "}
         </a>
       </p>
-      <Link  className="text-center text-base font-light text-white/50" href="/books"> Return to book</Link>
+      <Link
+        className="text-center text-base font-light text-white/50"
+        href="/books"
+      >
+        {" "}
+        Return to book
+      </Link>
     </div>
   );
 };

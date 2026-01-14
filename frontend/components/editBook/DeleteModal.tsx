@@ -1,8 +1,8 @@
-import { Button } from "./ui/button";
-import { Card, CardDescription, CardTitle } from "./ui/card";
+import { Button } from "../ui/button";
+import { Card, CardDescription, CardTitle } from "../ui/card";
 
 // Not used yet
-const ConfirmationDeletion = ({ bookId, onConfirm, onCancel }: any) => {
+export const DeleteModal = ({ bookId, onConfirm, onCancel }: any) => {
   if (!bookId) return null;
 
   return (
@@ -25,4 +25,4 @@ const ConfirmationDeletion = ({ bookId, onConfirm, onCancel }: any) => {
   );
 };
 
-export default ConfirmationDeletion;
+

@@ -33,15 +33,17 @@ interface Book {
 const getBook = async (bookId: string) => {
   const bookApiUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/books/${bookId}`;
 
-  try {
+try {
     const response = await axios.get(bookApiUrl);
-    if (response.status === 404) {
-      notFound();
-    }
     return response.data.data;
   } catch (error) {
-    console.error("Axios error:", error);
-    notFound();
+    // Check if it's specifically a 404 from the server
+    if (axios.isAxiosError(error) && error.response?.status === 404) {
+      return null; 
+    }
+    // For other errors (network fail, 500), log and return null
+    console.error("Fetch Error:", error);
+    return null;
   }
 };
 
@@ -49,8 +51,7 @@ const SingleBookPage = async ({ params }: { params: { bookId: string } }) => {
   const { bookId } = await params; 
   const book: Book | null = await getBook(bookId);
 
-  // The getBook function now calls notFound(), so Next.js will
-  // automatically render your not-found.tsx page.
+ 
   // This check is a fallback in case getBook returns null unexpectedly.
   if (!book) {
     return (
@@ -92,7 +93,7 @@ const SingleBookPage = async ({ params }: { params: { bookId: string } }) => {
               alt={book.title}
               width={400} // Provide high-res base for quality
               height={600} // Maintain aspect ratio
-              className="rounded-lg shadow-xl object-cover w-full max-w-[300px] md:max-w-full h-auto"
+              className="rounded-lg shadow-xl object-cover w-full max-w-75 md:max-w-full h-auto"
               priority // Prioritize loading this image (LCP)
             />
           </div>
