@@ -1,7 +1,8 @@
-import { EditBookForm } from "./EditBookForm"; // Assuming you put the form in a file named EditBookForm
+
+import { EditBookForm } from "./EditBookForm";
 
 // Rename to EditModal or keep EditDialog, but its purpose is to contain the form
-const EditDialog = ({ bookId, onCancel, onSuccess }: any) => {
+export const EditModal = ({ bookId, onCancel, onSuccess }: any) => {
   if (!bookId) return null;
 
   return (
@@ -23,4 +24,3 @@ const EditDialog = ({ bookId, onCancel, onSuccess }: any) => {
   );
 };
 
-export default EditDialog;

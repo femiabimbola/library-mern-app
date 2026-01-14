@@ -153,7 +153,7 @@ export const Setting = () => {
                   <CardDescription>Digital copy of your ID</CardDescription>
                 </CardHeader>
                 <CardContent className="flex justify-center pb-6 flex-1 items-center">
-                  <div className="relative w-full aspect-[3/2] max-w-[280px] rounded-xl overflow-hidden border shadow-sm">
+                  <div className="relative w-full aspect-3/2 max-w-70 rounded-xl overflow-hidden border shadow-sm">
                     <ImageKitProvider urlEndpoint={imageKitEndpoint}>
                       <Image
                         src={user.universityCard}

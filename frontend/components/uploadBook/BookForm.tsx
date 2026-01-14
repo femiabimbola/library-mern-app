@@ -6,148 +6,99 @@ import { z } from "zod";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { ErrorBoundary } from "react-error-boundary";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import useSWR from "swr"; // Use SWR for fetching data
-import useSWRMutation from "swr/mutation"; // Use SWRMutation for updating data
+import { useState } from "react";
+import useSWRMutation from "swr/mutation";
 import axios from "axios";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "./ui/form";
-import { Input } from "./ui/input";
-import { Button } from "./ui/button";
-import { Textarea } from "./ui/textarea";
-import ColorPicker from "./ColorPicker";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
+import { Textarea } from "../ui/textarea";
+import ColorPicker from "../ColorPicker";
 import { MediaUpload } from "./MediaUpload";
-import ErrorBoundaryAdapter from "./GlobalErrorFallback";
-import { bookSchema } from "./BookForm"; // Assuming you export bookSchema from the file where BookForm is defined
 
-// Type for the book data based on your schema
-type BookFormData = z.infer<typeof bookSchema>;
-
-// --- Fetcher Functions ---
-
-// Fetch function for SWR to get book data
-const BookFetcher = async (url: string) => {
-  const response = await axios.get(url, { withCredentials: true });
-  return response.data.data;
-};
-
-// Update function for SWRMutation (using PUT for full replacement)
-const UpdatedBookFetcher = async (url: string, { arg }: { arg: BookFormData }) => {
-  const response = await axios.put(url, arg, { withCredentials: true });
-  return response.data;
-};
-
-// --- Main Component ---
-
-interface EditBookFormProps {
-  bookId: string | null;
-  onSuccess: () => void;
-  onCancel: () => void;
-}
-
-export const EditBookForm = ({ bookId, onCancel }: EditBookFormProps) => {
-  const [error, setError] = useState<string | undefined>("");
-  const [success, setSuccess] = useState<string | undefined>("");
-  const router = useRouter();
-
-  // 1. FETCH existing book data
-  const bookApiUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/books/${bookId}`;
-  const {
-    data: bookData,
-    isLoading,
-    error: swrFetchError,
-  } = useSWR(
-    bookId ? bookApiUrl : null, // Only fetch if bookId exists
-    BookFetcher
+// Error fallback component
+const ErrorFallback = ({ error }: { error: Error }) => {
+  return (
+    <div className="flex items-center justify-center h-screen">
+      <Card className="p-4">
+        <CardTitle className="text-red-500">Something went wrong</CardTitle>
+        <CardDescription>{error.message}</CardDescription>
+      </Card>
+    </div>
   );
+};
 
-  // 2. SETUP Form with default values from fetched data
-  const form = useForm<BookFormData>({
+export const bookSchema = z.object({
+  title: z.string().trim().min(2).max(100),
+  description: z.string().trim().min(10).max(1000),
+  author: z.string().trim().min(2).max(100),
+  genre: z.string().trim().min(2).max(50),
+  rating: z.coerce.number().min(1).max(5),
+  totalCopies: z.coerce.number().int().positive().lte(10000),
+  coverUrl: z.string(),
+  coverColor: z
+    .string()
+    .trim()
+    .regex(/^#[0-9A-F]{6}$/i),
+  videoUrl: z.string(),
+  summary: z.string().trim().min(10),
+});
+
+export const BookForm = () => {
+  const router = useRouter();
+  const [error, setError] = useState<string | undefined>("");
+
+  const form = useForm<z.infer<typeof bookSchema>>({
     resolver: zodResolver(bookSchema),
-    defaultValues: bookData || {},
+    defaultValues: {
+      title: "",
+      description: "",
+      author: "",
+      genre: "",
+      rating: 1,
+      totalCopies: 1,
+      coverUrl: "",
+      coverColor: "",
+      videoUrl: "",
+      summary: "",
+    },
   });
 
-  // Effect to populate form fields once data is loaded
-  useEffect(() => {
-    if (bookData) {
-      const numericData = {
-        ...bookData,
-        rating: Number(bookData.rating),
-        totalCopies: Number(bookData.totalCopies),
-      };
-      form.reset(numericData); // Resets the form with the fetched data
-    }
-  }, [bookData, form]);
+  const SavedBookFetcher = async (url: string, { arg }: { arg: z.infer<typeof bookSchema> }) => {
+    const response = await axios.post(url, arg, { withCredentials: true });
+    return response.data;
+  };
 
-  // 3. SETUP SWRMutation for updating the book
-  const { trigger, isMutating, error: swrMutationError } = useSWRMutation(bookApiUrl, UpdatedBookFetcher);
+  const {
+    trigger,
+    isMutating,
+    error: swrError,
+  } = useSWRMutation(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/books`, SavedBookFetcher);
 
-  // 4. HANDLE form submission
-  const onSubmit = async (values: BookFormData) => {
+  const onSubmit = async (values: z.infer<typeof bookSchema>) => {
     try {
-      await trigger(values);
-      setSuccess("The book is successfully updated");
-      router.push("/books");
+      const data = await trigger(values);
+      form.reset();
+      // TODO - redesign the add success
+      const { title, author } = values;
+      router.push(`/add-success?title=${encodeURIComponent(title)}&author=${encodeURIComponent(author)}`);
     } catch (error: any) {
-      const errorMessage =
-        error?.response?.data?.message || swrMutationError?.message || "An unexpected error occurred during update";
+      const errorMessage = error?.response?.data?.message || swrError?.message || "An unexpected error occurred";
       setError(errorMessage);
     }
   };
 
-  // --- Render Logic ---
-  if (!bookId) return null;
-
-  if (isLoading) {
-    return (
-      <Card className="p-8 text-center">
-        <CardTitle>Loading Book Details...</CardTitle>
-        <CardDescription className="mt-2">Fetching data for book ID</CardDescription>
-      </Card>
-    );
-  }
-
-  if (swrFetchError || !bookData) {
-    return (
-      <Card className="p-8 text-center">
-        <CardTitle className="text-red-500">Error</CardTitle>
-        <CardDescription className="mt-2">
-          Failed to load book: {swrFetchError?.message || "Book not found."}
-        </CardDescription>
-        <Button onClick={onCancel} className="mt-4">
-          Close
-        </Button>
-      </Card>
-    );
-  }
-
-  // Combine all errors for display
-  const displayError = error || swrMutationError?.message || swrFetchError?.message;
-  const successMessage = success;
-
   return (
-    <ErrorBoundary FallbackComponent={ErrorBoundaryAdapter}>
+    <ErrorBoundary FallbackComponent={ErrorFallback}>
       <div className="container mx-auto px-6 py-12 space-y-6">
         <Card>
           <CardHeader>
-            <CardTitle className="text-center text-3xl">Edit Book</CardTitle>
-            <CardDescription className="text-center">Update the details for the book ID: **{bookId}**</CardDescription>
+            <CardTitle className="text-center text-3xl">Add Books</CardTitle>
+            <CardDescription className="text-center">Add books to the Library</CardDescription>
           </CardHeader>
           <CardContent className="px-16">
-            {displayError && (
-              <p className="text-red-500 text-center mb-4 border border-red-500 p-2 rounded">{displayError}</p>
-            )}
-            {successMessage && (
-              <p className="text-green-500 text-center mb-4 border border-green-500 p-2 rounded">{successMessage}</p>
-            )}
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                {/* *** FORM FIELDS (Same as BookForm) ***
-                  
-                  I'm only including one field for brevity, but you would include 
-                  ALL the fields from your original BookForm here. 
-                  Since they are controlled components and the form is reset with bookData, 
-                  they will be automatically populated.
-                */}
                 <FormField
                   control={form.control}
                   name={"title"}
@@ -159,7 +110,7 @@ export const EditBookForm = ({ bookId, onCancel }: EditBookFormProps) => {
                           required
                           placeholder="Book title"
                           {...field}
-                          className="border-1 h-12 focus-visible:ring-0 focus-visible:border-1"
+                          className="border h-12 focus-visible:ring-0 focus-visible:border"
                         />
                       </FormControl>
                       <FormMessage />
@@ -310,17 +261,9 @@ export const EditBookForm = ({ bookId, onCancel }: EditBookFormProps) => {
                     )}
                   />
                 </div>
-                <div className="flex justify-between items-center py-4">
-                  <Button
-                    type="button"
-                    onClick={onCancel}
-                    disabled={isMutating}
-                    className=" text-white w-40 cursor-pointer py-6 bg-gray-500 hover:bg-gray-600"
-                  >
-                    Cancel
-                  </Button>
-                  <Button type="submit" disabled={isMutating} className=" text-white w-80 cursor-pointer py-6">
-                    {isMutating ? "Saving..." : "Update Book Details"}
+                <div className="flex justify-center items-center py-4">
+                  <Button type="submit" className=" text-white w-80 cursor-pointer py-6">
+                    Add Book to Library
                   </Button>
                 </div>
               </form>

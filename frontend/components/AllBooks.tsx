@@ -7,8 +7,8 @@ import { useBookStore } from "@/store/bookStore";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import ErrorBoundaryAdapter from "./GlobalErrorFallback";
 import { Button } from "./ui/button";
-import ConfirmationDialog from "./ConfirmationDeletion";
-import EditDialog from "./EditDialog";
+import { DeleteModal } from "./editBook/DeleteModal";
+import { EditModal } from "./editBook/EditDialog";
 
 const AllBooks = () => {
   const { books, isLoading, fetchBooks, deleteBook } = useBookStore();
@@ -101,14 +101,14 @@ const AllBooks = () => {
         </CardHeader>
       </Card>
       {/* There must be props for dialog */}
-      <ConfirmationDialog
+       <DeleteModal
         bookId={bookToDeleteId}
         onConfirm={handleConfirmDelete}
         onCancel={() => setBookToDeleteId(null)}
       />
       {/* For the edit */}
 
-      <EditDialog bookId={bookToEditId} onCancel={() => setBookToEditId(null)} />
+      <EditModal bookId={bookToEditId} onCancel={() => setBookToEditId(null)} />
     </ErrorBoundary>
   );
 };

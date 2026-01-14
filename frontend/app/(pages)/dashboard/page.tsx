@@ -15,6 +15,8 @@ import { ImageKitProvider } from "@imagekit/next";
 import { ErrorFallback } from "@/components/ErrorFallBack";
 import Image from "next/image";
 
+
+//  TODO: ENSURE USER IS STILL SIGNED ACROSS THE DASHBOARD
 interface AppUser {
   id: string;
   fullName: string;
