@@ -9,6 +9,8 @@ export function proxy(request: NextRequest) {
   const protectedRoutes = ["/dashboard", "/setting", "/addbook", "/allbooks"];
   const isProtectedRoute = protectedRoutes.some((route) => pathname.startsWith(route));
 
+  console.log("token", token)
+  console.log("route ",isProtectedRoute)
   if (!token && isProtectedRoute) {
     const loginUrl = new URL("/auth/login", request.url);
     loginUrl.searchParams.set("callbackUrl", pathname);
