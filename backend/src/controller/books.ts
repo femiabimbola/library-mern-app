@@ -219,7 +219,8 @@ export const editBook = async (req: Request, res: any, next: NextFunction) => {
     const updatedBook = await db
       .update(books)
       .set(updateData)
-      .where(eq(books.id, id)) // Use eq for precise ID matching
+      // .where(eq(books.id, id)) // Use eq for precise ID matching
+      .where(eq(books.id, sql`${id}::uuid`)) 
       .returning();
 
     // Check if the book was found and updated
