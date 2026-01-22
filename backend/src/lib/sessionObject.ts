@@ -9,7 +9,22 @@ export const sessionObject = {
     secure: process.env.NODE_ENV === 'production',   // true on prod
     sameSite: process.env.NODE_ENV === "production" ? "none" : "lax" as 'none' | 'lax',
     maxAge: 1000 * 60 * 60 * 24, // 1 day
-    // Do NOT set domain unless both are subdomains of same parent (e.g. app.example.com & api.example.com)
-    // domain: '.example.com' // only if you control both on same domain
   }
 }
+
+
+export const sessionObject2 = {
+  name: 'connect.sid',
+  secret: process.env.SESSION_SECRET!,
+  resave: false,
+  saveUninitialized: false,
+  proxy: true, // Required for Heroku/Render/Vercel (behind a proxy)
+  cookie: {
+    secure: true, // Required for HTTPS on Vercel
+    sameSite: 'none' as const, // Required if backend and frontend domains are different
+    httpOnly: true,
+    maxAge: 1000 * 60 * 60 * 24 // 24 hours
+  }
+}
+
+console.log(sessionObject.cookie.sameSite)
