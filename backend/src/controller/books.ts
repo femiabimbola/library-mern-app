@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { db } from "../database/connectdb";
 import { books } from "../database/schema";
-import { eq } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 
 interface DeleteBookParams {
   id: string;
@@ -77,7 +77,8 @@ export const deleteBook = async (req: Request, res: Response) => {
       return;
     }
 
-    const book = await db.select().from(books).where(eq(books.id, id)).limit(1);
+    // const book = await db.select().from(books).where(eq(books.id, id)).limit(1);
+    const book = await db.select().from(books).where(eq(books.id, sql`${id}::uuid`)).limit(1);
 
     if (book.length === 0) {
       res.status(404).json({
@@ -88,10 +89,17 @@ export const deleteBook = async (req: Request, res: Response) => {
     }
 
     // 2. Perform the deletion query
-    const deletedBook = await db
-      .delete(books) // Specify the table
-      .where(eq(books.id, id)) // Specify the condition (assuming the primary key is 'id' and 'eq' is a function for equality comparison from the ORM)
-      .returning(); // Optional: returns the deleted rows
+    // const deletedBook = await db
+    //   .delete(books) // Specify the table
+    //   .where(eq(books.id, id)) // Specify the condition (assuming the primary key is 'id' and 'eq' is a function for equality comparison from the ORM)
+    //   .returning(); // Optional: returns the deleted rows
+
+  const deletedBook = await db
+      .delete(books) 
+      .where(eq(books.id, sql`${id}::uuid`)) 
+      .returning();
+
+
 
     // 4. Respond with success
     res.status(200).json({
@@ -127,7 +135,8 @@ export const getBookById = async (req: Request, res: Response) => {
     const book = await db
       .select()
       .from(books) // Specify the table
-      .where(eq(books.id, id)) // Specify the condition
+      // .where(eq(books.id, id)) // Specify the condition
+      .where(eq(books.id, sql`${id}::uuid`)) // Specify the condition
       .limit(1); // Limit the result to one
 
     // 3. Check if the book was found
