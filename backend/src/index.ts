@@ -4,7 +4,7 @@ import router from "./routes";
 import session from "express-session";
 import passport from "passport";
 import cors from "cors";
-import { sessionObject } from "./lib/sessionObject";
+import { sessionObject2 } from "./lib/sessionObject";
 import { corsOptions } from "./lib/config/app.config";
 import swaggerUi from "swagger-ui-express";
 import swaggerJSDoc from "swagger-jsdoc";
@@ -17,10 +17,9 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-process.env.NODE_ENV = process.env.NODE_ENV || "development";
+// process.env.NODE_ENV = process.env.NODE_ENV || "development";
 
-app.set("trust proxy", 1)
-app.use(session(sessionObject));
+app.use(session(sessionObject2));
 app.use(passport.initialize());
 app.use(passport.session());
 
