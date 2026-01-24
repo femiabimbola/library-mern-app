@@ -88,18 +88,11 @@ export const deleteBook = async (req: Request, res: Response) => {
       return;
     }
 
-    // 2. Perform the deletion query
-    // const deletedBook = await db
-    //   .delete(books) // Specify the table
-    //   .where(eq(books.id, id)) // Specify the condition (assuming the primary key is 'id' and 'eq' is a function for equality comparison from the ORM)
-    //   .returning(); // Optional: returns the deleted rows
-
+  // 2. Perform the deletion query
   const deletedBook = await db
       .delete(books) 
       .where(eq(books.id, sql`${id}::uuid`)) 
       .returning();
-
-
 
     // 4. Respond with success
     res.status(200).json({
@@ -135,7 +128,6 @@ export const getBookById = async (req: Request, res: Response) => {
     const book = await db
       .select()
       .from(books) // Specify the table
-      // .where(eq(books.id, id)) // Specify the condition
       .where(eq(books.id, sql`${id}::uuid`)) // Specify the condition
       .limit(1); // Limit the result to one
 
@@ -219,7 +211,6 @@ export const editBook = async (req: Request, res: any, next: NextFunction) => {
     const updatedBook = await db
       .update(books)
       .set(updateData)
-      // .where(eq(books.id, id)) // Use eq for precise ID matching
       .where(eq(books.id, sql`${id}::uuid`)) 
       .returning();
 

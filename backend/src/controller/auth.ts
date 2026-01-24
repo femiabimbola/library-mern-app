@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { users } from "../database/schema";
 import { eq } from "drizzle-orm";
 import { db } from "../database/connectdb";
-import { hash, compare } from "bcryptjs";
+import { hash } from "bcryptjs";
 import Passport from "passport";
 
 export const createUser = async (req: Request, res: any, next: NextFunction) => {
@@ -45,7 +45,6 @@ export const PassportLocal = (req: Request, res: Response, next: NextFunction) =
 };
 
 export const logOut = (req: Request, res: Response, next: NextFunction) => {
-  console.log("Logout route hit");
 
   // 1. Passport Logout: Removes req.user and clears login session
   req.logout((err) => {
