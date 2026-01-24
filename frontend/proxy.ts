@@ -3,14 +3,16 @@ import type { NextRequest } from "next/server";
 
 // 1. Function name changed to "proxy"
 export function proxy(request: NextRequest) {
-  const token = request.cookies.get("connect.sid");
+  // const token = request.cookies.get("connect.sid");
+
+  const token = request.cookies.get("connect.sid")?.value;
   const { pathname } = request.nextUrl;
 
   const protectedRoutes = ["/dashboard", "/setting", "/addbook", "/allbooks"];
   const isProtectedRoute = protectedRoutes.some((route) => pathname.startsWith(route));
 
-  // console.log("token", token)
-  // console.log("route ",isProtectedRoute)
+  console.log(" The token is", token)
+  console.log("route ",isProtectedRoute)
   if (!token && isProtectedRoute) {
     const loginUrl = new URL("/auth/login", request.url);
     loginUrl.searchParams.set("callbackUrl", pathname);
