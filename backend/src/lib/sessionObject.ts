@@ -13,6 +13,7 @@ export const sessionObject2 = {
     httpOnly: true,
     sameSite: process.env.NODE_ENV === "production" ? "none" : "lax" as 'none' | 'lax',
     secure: process.env.NODE_ENV === 'production', 
+    domain: process.env.NODE_ENV === 'production' ? '.vercel.com' : 'localhost',
     maxAge: 1000 * 60 * 60 * 24 // 24 hours
   }
 }
