@@ -1,11 +1,14 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { cookies } from 'next/headers';
 
 // 1. Function name changed to "proxy"
 export async function proxy(request: NextRequest) {
   // const token = request.cookies.get("connect.sid");
-
-  const token = await request.cookies.get("connect.sid")?.value;
+  // const token = await request.cookies.get("connect.sid")?.value;
+  
+  const cookieStore = await cookies();
+  const token = cookieStore.get('connect.sid');
   const { pathname } = request.nextUrl;
 
   const protectedRoutes = ["/dashboard", "/setting", "/addbook", "/allbooks"];
