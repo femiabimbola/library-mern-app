@@ -47,14 +47,20 @@ const Login = () => {
     },
   });
 
-  const {
+  // const {
+  //   trigger,
+  //   isMutating,
+  //   error: swrError,
+  // } = useSWRMutation(
+  //   `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/login`,
+  //   loginFetcher
+  // );
+
+   const {
     trigger,
     isMutating,
     error: swrError,
-  } = useSWRMutation(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/login`,
-    loginFetcher
-  );
+  } = useSWRMutation('/api/proxy/auth/login', loginFetcher);
 
   const onSubmit = async (values: z.infer<typeof LogInSchema>) => {
     setError("");
