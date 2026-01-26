@@ -11,9 +11,9 @@ export const sessionObject2 = {
   proxy: true, // Required for Heroku/Render/Vercel (behind a proxy)
   cookie: {
     httpOnly: true,
-    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax" as 'none' | 'lax',
     secure: process.env.NODE_ENV === 'production', 
-    domain: process.env.NODE_ENV === 'production' ? '.vercel.com' : 'localhost',
+    sameSite: process.env.NODE_ENV === "production" ? ('none' as const) : ('lax' as const),
+    // sameSite: process.env.NODE_ENV === "production" ? "none" : "lax" as 'none' | 'lax', 
     maxAge: 1000 * 60 * 60 * 24 // 24 hours
   }
 }
