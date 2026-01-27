@@ -34,7 +34,7 @@ export const Sidebar = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/logout`, {
+      const response = await fetch(`/api/proxy/api/auth/logout`, {
         method: "GET",
         credentials: "include",
         headers: {
