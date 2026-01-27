@@ -14,10 +14,6 @@ export const sessionObject2 = {
     secure: process.env.NODE_ENV === 'production', 
     // sameSite: process.env.NODE_ENV === "production" ? ('none' as const) : ('lax' as const),
     sameSite: 'lax' as const,
-    // sameSite: process.env.NODE_ENV === "production" ? "none" : "lax" as 'none' | 'lax', 
     maxAge: 1000 * 60 * 60 * 24 // 24 hours
   }
 }
-
-console.log(sessionObject2.secret)
-console.log(sessionObject2.cookie.sameSite)

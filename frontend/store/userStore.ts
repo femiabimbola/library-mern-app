@@ -25,9 +25,13 @@ export const useUserStore = create<UserState>((set) => ({
   fetchUser: async () => {
     set({ isLoading: true, error: null });
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/user`, {
+      // const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/user`, {
+      //   credentials: "include",
+      // });
+      // /api/proxy/
+       const response = await fetch(`/api/proxy/api/user`, {
         credentials: "include",
-      });
+      })
       if (!response.ok) {
         throw new Error("Failed to fetch user data");
       }
